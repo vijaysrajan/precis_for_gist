@@ -18,7 +18,7 @@ public class SanitationInputObject extends InputObject {
 		+ Arrays.toString(fieldObjects) + "\n";
     }
 
-    protected void init(int noOfFields) {
+    public void init(int noOfFields) {
 	this.noOfFields = noOfFields;
 	fieldObjects = new FieldObject[noOfFields];
 	for (int i = 0; i < noOfFields; i++) {

@@ -24,7 +24,7 @@ public abstract class InputObject implements Serializable {
 	noOfValues = noOfValues + inc;
     }
 
-    protected abstract void init(int noOfFields);
+    public abstract void init(int noOfFields);
 
     public abstract void loadInput(Object o) throws Exception;
 

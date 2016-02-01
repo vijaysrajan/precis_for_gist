@@ -4,35 +4,36 @@ import com.fratics.precis.base.PrecisProcessor;
 import com.fratics.precis.base.ValueObject;
 import com.fratics.precis.reader.PrecisFileStream;
 import com.fratics.precis.reader.PrecisFileStreamProcessor;
+import com.fratics.precis.sanitation.rules.SanitationRuleProcessor;
 
 public class SanitationMain extends PrecisProcessor {
 
-    private PrecisProcessor ps = null;
-    private String precisStreamName = null;
+    private PrecisProcessor[] ps = null;
 
-    public SanitationMain(String st) {
-	this.precisStreamName = st;
+    public SanitationMain(String streamName) {
+	ps = new PrecisProcessor[2];
+	ps[0] = new PrecisFileStreamProcessor(new PrecisFileStream(streamName));
+	ps[1] = new SanitationRuleProcessor();
     }
 
     public boolean initialize() throws Exception {
-	ps = new PrecisFileStreamProcessor(new PrecisFileStream(
-		this.precisStreamName));
-	ps.initialize();
+	for (int i = 0; i < ps.length; i++)
+	    ps[i].initialize();
 	return true;
     }
 
     public boolean unInitialize() throws Exception {
-	ps.unInitialize();
+	for (int i = 0; i < ps.length; i++)
+	    ps[i].unInitialize();
 	return true;
 
     }
 
     public boolean process(ValueObject o) throws Exception {
-	// Initialize various Processors for Populating the Value Object
-	// and run the sequence to the processors for the same.
-	ps.process(o);
-	//
-
+	// Initialize & run the various Processors in sequence on the Value
+	// Object
+	for (int i = 0; i < ps.length; i++)
+	    ps[i].process(o);
 	return true;
     }
 

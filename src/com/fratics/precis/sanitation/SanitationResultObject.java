@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.fratics.precis.base.ResultObject;
+import com.fratics.precis.sanitation.rules.SingleRuleResult;
 
 class RuleResult {
     public RuleResult(String ruleName, boolean result) {
@@ -14,6 +15,10 @@ class RuleResult {
 
     public String ruleName;
     public boolean result;
+
+    public String toString() {
+	return "Rule :: " + ruleName + " Result :: " + result;
+    }
 }
 
 class FieldResult {
@@ -24,6 +29,11 @@ class FieldResult {
     }
 
     public List<RuleResult> rulesResult = new ArrayList<RuleResult>();
+
+    public String toString() {
+	return "Field Index :: " + fieldIndex + " Applied Rules ==> { "
+		+ rulesResult.toString() + " }";
+    }
 }
 
 public class SanitationResultObject extends ResultObject {
@@ -43,16 +53,17 @@ public class SanitationResultObject extends ResultObject {
 	}
     }
 
-    public void loadResult(String ruleName, boolean result, int fieldIndex) {
+    private void loadResult(String ruleName, boolean result, int fieldIndex) {
 	fr[fieldIndex].rulesResult.add(new RuleResult(ruleName, result));
     }
 
     public String toString() {
-	return "Rule Restult ::" + Arrays.toString(fr) + "\n";
+	return "Rule Result ::" + Arrays.toString(fr) + "\n";
     }
 
     public void loadResult(Object o) throws Exception {
-
+	SingleRuleResult srr = (SingleRuleResult) o;
+	loadResult(srr.ruleName, srr.result, srr.fieldIndex);
     }
 
 }
