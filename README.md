@@ -5,6 +5,7 @@ precis_for_gist is rewriting precis for
   i.   Multi Threading
   ii.  Finding only Frequent Item Sets without getting actual numbers during the multi stage phase
   iii. Using the trick of Apriori+
+  iv.  Eliminate data records that have only few dims at later stages.
 3. Configurability with user input. When the user submits a file or directory containing files in GIST for analysis,
   i.   We run an initial column level group by on each column
   ii.  Find columns with same values to omit
