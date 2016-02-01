@@ -1,7 +1,9 @@
-package com.fratics.precis.sanitation.rules;
+package com.fratics.precis.sanitation;
 
 import com.fratics.precis.base.PrecisProcessor;
 import com.fratics.precis.base.ValueObject;
+import com.fratics.precis.sanitation.rules.SanitationRuleBase;
+import com.fratics.precis.sanitation.rules.UniqueValueRule;
 
 public class SanitationRuleProcessor extends PrecisProcessor {
     SanitationRuleBase[] srb = { new SameValueRule(), new UniqueValueRule() };

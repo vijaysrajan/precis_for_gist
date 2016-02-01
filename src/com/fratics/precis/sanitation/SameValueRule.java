@@ -1,7 +1,9 @@
-package com.fratics.precis.sanitation.rules;
+package com.fratics.precis.sanitation;
 
 import com.fratics.precis.base.FieldObject;
 import com.fratics.precis.base.ValueObject;
+import com.fratics.precis.sanitation.rules.SanitationRuleBase;
+import com.fratics.precis.sanitation.rules.SingleRuleResult;
 
 public class SameValueRule extends SanitationRuleBase {
     public void applyRule(ValueObject vo) throws Exception {

@@ -4,7 +4,6 @@ import com.fratics.precis.base.PrecisProcessor;
 import com.fratics.precis.base.ValueObject;
 import com.fratics.precis.reader.PrecisFileStream;
 import com.fratics.precis.reader.PrecisFileStreamProcessor;
-import com.fratics.precis.sanitation.rules.SanitationRuleProcessor;
 
 public class SanitationMain extends PrecisProcessor {
 
