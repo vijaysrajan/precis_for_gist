@@ -30,11 +30,26 @@ import java.util.Map;
 class Element {
     private BitSet b = new BitSet();
     private double metric;
-    public void addElement(int e) { this.b.set(e);}
-    public void setMetric(double metric) { this.metric = metric;}
-    public double getMetric() { return metric; }
-    public int getNumberofDimVals() { return this.b.cardinality() / 2; }
-    public String toString() { return this.b.toString() + "," + metric; }
+
+    public void addElement(int e) {
+	this.b.set(e);
+    }
+
+    public void setMetric(double metric) {
+	this.metric = metric;
+    }
+
+    public double getMetric() {
+	return metric;
+    }
+
+    public int getNumberofDimVals() {
+	return this.b.cardinality() / 2;
+    }
+
+    public String toString() {
+	return this.b.toString() + "," + metric;
+    }
 }
 
 final class BaseFeedPartitioner {

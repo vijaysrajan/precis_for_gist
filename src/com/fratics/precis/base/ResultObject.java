@@ -2,10 +2,14 @@ package com.fratics.precis.base;
 
 import java.io.Serializable;
 
-class FieldResult{
-    
-}
+public abstract class ResultObject implements Serializable {
+    private static final long serialVersionUID = -6326248205032370705L;
 
-public class ResultObject implements Serializable {
-    private static final long serialVersionUID = 8259727611192043540L;
+    protected abstract void init(int noOfFields);
+
+    public abstract void loadResult(Object o) throws Exception;
+
+    protected abstract boolean isInitialized();
+
+    public abstract String toString();
 }

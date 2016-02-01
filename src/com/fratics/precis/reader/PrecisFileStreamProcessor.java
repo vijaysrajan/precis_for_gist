@@ -7,7 +7,10 @@ import com.fratics.precis.base.ValueObject;
 public class PrecisFileStreamProcessor extends PrecisProcessor {
 
     private PrecisStream ps = null;
-    public PrecisFileStreamProcessor(PrecisStream ps) { this.ps = ps; }
+
+    public PrecisFileStreamProcessor(PrecisStream ps) {
+	this.ps = ps;
+    }
 
     public boolean initialize() throws Exception {
 	return this.ps.initialize();
@@ -20,10 +23,10 @@ public class PrecisFileStreamProcessor extends PrecisProcessor {
     public boolean process(ValueObject o) throws Exception {
 	String[] str = null;
 	while ((str = ps.readStream()) != null) {
-	    o.loadDataObjects(str);
+	    o.inputObject.loadInput(str);
 	}
-	//Set the Number of Lines as Well.
-	o.setNoOfValues(ps.getNoOfLines());
+	// Set the Number of Lines as Well.
+	o.inputObject.setNoOfValues(ps.getNoOfLines());
 	return true;
     }
 }

@@ -28,11 +28,11 @@ public class SanitationMain extends PrecisProcessor {
     }
 
     public boolean process(ValueObject o) throws Exception {
-	//Initialize various Processors for Populating the Value Object 
-	//and run the sequence to the processors for the same.
+	// Initialize various Processors for Populating the Value Object
+	// and run the sequence to the processors for the same.
 	ps.process(o);
 	//
-	
+
 	return true;
     }
 
@@ -52,12 +52,14 @@ public class SanitationMain extends PrecisProcessor {
 	    System.exit(0);
 	}
 	try {
-	    SanitationObject so = new SanitationObject();
+	    ValueObject vo = new ValueObject();
+	    vo.inputObject = new SanitationInputObject();
+	    vo.resultObject = new SanitationResultObject();
 	    SanitationMain sm = new SanitationMain(args[0]);
 	    sm.initialize();
-	    sm.process(so);
+	    sm.process(vo);
 	    sm.unInitialize();
-	    System.err.println(so);
+	    System.err.println(vo);
 	} catch (Exception e) {
 	    e.printStackTrace();
 	}

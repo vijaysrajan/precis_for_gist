@@ -15,7 +15,9 @@ public class PrecisFileStream extends PrecisStream {
     private String fileName = null;
     private BufferedReader br = null;
 
-    public PrecisFileStream(String fileName) { this.fileName = fileName; }
+    public PrecisFileStream(String fileName) {
+	this.fileName = fileName;
+    }
 
     public boolean initialize() throws Exception {
 	File file = new File(fileName);
