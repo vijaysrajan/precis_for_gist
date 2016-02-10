@@ -16,58 +16,60 @@ public class DimOrMetricRule extends SanitationRuleBase {
 	    Map<String, MutableInt> map = fo[i].getMap();
 	    Iterator<String> it = map.keySet().iterator();
 	    boolean flag = true;
-	    while(it.hasNext()){
+	    while (it.hasNext()) {
 		String x = it.next();
-		try{
+		try {
 		    Integer.parseInt(x);
-		}catch(NumberFormatException ne){
+		} catch (NumberFormatException ne) {
 		    flag = false;
 		    break;
 		}
 	    }
 	    if (flag) {
-		vo.resultObject.loadResult(new SingleRuleResult("MetricRule", true,i));
+		vo.resultObject.loadResult(new SingleRuleResult("MetricRule",
+			true, i));
 	    } else {
-		vo.resultObject.loadResult(new SingleRuleResult("MetricRule",false, i));
+		vo.resultObject.loadResult(new SingleRuleResult("MetricRule",
+			false, i));
 	    }
-	    //dim part
-	    if (fo[i].getNumberOfUniques() < numOfLines){
-		
-		vo.resultObject.loadResult(new SingleRuleResult("DimRule", true,i));
-	    }else{
-		vo.resultObject.loadResult(new SingleRuleResult("DimRule", false,i));
+	    // dim part
+	    if (fo[i].getNumberOfUniques() < numOfLines) {
+
+		vo.resultObject.loadResult(new SingleRuleResult("DimRule",
+			true, i));
+	    } else {
+		vo.resultObject.loadResult(new SingleRuleResult("DimRule",
+			false, i));
 	    }
-	    //merge rules
+	    // merge rules
 	    if (fo[i].getNumberOfUniques() == numOfLines) {
-		vo.resultObject.loadResult(new SingleRuleResult("UniqueValueRule", true,
-			i));
+		vo.resultObject.loadResult(new SingleRuleResult(
+			"UniqueValueRule", true, i));
 	    } else {
-		vo.resultObject.loadResult(new SingleRuleResult("UniqueValueRule",
-			false, i));
+		vo.resultObject.loadResult(new SingleRuleResult(
+			"UniqueValueRule", false, i));
 	    }
-	    
+
 	    if (fo[i].getNumberOfUniques() == 1) {
-		vo.resultObject.loadResult(new SingleRuleResult("SameValueRule", true,
-			i));
+		vo.resultObject.loadResult(new SingleRuleResult(
+			"SameValueRule", true, i));
 	    } else {
-		vo.resultObject.loadResult(new SingleRuleResult("SameValueRule",
-			false, i));
+		vo.resultObject.loadResult(new SingleRuleResult(
+			"SameValueRule", false, i));
 	    }
 	    /*
-	    if (fo[i].getNumberOfUniques() == 2 ) {
-		vo.resultObject.loadResult(new SingleRuleResult("BinaryValueRule", true,
-			i));
+	     * if (fo[i].getNumberOfUniques() == 2 ) {
+	     * vo.resultObject.loadResult(new
+	     * SingleRuleResult("BinaryValueRule", true, i)); } else {
+	     * vo.resultObject.loadResult(new
+	     * SingleRuleResult("BinaryValueRule", false, i)); }
+	     */
+	    if (fo[i].getNumberOfUniques() <= 5) {
+		vo.resultObject.loadResult(new SingleRuleResult(
+			"ClassifierValueRule", true, i));
 	    } else {
-		vo.resultObject.loadResult(new SingleRuleResult("BinaryValueRule",
-			false, i));
-	    }
-	    */
-	    if (fo[i].getNumberOfUniques() <= 5 ) {
-		vo.resultObject.loadResult(new SingleRuleResult("ClassifierValueRule", true,
-			i));
-	    } else {
-		vo.resultObject.loadResult(new SingleRuleResult("ClassifierValueRule",
-			false, i));
+		vo.resultObject.loadResult(new SingleRuleResult(
+			"ClassifierValueRule", false, i));
 	    }
 	}
     }

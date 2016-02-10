@@ -6,7 +6,11 @@ import com.fratics.precis.sanitation.rules.DimOrMetricRule;
 import com.fratics.precis.sanitation.rules.SanitationRuleBase;
 
 public class SanitationRuleProcessor extends PrecisProcessor {
-    SanitationRuleBase[] srb = { new DimOrMetricRule() }; //new SameValueRule(), new UniqueValueRule() };
+    SanitationRuleBase[] srb = { new DimOrMetricRule() }; // new
+							  // SameValueRule(),
+							  // new
+							  // UniqueValueRule()
+							  // };
 
     public boolean process(ValueObject vo) throws Exception {
 	vo.resultObject.init(vo.inputObject.getFieldObjects().length);
