@@ -3,21 +3,7 @@ package com.fratics.precis.base;
 import java.util.HashMap;
 import java.util.Map;
 
-class MutableInt {
-    int value = 1;
 
-    public void inc() {
-	++value;
-    }
-
-    public int get() {
-	return value;
-    }
-
-    public String toString() {
-	return "" + value;
-    }
-}
 
 public class FieldObject {
 
@@ -29,6 +15,10 @@ public class FieldObject {
 	return fieldIndex;
     }
 
+    public Map<String, MutableInt> getMap(){
+	return map;
+    }
+    
     public void setFieldIndex(int fieldIndex) {
 	this.fieldIndex = fieldIndex;
     }
