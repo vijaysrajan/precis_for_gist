@@ -1,4 +1,4 @@
-package com.fractics.precis.dimval;
+package com.fratics.precis.dimval;
 
 import java.util.HashMap;
 import java.util.Iterator;
