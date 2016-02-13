@@ -8,6 +8,19 @@ import com.fratics.precis.base.FieldObject;
 import com.fratics.precis.base.MutableInt;
 import com.fratics.precis.base.ValueObject;
 
+/*
+ * Indexes are created for all the dims and values that cross the threshold in stage 1.
+ * 
+ * We have 4 maps totally, they are
+ * 	1) dim map
+ * 	2) dim_val map
+ * 	3) reverse dim map
+ * 	4) reverse dim_val map
+ * 
+ * The format we used for dim_val map element is "dim^Bvalue" -> Index.
+ * 
+ */
+
 public class DimValIndex {
     
     public static int threshold = 500;
@@ -50,8 +63,6 @@ public class DimValIndex {
     }
 
     public String toString() {
-	// System.err.println(dimValMap.size());
-	// System.err.println(revDimValMap.size());
 	return dimMap + "\n" + dimValMap + "\n" + revDimMap + "\n"
 		+ revDimValMap + "\n";
 
