@@ -39,10 +39,10 @@ public class DimValIndex {
 		    }
 		    dimValMap.put(
 			    fi[i].getFieldName() + Character.toString('\002')
-				    + val.get(), new MutableInt(valIndex));
+				    + key, new MutableInt(valIndex));
 		    revDimValMap.put(new MutableInt(valIndex),
 			    fi[i].getFieldName() + Character.toString('\002')
-				    + val.get());
+				    + key);
 		    valIndex++;
 		}
 	    }
