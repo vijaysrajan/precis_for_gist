@@ -24,7 +24,7 @@ public abstract class InputObject implements Serializable {
 	noOfValues = noOfValues + inc;
     }
 
-    public abstract void init(int noOfFields);
+    public abstract void loadSchema(String[] str);
 
     public abstract void loadInput(Object o) throws Exception;
 

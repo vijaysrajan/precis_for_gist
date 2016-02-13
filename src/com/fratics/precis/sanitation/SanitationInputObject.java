@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import com.fratics.precis.base.FieldObject;
 import com.fratics.precis.base.InputObject;
+import com.fratics.precis.exception.PrecisException;
 
 public class SanitationInputObject extends InputObject {
     private static final long serialVersionUID = 6369672872079922497L;
@@ -18,20 +19,20 @@ public class SanitationInputObject extends InputObject {
 		+ Arrays.toString(fieldObjects) + "\n";
     }
 
-    public void init(int noOfFields) {
-	this.noOfFields = noOfFields;
+    public void loadSchema(String[] str) {
+	this.noOfFields = str.length;
 	fieldObjects = new FieldObject[noOfFields];
 	for (int i = 0; i < noOfFields; i++) {
 	    fieldObjects[i] = new FieldObject();
 	    fieldObjects[i].setFieldIndex(i);
-	    fieldObjects[i].setFieldName("" + i); // Change Later Accordingly
+	    fieldObjects[i].setFieldName(str[i]);
 	}
     }
 
     public void loadInput(Object o) throws Exception {
 	String[] str = (String[]) o;
 	if (!this.isInitialized())
-	    this.init(str.length);
+	    throw new PrecisException("Schema Not Loaded");
 	// System.err.println("String Array ==> " + Arrays.toString(str));
 	// Load Values to the Value Object.
 	for (int i = 0; i < str.length; i++) {
