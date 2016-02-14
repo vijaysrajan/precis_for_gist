@@ -20,6 +20,7 @@ public class SanitationInputObject extends InputObject {
     }
 
     public void loadSchema(String[] str) {
+	// need to alter loadSchema in case of Metrics.
 	this.noOfFields = str.length;
 	fieldObjects = new FieldObject[noOfFields];
 	for (int i = 0; i < noOfFields; i++) {

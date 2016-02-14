@@ -14,6 +14,10 @@ public class MutableInt implements Comparable<MutableInt> {
 	++value;
     }
 
+    public void incBy(int inc) {
+	value += inc;
+    }
+
     public int get() {
 	return value;
     }

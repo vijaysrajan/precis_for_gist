@@ -1,0 +1,41 @@
+package com.fratics.precis.fis.app;
+
+import java.util.BitSet;
+
+public class Element {
+
+    private BitSet b;
+    private double metric;
+
+    public Element() {
+	b = new BitSet();
+    }
+
+    public Element(int noOfBits) {
+	b = new BitSet(noOfBits);
+    }
+
+    public void addElement(int e) {
+	this.b.set(e);
+    }
+
+    public void setMetric(double metric) {
+	this.metric = metric;
+    }
+
+    public double getMetric() {
+	return metric;
+    }
+
+    public int getCardinality() {
+	return this.b.cardinality();
+    }
+
+    public int getNumberofDimVals() {
+	return this.b.cardinality() / 2;
+    }
+
+    public String toString() {
+	return this.b.toString() + "," + metric;
+    }
+}

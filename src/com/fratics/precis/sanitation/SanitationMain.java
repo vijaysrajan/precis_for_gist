@@ -3,6 +3,7 @@ package com.fratics.precis.sanitation;
 import com.fratics.precis.base.PrecisProcessor;
 import com.fratics.precis.base.ValueObject;
 import com.fratics.precis.dimval.DimValIndex;
+import com.fratics.precis.fis.app.BitSetFeed;
 import com.fratics.precis.reader.PrecisFileStream;
 import com.fratics.precis.reader.PrecisFileStreamProcessor;
 import com.fratics.precis.reader.PrecisSchemaProcessor;
@@ -12,11 +13,13 @@ public class SanitationMain extends PrecisProcessor {
     private PrecisProcessor[] ps = null;
 
     public SanitationMain(String streamName) {
-	ps = new PrecisProcessor[3];
+	ps = new PrecisProcessor[5];
 	ps[0] = new PrecisSchemaProcessor(new PrecisFileStream(
 		"./data/schemaFile"));
 	ps[1] = new PrecisFileStreamProcessor(new PrecisFileStream(streamName));
 	ps[2] = new SanitationRuleProcessor();
+	ps[3] = new DimValIndex();
+	ps[4] = new BitSetFeed(new PrecisFileStream(streamName));
     }
 
     public boolean initialize() throws Exception {
@@ -60,14 +63,12 @@ public class SanitationMain extends PrecisProcessor {
 	    vo.inputObject = new SanitationInputObject();
 	    vo.resultObject = new SanitationResultObject();
 	    SanitationMain sm = new SanitationMain(args[0]);
-	    DimValIndex ms = new DimValIndex();
 	    sm.initialize();
 	    sm.process(vo);
-	    ms.applyThresholds(vo);
 	    sm.unInitialize();
 	    System.err.println(vo);
 	    System.err.println();
-	    System.err.println(ms);
+	    System.err.println(DimValIndex.dumpIndexes());
 
 	} catch (Exception e) {
 	    e.printStackTrace();

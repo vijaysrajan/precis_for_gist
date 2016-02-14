@@ -4,9 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FieldObject {
+    public static enum FieldType {
+	DIMENSION, METRIC
+    };
 
+    private FieldType fieldType;
     private int fieldIndex;
     private String fieldName;
+
     private Map<String, MutableInt> map = new HashMap<String, MutableInt>();
 
     public int getFieldIndex() {
@@ -27,6 +32,14 @@ public class FieldObject {
 
     public void setFieldName(String fieldName) {
 	this.fieldName = fieldName;
+    }
+
+    public FieldType getFieldType() {
+	return fieldType;
+    }
+
+    public void setFieldType(FieldType fieldType) {
+	this.fieldType = fieldType;
     }
 
     public int getNumberOfUniques() {
