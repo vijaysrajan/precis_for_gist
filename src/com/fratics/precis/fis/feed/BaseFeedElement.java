@@ -15,16 +15,21 @@ public class BaseFeedElement {
 	b = new BitSet(noOfBits);
     }
 
-    public void and(BitSet b) {
-	this.b.and(b);
+    public BitSet and(BitSet b) {
+	BitSet bs = (BitSet) this.b.clone();
+	bs.and(b);
+	return bs;
     }
 
-    public void or(BitSet b) {
-	this.b.or(b);
-    }
+    public BitSet or(BitSet b) {
+	BitSet bs = (BitSet) this.b.clone();
+	bs.or(b);
+	return bs;   }
 
-    public void xor(BitSet b) {
-	this.b.xor(b);
+    public BitSet xor(BitSet b) {
+	BitSet bs = (BitSet) this.b.clone();
+	bs.xor(b);
+	return bs;
     }
 
     public void addElement(int e) {

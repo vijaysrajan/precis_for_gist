@@ -26,17 +26,17 @@ public class PrecisInputObject extends InputObject {
 	    throw new PrecisException("Schema Not Loaded");
 	// System.err.println("String Array ==> " + Arrays.toString(str));
 	// Load Values to the Value Object.
-	this.setCountPrecis(false);
+	this.countPrecis = false;
 	for (int i = 0; i < fieldObjects.length; i++) {
-	    if (i == this.getMetricIndex())
+	    if (i == this.metricIndex)
 		continue;
 	    index = fieldObjects[i].getSchemaElement().fieldIndex;
 	    if (str[index] == null) {
 		fieldObjects[i].addFieldValueBy(DEF_VALUE,
-			Double.parseDouble(str[this.getMetricIndex()]));
+			Double.parseDouble(str[this.metricIndex]));
 	    } else {
 		fieldObjects[i].addFieldValueBy(str[index].trim(),
-			Double.parseDouble(str[this.getMetricIndex()]));
+			Double.parseDouble(str[this.metricIndex]));
 	    }
 	}
     }

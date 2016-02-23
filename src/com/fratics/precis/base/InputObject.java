@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import com.fratics.precis.base.Schema.SchemaElement;
+import com.fratics.precis.fis.feed.BaseFeedPartitioner;
 
 public abstract class InputObject implements Serializable {
 
@@ -11,26 +12,30 @@ public abstract class InputObject implements Serializable {
     protected int noOfFields = 0;
     private long noOfValues = 0;
     protected FieldObject[] fieldObjects = null;
-    private boolean countPrecis = true;
-
-    public boolean isCountPrecis() {
-	return countPrecis;
+    protected boolean countPrecis = true;
+    protected BaseFeedPartitioner partitioner = null;
+    protected int metricIndex;
+    
+    public BaseFeedPartitioner getPartitioner() {
+        return partitioner;
     }
 
-    public void setCountPrecis(boolean countPrecis) {
-	this.countPrecis = countPrecis;
+    public void setPartitioner(BaseFeedPartitioner partitioner) {
+        this.partitioner = partitioner;
+    }
+    
+    public boolean isCountPrecis(){
+	return this.countPrecis;
+    }
+    
+    public int getMetricIndex(){
+	return this.metricIndex;
     }
 
-    private int metricIndex;
-
-    public int getMetricIndex() {
-	return metricIndex;
-    }
-
-    public void setMetricIndex(int metricIndex) {
+    public void setMetricIndex(int metricIndex){
 	this.metricIndex = metricIndex;
     }
-
+    
     public int getNoOfFields() {
 	return noOfFields;
     }

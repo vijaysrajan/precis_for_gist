@@ -12,8 +12,6 @@ import com.fratics.precis.dimval.DimValIndexBase;
 
 public class BitSetFeed extends PrecisProcessor {
 
-    public BaseFeedPartitioner partitioner = new BaseFeedPartitioner();
-
     private PrecisStream ps = null;
 
     public BitSetFeed(PrecisStream ps) {
@@ -28,7 +26,7 @@ public class BitSetFeed extends PrecisProcessor {
 	return this.ps.unInitialize();
     }
 
-    public void dump() {
+    private void dump(BaseFeedPartitioner partitioner) {
 	try {
 	    PrintWriter pw = new PrintWriter(new File("./data/out.txt"));
 	    pw.append(partitioner.toString());
@@ -40,6 +38,7 @@ public class BitSetFeed extends PrecisProcessor {
     }
 
     public boolean process(ValueObject o) throws Exception {
+	BaseFeedPartitioner partitioner = new BaseFeedPartitioner();
 	String[] str = null;
 	FieldObject[] fi = o.inputObject.getFieldObjects();
 	boolean metricPrecis = !o.inputObject.isCountPrecis();
@@ -69,7 +68,8 @@ public class BitSetFeed extends PrecisProcessor {
 	    if (elementAddedflag)
 		partitioner.addElement(e.getNumberofDimVals(), e);
 	}
-	dump();
+	o.inputObject.setPartitioner(partitioner);
+	dump(partitioner);
 	return true;
     }
 }
