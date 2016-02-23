@@ -1,4 +1,4 @@
-package com.fratics.precis.fis.app;
+package com.fratics.precis.fis.feed;
 
 import java.util.BitSet;
 
@@ -15,18 +15,18 @@ public class Element {
 	b = new BitSet(noOfBits);
     }
 
-    public void and(BitSet b){
+    public void and(BitSet b) {
 	this.b.and(b);
     }
-    
-    public void or(BitSet b){
+
+    public void or(BitSet b) {
 	this.b.or(b);
     }
-    
-    public void xor(BitSet b){
+
+    public void xor(BitSet b) {
 	this.b.xor(b);
     }
-    
+
     public void addElement(int e) {
 	this.b.set(e);
     }

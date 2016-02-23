@@ -6,19 +6,19 @@ import java.util.ArrayList;
 import com.fratics.precis.base.Schema.SchemaElement;
 
 public abstract class InputObject implements Serializable {
-    
+
     private static final long serialVersionUID = -6326248205037370805L;
     protected int noOfFields = 0;
     private long noOfValues = 0;
     protected FieldObject[] fieldObjects = null;
     private boolean countPrecis = true;
-    
+
     public boolean isCountPrecis() {
-        return countPrecis;
+	return countPrecis;
     }
 
     public void setCountPrecis(boolean countPrecis) {
-        this.countPrecis = countPrecis;
+	this.countPrecis = countPrecis;
     }
 
     private int metricIndex;

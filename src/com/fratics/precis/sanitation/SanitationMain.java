@@ -3,7 +3,7 @@ package com.fratics.precis.sanitation;
 import com.fratics.precis.base.PrecisProcessor;
 import com.fratics.precis.base.ValueObject;
 import com.fratics.precis.dimval.DimValIndex;
-import com.fratics.precis.fis.app.BitSetFeed;
+import com.fratics.precis.fis.feed.BitSetFeed;
 import com.fratics.precis.reader.PrecisFileStream;
 import com.fratics.precis.reader.PrecisFileStreamProcessor;
 import com.fratics.precis.schema.PrecisSchemaProcessor;

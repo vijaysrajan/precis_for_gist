@@ -1,4 +1,4 @@
-package com.fratics.precis.fis.app;
+package com.fratics.precis.fis.feed;
 
 import java.util.ArrayList;
 import java.util.HashMap;

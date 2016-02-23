@@ -1,4 +1,4 @@
-package com.fratics.precis.fis.app;
+package com.fratics.precis.fis.feed;
 
 import java.io.File;
 import java.io.PrintWriter;
@@ -58,7 +58,9 @@ public class BitSetFeed extends PrecisProcessor {
 			int index2 = DimValIndex.dimValMap.get(tmpDimVal).get();
 			e.addElement(index1);
 			e.addElement(index2);
-			if(metricPrecis) e.setMetric(Double.parseDouble(str[o.inputObject.getMetricIndex()]));
+			if (metricPrecis)
+			    e.setMetric(Double.parseDouble(str[o.inputObject
+				    .getMetricIndex()]));
 			elementAddedflag = true;
 		    }
 		}
