@@ -45,7 +45,7 @@ public class BitSetFeed extends PrecisProcessor {
 	boolean metricPrecis = !o.inputObject.isCountPrecis();
 	boolean elementAddedflag = false;
 	while ((str = ps.readStream()) != null) {
-	    Element e = new Element(
+	    BaseFeedElement e = new BaseFeedElement(
 		    (int) DimValIndexBase.getDimValBitSetLength());
 	    elementAddedflag = false;
 	    for (int i = 0; i < str.length; i++) {

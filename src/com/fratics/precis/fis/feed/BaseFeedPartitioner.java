@@ -6,14 +6,14 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class BaseFeedPartitioner {
-    public Map<Integer, ArrayList<Element>> partitionMap = new HashMap<Integer, ArrayList<Element>>();
+    public Map<Integer, ArrayList<BaseFeedElement>> partitionMap = new HashMap<Integer, ArrayList<BaseFeedElement>>();
 
-    public void addElement(int index, Element e) {
+    public void addElement(int index, BaseFeedElement e) {
 	if (partitionMap.containsKey(index)) {
 	    partitionMap.get(index).add(e);
 	    return;
 	}
-	ArrayList<Element> al = new ArrayList<Element>();
+	ArrayList<BaseFeedElement> al = new ArrayList<BaseFeedElement>();
 	al.add(e);
 	partitionMap.put(index, al);
     }
@@ -23,7 +23,7 @@ public class BaseFeedPartitioner {
 	Iterator<Integer> i = partitionMap.keySet().iterator();
 	while (i.hasNext()) {
 	    Integer l = i.next();
-	    ArrayList<Element> al = partitionMap.get(l);
+	    ArrayList<BaseFeedElement> al = partitionMap.get(l);
 	    str = str + "PN ==> " + l + ", NS ==> " + al.size() + ", ==> {"
 		    + al.toString() + "}\n";
 	}

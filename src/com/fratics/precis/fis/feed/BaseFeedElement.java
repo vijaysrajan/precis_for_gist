@@ -2,16 +2,16 @@ package com.fratics.precis.fis.feed;
 
 import java.util.BitSet;
 
-public class Element {
+public class BaseFeedElement {
 
     private BitSet b;
     private double metric;
 
-    public Element() {
+    public BaseFeedElement() {
 	b = new BitSet();
     }
 
-    public Element(int noOfBits) {
+    public BaseFeedElement(int noOfBits) {
 	b = new BitSet(noOfBits);
     }
 

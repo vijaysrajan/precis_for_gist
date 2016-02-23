@@ -28,7 +28,7 @@ public class BitSetFeed2 {
 
     private void populateLine(String str) {
 	// parseLine
-	Element el = new Element();
+	BaseFeedElement el = new BaseFeedElement();
 	int beginIndex = str.indexOf('{') + 1;
 	int endIndex = str.indexOf('}');
 	String[] strArray = str.substring(beginIndex, endIndex).split(",");
