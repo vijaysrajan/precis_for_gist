@@ -12,17 +12,17 @@ public class PrecisFileStream extends PrecisStream {
 
     // private static String recordSeperator = Character.toString('\n');
     private static String fieldSeparator = Character.toString('\001');
-    private String fileName = null;
     private BufferedReader br = null;
 
     public PrecisFileStream(String fileName) {
-	this.fileName = fileName;
+	super(fileName);
     }
 
     public boolean initialize() throws Exception {
-	File file = new File(fileName);
+	File file = new File(this.getStreamName());
 	if (!(file.exists() && file.canRead()))
-	    throw new PrecisException("Error Reading file:: " + fileName);
+	    throw new PrecisException("Error Reading file:: "
+		    + this.getStreamName());
 	try {
 	    this.br = new BufferedReader(new FileReader(file));
 	} catch (Exception e) {

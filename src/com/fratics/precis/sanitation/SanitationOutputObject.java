@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.fratics.precis.base.ResultObject;
+import com.fratics.precis.base.OutputObject;
 import com.fratics.precis.sanitation.rules.SingleRuleResult;
 
 class RuleResult {
@@ -36,7 +36,7 @@ class FieldResult {
     }
 }
 
-public class SanitationResultObject extends ResultObject {
+public class SanitationOutputObject extends OutputObject {
     private static final long serialVersionUID = 8259727611192043540L;
     private int numOfFields = 0;
     private FieldResult[] fr = null;

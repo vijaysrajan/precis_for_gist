@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import com.fratics.precis.base.FieldObject;
-import com.fratics.precis.base.MutableInt;
+import com.fratics.precis.base.MutableDouble;
 import com.fratics.precis.base.ValueObject;
 
 public class DimOrMetricRule extends SanitationRuleBase {
@@ -13,13 +13,13 @@ public class DimOrMetricRule extends SanitationRuleBase {
 	long numOfLines = vo.inputObject.getNoOfValues();
 	FieldObject[] fo = vo.inputObject.getFieldObjects();
 	for (int i = 0; i < fo.length; i++) {
-	    Map<String, MutableInt> map = fo[i].getMap();
+	    Map<String, MutableDouble> map = fo[i].getMap();
 	    Iterator<String> it = map.keySet().iterator();
 	    boolean flag = true;
 	    while (it.hasNext()) {
 		String x = it.next();
 		try {
-		    Integer.parseInt(x);
+		    Double.parseDouble(x);
 		} catch (NumberFormatException ne) {
 		    flag = false;
 		    break;

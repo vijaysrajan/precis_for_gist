@@ -2,6 +2,19 @@ package com.fratics.precis.base;
 
 public abstract class PrecisStream extends PrecisBase {
     private long noOfLines = 0;
+    private String streamName = null;
+
+    public PrecisStream(String streamName) {
+	this.streamName = streamName;
+    }
+
+    public String getStreamName() {
+	return streamName;
+    }
+
+    public void setStreamName(String streamName) {
+	this.streamName = streamName;
+    }
 
     public abstract String[] readStream() throws Exception;
 

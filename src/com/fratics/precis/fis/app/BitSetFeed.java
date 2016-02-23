@@ -8,6 +8,7 @@ import com.fratics.precis.base.PrecisProcessor;
 import com.fratics.precis.base.PrecisStream;
 import com.fratics.precis.base.ValueObject;
 import com.fratics.precis.dimval.DimValIndex;
+import com.fratics.precis.dimval.DimValIndexBase;
 
 public class BitSetFeed extends PrecisProcessor {
 
@@ -41,20 +42,23 @@ public class BitSetFeed extends PrecisProcessor {
     public boolean process(ValueObject o) throws Exception {
 	String[] str = null;
 	FieldObject[] fi = o.inputObject.getFieldObjects();
+	boolean metricPrecis = !o.inputObject.isCountPrecis();
 	boolean elementAddedflag = false;
 	while ((str = ps.readStream()) != null) {
-	    Element e = new Element((int) DimValIndex.getDimValBitSetLength());
+	    Element e = new Element(
+		    (int) DimValIndexBase.getDimValBitSetLength());
 	    elementAddedflag = false;
 	    for (int i = 0; i < str.length; i++) {
-		String tmpDim = fi[i].getFieldName();
-		String tmpDimVal = fi[i].getFieldName()
-			+ DimValIndex.dimValDelimiter + str[i];
+		String tmpDim = fi[i].getSchemaElement().fieldName;
+		String tmpDimVal = fi[i].getSchemaElement().fieldName
+			+ DimValIndexBase.dimValDelimiter + str[i];
 		if (DimValIndex.dimMap.containsKey(tmpDim)) {
 		    if (DimValIndex.dimValMap.containsKey(tmpDimVal)) {
 			int index1 = DimValIndex.dimMap.get(tmpDim).get();
 			int index2 = DimValIndex.dimValMap.get(tmpDimVal).get();
 			e.addElement(index1);
 			e.addElement(index2);
+			if(metricPrecis) e.setMetric(Double.parseDouble(str[o.inputObject.getMetricIndex()]));
 			elementAddedflag = true;
 		    }
 		}

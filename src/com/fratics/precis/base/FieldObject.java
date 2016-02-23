@@ -3,43 +3,24 @@ package com.fratics.precis.base;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.fratics.precis.base.Schema.SchemaElement;
+
 public class FieldObject {
-    public static enum FieldType {
-	DIMENSION, METRIC
-    };
 
-    private FieldType fieldType;
-    private int fieldIndex;
-    private String fieldName;
+    private SchemaElement schElement;
 
-    private Map<String, MutableInt> map = new HashMap<String, MutableInt>();
+    private Map<String, MutableDouble> map = new HashMap<String, MutableDouble>();
 
-    public int getFieldIndex() {
-	return fieldIndex;
+    public SchemaElement getSchemaElement() {
+	return schElement;
     }
 
-    public Map<String, MutableInt> getMap() {
+    public Map<String, MutableDouble> getMap() {
 	return map;
     }
 
-    public void setFieldIndex(int fieldIndex) {
-	this.fieldIndex = fieldIndex;
-    }
-
-    public String getFieldName() {
-	return fieldName;
-    }
-
-    public void setFieldName(String fieldName) {
-	this.fieldName = fieldName;
-    }
-
-    public FieldType getFieldType() {
-	return fieldType;
-    }
-
-    public void setFieldType(FieldType fieldType) {
-	this.fieldType = fieldType;
+    public void setSchemaElement(SchemaElement schElement) {
+	this.schElement = schElement;
     }
 
     public int getNumberOfUniques() {
@@ -47,19 +28,29 @@ public class FieldObject {
     }
 
     public void addFieldValue(String key) {
-	MutableInt value = map.get(key);
+	MutableDouble value = map.get(key);
 	if (value == null) {
-	    value = new MutableInt();
+	    value = new MutableDouble();
 	    map.put(key, value);
 	} else {
 	    value.inc();
 	}
     }
 
+    public void addFieldValueBy(String key, double metric) {
+	MutableDouble value = map.get(key);
+	if (value == null) {
+	    value = new MutableDouble(metric);
+	    map.put(key, value);
+	} else {
+	    value.incBy(metric);
+	}
+    }
+
     public String toString() {
-	String str = "fieldName :: " + this.fieldName + " fieldIndex :: "
-		+ this.fieldIndex + " Map Values ==>{ " + this.map.toString()
-		+ " } \n";
+	String str = "fieldName :: " + this.schElement.fieldName
+		+ " fieldIndex :: " + this.schElement.fieldIndex
+		+ " Map Values ==>{ " + this.map.toString() + " } \n";
 	return str;
     }
 

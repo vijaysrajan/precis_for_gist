@@ -1,10 +1,8 @@
-package com.fratics.precis.reader;
-
-import java.util.ArrayList;
-import java.util.List;
+package com.fratics.precis.schema;
 
 import com.fratics.precis.base.PrecisProcessor;
 import com.fratics.precis.base.PrecisStream;
+import com.fratics.precis.base.Schema;
 import com.fratics.precis.base.ValueObject;
 
 public class PrecisSchemaProcessor extends PrecisProcessor {
@@ -24,13 +22,22 @@ public class PrecisSchemaProcessor extends PrecisProcessor {
 
     public boolean process(ValueObject o) throws Exception {
 	String[] str = null;
-	List<String> s = new ArrayList<String>();
+	Schema schema = new Schema();
+	int i = 0;
 	while ((str = ps.readStream()) != null) {
-	    s.add(str[0]);
+	    if (str[3].equalsIgnoreCase("t")) {
+		Schema.FieldType fieldType;
+		if (str[1].equalsIgnoreCase("d")) {
+		    fieldType = Schema.FieldType.DIMENSION;
+		} else {
+		    fieldType = Schema.FieldType.METRIC;
+		    o.inputObject.setMetricIndex(i);
+		}
+		schema.addSchemaElement(str[0], i, fieldType);
+	    }
+	    i++;
 	}
-	str = new String[s.size()];
-	str = (String[]) s.toArray(str);
-	o.inputObject.loadSchema(str);
+	o.inputObject.loadSchema(schema);
 	return false;
     }
 }

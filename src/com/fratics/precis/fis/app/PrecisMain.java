@@ -1,25 +1,23 @@
-package com.fratics.precis.sanitation;
+package com.fratics.precis.fis.app;
 
 import com.fratics.precis.base.PrecisProcessor;
 import com.fratics.precis.base.ValueObject;
 import com.fratics.precis.dimval.DimValIndex;
-import com.fratics.precis.fis.app.BitSetFeed;
 import com.fratics.precis.reader.PrecisFileStream;
 import com.fratics.precis.reader.PrecisFileStreamProcessor;
 import com.fratics.precis.schema.PrecisSchemaProcessor;
 
-public class SanitationMain extends PrecisProcessor {
+public class PrecisMain extends PrecisProcessor {
 
     private PrecisProcessor[] ps = null;
 
-    public SanitationMain(String streamName) {
-	ps = new PrecisProcessor[5];
+    public PrecisMain(String streamName) {
+	ps = new PrecisProcessor[4];
 	ps[0] = new PrecisSchemaProcessor(new PrecisFileStream(
 		"./data/schemaFile"));
 	ps[1] = new PrecisFileStreamProcessor(new PrecisFileStream(streamName));
-	ps[2] = new SanitationRuleProcessor();
-	ps[3] = new DimValIndex(500.0);
-	ps[4] = new BitSetFeed(new PrecisFileStream(streamName));
+	ps[2] = new DimValIndex(36000.0);
+	ps[3] = new BitSetFeed(new PrecisFileStream(streamName));
     }
 
     public boolean initialize() throws Exception {
@@ -60,9 +58,9 @@ public class SanitationMain extends PrecisProcessor {
 	}
 	try {
 	    ValueObject vo = new ValueObject();
-	    vo.inputObject = new SanitationInputObject();
-	    vo.resultObject = new SanitationOutputObject();
-	    SanitationMain sm = new SanitationMain(args[0]);
+	    vo.inputObject = new PrecisInputObject();
+	    vo.resultObject = new PrecisOutputObject();
+	    PrecisMain sm = new PrecisMain(args[0]);
 	    sm.initialize();
 	    sm.process(vo);
 	    sm.unInitialize();
