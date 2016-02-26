@@ -44,7 +44,7 @@ public abstract class InputObject implements Serializable {
     public void addNextCandidateElement(BaseCandidateElement b){
 	if(currCandidateMap.containsKey(b.getBitSet())){
 	    if(currCandidateMap.get(b.getBitSet()).isPassedThreshold()) return;
-	    currCandidateMap.get(b.getBitSet()).incrMetric(b.getMetric());
+	    currCandidateMap.get(b.getBitSet()).incrMetricBy(b.getMetric());
 	    if(currCandidateMap.get(b.getBitSet()).getMetric() >= this.threshold){
 		currCandidateMap.get(b.getBitSet()).setPassedThreshold(true);
 	    }

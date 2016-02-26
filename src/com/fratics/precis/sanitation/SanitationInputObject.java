@@ -3,6 +3,7 @@ package com.fratics.precis.sanitation;
 import java.util.Arrays;
 
 import com.fratics.precis.base.InputObject;
+import com.fratics.precis.dimval.DimValIndex;
 import com.fratics.precis.exception.PrecisException;
 
 public class SanitationInputObject extends InputObject {
@@ -14,8 +15,12 @@ public class SanitationInputObject extends InputObject {
     }
 
     public String toString() {
-	return "No of Records :: " + this.getNoOfValues() + "\n"
-		+ Arrays.toString(fieldObjects) + "\n";
+	return "No of Records :: " + this.getNoOfValues() + "\n" +
+		"Field Objects :: " + Arrays.toString(fieldObjects) + "\n\n" +
+		"Current Candidate Stage :: " + this.currentStage + "\n" + 
+		"Prev Candidates Generated :: " + this.prevCandidateMap.values() + "\n" +
+		"Candidates Generated :: " + this.currCandidateMap.values()  + "\n" + 
+		"DimVal Indexes :: " +  DimValIndex.dumpIndexes() +  "\n";
     }
 
     public void loadInput(Object o) throws Exception {

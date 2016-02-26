@@ -69,7 +69,6 @@ public class PrecisMain extends PrecisProcessor {
 	    sm.unInitialize();
 	    System.err.println(vo);
 	    System.err.println();
-	    System.err.println(DimValIndex.dumpIndexes());
 
 	} catch (Exception e) {
 	    e.printStackTrace();

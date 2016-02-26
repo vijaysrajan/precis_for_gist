@@ -27,13 +27,16 @@ public class Stage2CandidateGenerator extends PrecisProcessor {
     }
 
     private void crossProduct(BaseFeedElement be, BaseCandidateElement [] it){
+	double metric = 0.0;
 	for(int i = 0; i < it.length; i++){
 	    for(int j = i + 1; j < it.length; j++){
 		if(it[i].xor(it[j]).cardinality() == 4){
 		    BitSet b = it[i].or(it[j]);
 		    //System.err.println("it 1 :: " +  it[i] + " it 2 ::"+ it[j] + " b :: " +  b);
 		    if(be.and(b).equals(b)){
-			o.inputObject.addNextCandidateElement(new BaseCandidateElement(b, be.getMetric()));
+			metric = o.inputObject.isCountPrecis() ? 1 : be.getMetric();
+			//System.err.println("it 1 :: " +  it[i] + " it 2 ::"+ it[j] + " b :: " +  b);
+			o.inputObject.addNextCandidateElement(new BaseCandidateElement(b, metric));
 		    }
 		}
 	    }

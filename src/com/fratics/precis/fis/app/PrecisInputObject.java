@@ -3,6 +3,7 @@ package com.fratics.precis.fis.app;
 import java.util.Arrays;
 
 import com.fratics.precis.base.InputObject;
+import com.fratics.precis.dimval.DimValIndex;
 import com.fratics.precis.exception.PrecisException;
 
 public class PrecisInputObject extends InputObject {
@@ -19,7 +20,8 @@ public class PrecisInputObject extends InputObject {
 		"Field Objects :: " + Arrays.toString(fieldObjects) + "\n\n" +
 		"Current Candidate Stage :: " + this.currentStage + "\n" + 
 		"Prev Candidates Generated :: " + this.prevCandidateMap.values() + "\n" +
-		"Candidates Generated :: " + this.currCandidateMap.values()  + "\n\n";
+		"Candidates Generated :: " + this.currCandidateMap.values()  + "\n" + 
+		"DimVal Indexes :: " +  DimValIndex.dumpIndexes() +  "\n";
     }
 
     public void loadInput(Object o) throws Exception {

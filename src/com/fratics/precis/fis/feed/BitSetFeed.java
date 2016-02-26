@@ -80,14 +80,18 @@ public class BitSetFeed extends PrecisProcessor {
 			BaseCandidateElement bce = new BaseCandidateElement((int) DimValIndexBase.getDimValBitSetLength());
 			bce.setBit(index1);
 			bce.setBit(index2);
-			bce.setMetric(metric);
+			if(metricPrecis) 
+			    bce.setMetric(metric);
+			else
+			    bce.setMetric(1.0);
 			o.inputObject.addNextCandidateElement(bce);
 		    }
 		}
 	    }
 	    // e.setMetric(0.0); //for now, we need to change this.
 	    if (elementAddedflag){
-		partitioner.addElement(e.getNumberofDimVals(), e);
+		//System.err.println(e);
+		partitioner.addElement(e.getNumberofDimVals() - 1, e);
 	    }
 	}
 	o.inputObject.setPartitioner(partitioner);

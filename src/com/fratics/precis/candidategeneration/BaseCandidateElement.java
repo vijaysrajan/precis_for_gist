@@ -32,8 +32,11 @@ public class BaseCandidateElement extends BaseFeedElement {
         this.passedThreshold = passedThreshold;
     }
 
+    public void incrMetric(){
+	this.metric++;
+    }
     
-    public void incrMetric(double metric){
+    public void incrMetricBy(double metric){
 	this.metric += metric;
     }
 
