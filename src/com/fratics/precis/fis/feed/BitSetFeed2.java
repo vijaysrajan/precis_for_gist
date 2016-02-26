@@ -24,7 +24,7 @@ import java.io.PrintWriter;
 
 public class BitSetFeed2 {
 
-    public BaseFeedPartitioner partitioner = new BaseFeedPartitioner();
+    public BaseFeedPartitioner partitioner = new BaseFeedPartitioner(25);
 
     private void populateLine(String str) {
 	// parseLine
@@ -33,7 +33,7 @@ public class BitSetFeed2 {
 	int endIndex = str.indexOf('}');
 	String[] strArray = str.substring(beginIndex, endIndex).split(",");
 	for (int i = 0; i < strArray.length; i++) {
-	    el.addElement(Integer.parseInt(strArray[i].trim()));
+	    el.setBit(Integer.parseInt(strArray[i].trim()));
 	}
 	el.setMetric(Double.parseDouble(str.substring(endIndex + 1).trim()));
 	partitioner.addElement(el.getNumberofDimVals(), el);

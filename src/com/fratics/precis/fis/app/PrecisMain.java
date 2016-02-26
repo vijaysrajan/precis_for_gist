@@ -2,6 +2,7 @@ package com.fratics.precis.fis.app;
 
 import com.fratics.precis.base.PrecisProcessor;
 import com.fratics.precis.base.ValueObject;
+import com.fratics.precis.candidategeneration.Stage2CandidateGenerator;
 import com.fratics.precis.dimval.DimValIndex;
 import com.fratics.precis.fis.feed.BitSetFeed;
 import com.fratics.precis.reader.PrecisFileStream;
@@ -13,12 +14,13 @@ public class PrecisMain extends PrecisProcessor {
     private PrecisProcessor[] ps = null;
 
     public PrecisMain(String streamName) {
-	ps = new PrecisProcessor[4];
+	ps = new PrecisProcessor[5];
 	ps[0] = new PrecisSchemaProcessor(new PrecisFileStream(
 		"./data/schemaFile"));
 	ps[1] = new PrecisFileStreamProcessor(new PrecisFileStream(streamName));
 	ps[2] = new DimValIndex(36000.0);
 	ps[3] = new BitSetFeed(new PrecisFileStream(streamName));
+	ps[4] = new Stage2CandidateGenerator();
     }
 
     public boolean initialize() throws Exception {

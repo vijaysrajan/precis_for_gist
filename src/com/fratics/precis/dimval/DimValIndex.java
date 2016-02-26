@@ -19,6 +19,7 @@ public class DimValIndex extends DimValIndexBase {
     public boolean process(ValueObject o) throws Exception {
 	int valIndex = 0;
 	int dimIndex = 0;
+	o.inputObject.setThreshold(this.threshold);
 	FieldObject[] fi = o.inputObject.getFieldObjects();
 	for (int i = 0; i < fi.length; i++) {
 	    Map<String, MutableDouble> map = fi[i].getMap();

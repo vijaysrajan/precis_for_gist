@@ -15,8 +15,11 @@ public class PrecisInputObject extends InputObject {
     }
 
     public String toString() {
-	return "No of Records :: " + this.getNoOfValues() + "\n"
-		+ Arrays.toString(fieldObjects) + "\n";
+	return  "No of Records :: " + this.getNoOfValues() + "\n\n" + 
+		"Field Objects :: " + Arrays.toString(fieldObjects) + "\n\n" +
+		"Current Candidate Stage :: " + this.currentStage + "\n" + 
+		"Prev Candidates Generated :: " + this.prevCandidateMap.values() + "\n" +
+		"Candidates Generated :: " + this.currCandidateMap.values()  + "\n\n";
     }
 
     public void loadInput(Object o) throws Exception {
