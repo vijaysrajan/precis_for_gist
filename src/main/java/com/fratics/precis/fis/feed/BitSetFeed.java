@@ -1,9 +1,5 @@
 package com.fratics.precis.fis.feed;
 
-import java.io.File;
-import java.io.PrintWriter;
-import java.util.BitSet;
-
 import com.fratics.precis.base.FieldObject;
 import com.fratics.precis.base.PrecisProcessor;
 import com.fratics.precis.base.PrecisStream;
@@ -11,12 +7,10 @@ import com.fratics.precis.base.ValueObject;
 import com.fratics.precis.candidategeneration.BaseCandidateElement;
 import com.fratics.precis.dimval.DimValIndex;
 import com.fratics.precis.dimval.DimValIndexBase;
-import com.fratics.precis.util.PrettyPrintingMap;
 
 public class BitSetFeed extends PrecisProcessor {
 
     private PrecisStream ps = null;
-    private ValueObject o;
 
     public BitSetFeed(PrecisStream ps) {
 	this.ps = ps;
@@ -29,24 +23,8 @@ public class BitSetFeed extends PrecisProcessor {
     public boolean unInitialize() throws Exception {
 	return this.ps.unInitialize();
     }
-
-    private void dump(BaseFeedPartitioner partitioner) {
-	try {
-	    PrintWriter pw = new PrintWriter(new File("./data/bitSetFeed.txt"));
-	    pw.append(partitioner.toString());
-	    pw.flush();
-	    pw.close();
-	    pw = new PrintWriter(new File("./data/stage1_candidates.txt"));
-	    pw.append(new PrettyPrintingMap<BitSet, BaseCandidateElement>(o.inputObject.getCurrentCandidateMap()).toString());
-	    pw.flush();
-	    pw.close();
-	} catch (Exception e) {
-	    e.printStackTrace();
-	}
-    }
-
+ 
     public boolean process(ValueObject o) throws Exception {
-	this.o = o;
 	o.inputObject.currentStage = 1;
 	String[] str = null;
 	FieldObject[] fi = o.inputObject.getFieldObjects();
@@ -63,7 +41,7 @@ public class BitSetFeed extends PrecisProcessor {
 	    for (int i = 0; i < str.length; i++) {
 		String tmpDim = fi[i].getSchemaElement().fieldName;
 		String tmpDimVal = fi[i].getSchemaElement().fieldName
-			+ DimValIndexBase.dimValDelimiter + str[i];
+			+ DimValIndexBase.dimValDelimiter + str[fi[i].getSchemaElement().fieldIndex];
 		if (DimValIndex.dimMap.containsKey(tmpDim)) {
 		    if (DimValIndex.dimValMap.containsKey(tmpDimVal)) {
 			int index1 = DimValIndex.dimMap.get(tmpDim).get();
@@ -95,8 +73,8 @@ public class BitSetFeed extends PrecisProcessor {
 	    }
 	}
 	o.inputObject.setPartitioner(partitioner);
-	dump(partitioner);
-	//System.err.println(o);
+	//partitioner.dump();
+	//Util.dump(1, o);
 	return true;
     }
 }

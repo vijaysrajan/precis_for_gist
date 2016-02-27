@@ -3,11 +3,12 @@ package com.fratics.precis.base;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.BitSet;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.TreeMap;
 
 import com.fratics.precis.base.Schema.SchemaElement;
 import com.fratics.precis.candidategeneration.BaseCandidateElement;
+import com.fratics.precis.candidategeneration.BitsComparator;
 import com.fratics.precis.fis.feed.BaseFeedPartitioner;
 
 public abstract class InputObject implements Serializable {
@@ -20,8 +21,8 @@ public abstract class InputObject implements Serializable {
     protected BaseFeedPartitioner partitioner = null;
     protected int metricIndex;
     protected double threshold;
-    protected HashMap<BitSet,BaseCandidateElement> currCandidateMap = new HashMap<BitSet,BaseCandidateElement>();
-    protected HashMap<BitSet,BaseCandidateElement> prevCandidateMap = new HashMap<BitSet,BaseCandidateElement>();
+    protected TreeMap<BitSet,BaseCandidateElement> currCandidateMap = new TreeMap<BitSet,BaseCandidateElement>(new BitsComparator());
+    protected TreeMap<BitSet,BaseCandidateElement> prevCandidateMap = new TreeMap<BitSet,BaseCandidateElement>(new BitsComparator());
     public int currentStage = -1;
     
     
@@ -33,18 +34,18 @@ public abstract class InputObject implements Serializable {
         this.threshold = threshold;
     }
 
-    public HashMap<BitSet,BaseCandidateElement> getCurrentCandidateMap(){
+    public TreeMap<BitSet,BaseCandidateElement> getCurrentCandidateMap(){
 	return currCandidateMap;
     }
     
-    public HashMap<BitSet,BaseCandidateElement> getPrevCandidateMap(){
+    public TreeMap<BitSet,BaseCandidateElement> getPrevCandidateMap(){
 	return prevCandidateMap;
     }
     
     public void addNextCandidateElement(BaseCandidateElement b){
 	if(currCandidateMap.containsKey(b.getBitSet())){
-	    if(currCandidateMap.get(b.getBitSet()).isPassedThreshold()) return;
 	    currCandidateMap.get(b.getBitSet()).incrMetricBy(b.getMetric());
+	    if(currCandidateMap.get(b.getBitSet()).isPassedThreshold()) return;
 	    if(currCandidateMap.get(b.getBitSet()).getMetric() >= this.threshold){
 		currCandidateMap.get(b.getBitSet()).setPassedThreshold(true);
 	    }
@@ -53,9 +54,8 @@ public abstract class InputObject implements Serializable {
 	}
     }
     
-    public void moveToNextStage(){
-	prevCandidateMap = currCandidateMap;
-	Iterator<BaseCandidateElement> it = prevCandidateMap.values().iterator();
+    public void selectSuccessfulCandidates(){
+	Iterator<BaseCandidateElement> it = currCandidateMap.values().iterator();
 	ArrayList<BitSet> al = new ArrayList<BitSet>();
 	while(it.hasNext()){
 	    BaseCandidateElement bce = it.next();
@@ -63,9 +63,13 @@ public abstract class InputObject implements Serializable {
 	}
 	//remove them from candidates
 	for(int i = 0; i < al.size(); i++){
-	    prevCandidateMap.remove(al.get(i));
+	    currCandidateMap.remove(al.get(i));
 	}
-	currCandidateMap = new HashMap<BitSet,BaseCandidateElement>();
+    }
+    
+    public void moveToNextStage(){
+	prevCandidateMap = currCandidateMap;
+	currCandidateMap = new TreeMap<BitSet,BaseCandidateElement>(new BitsComparator());
     }
     
     public BaseFeedPartitioner getPartitioner() {
@@ -116,10 +120,10 @@ public abstract class InputObject implements Serializable {
 	// need to alter loadSchema in case of Metrics.
 	this.noOfFields = sch.getNoOfFields();
 	fieldObjects = new FieldObject[noOfFields];
-	ArrayList<SchemaElement> list = sch.getSchemaList();
+	SchemaElement[] list = sch.getSchemaList().toArray(new SchemaElement[0]);
 	for (int i = 0; i < noOfFields; i++) {
 	    fieldObjects[i] = new FieldObject();
-	    fieldObjects[i].setSchemaElement(list.get(i));
+	    fieldObjects[i].setSchemaElement(list[i]);
 	}
     }
 

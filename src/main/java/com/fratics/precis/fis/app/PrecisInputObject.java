@@ -3,6 +3,7 @@ package com.fratics.precis.fis.app;
 import java.util.Arrays;
 
 import com.fratics.precis.base.InputObject;
+import com.fratics.precis.base.Schema.FieldType;
 import com.fratics.precis.dimval.DimValIndex;
 import com.fratics.precis.exception.PrecisException;
 
@@ -33,8 +34,7 @@ public class PrecisInputObject extends InputObject {
 	// Load Values to the Value Object.
 	this.countPrecis = false;
 	for (int i = 0; i < fieldObjects.length; i++) {
-	    if (i == this.metricIndex)
-		continue;
+	    if (fieldObjects[i].getSchemaElement().fieldType == FieldType.METRIC) continue;
 	    index = fieldObjects[i].getSchemaElement().fieldIndex;
 	    if (str[index] == null) {
 		fieldObjects[i].addFieldValueBy(DEF_VALUE,

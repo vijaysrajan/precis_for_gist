@@ -2,7 +2,7 @@ package com.fratics.precis.sanitation;
 
 import com.fratics.precis.base.PrecisProcessor;
 import com.fratics.precis.base.ValueObject;
-import com.fratics.precis.candidategeneration.Stage2CandidateGenerator;
+import com.fratics.precis.candidategeneration.CandidateGenerator;
 import com.fratics.precis.dimval.DimValIndex;
 import com.fratics.precis.fis.feed.BitSetFeed;
 import com.fratics.precis.reader.PrecisFileStream;
@@ -14,14 +14,17 @@ public class SanitationMain extends PrecisProcessor {
     private PrecisProcessor[] ps = null;
 
     public SanitationMain(String streamName) {
-	ps = new PrecisProcessor[6];
+	ps = new PrecisProcessor[8];
 	ps[0] = new PrecisSchemaProcessor(new PrecisFileStream(
 		"./data/schemaFile"));
 	ps[1] = new PrecisFileStreamProcessor(new PrecisFileStream(streamName));
 	ps[2] = new SanitationRuleProcessor();
 	ps[3] = new DimValIndex(2500.0);
 	ps[4] = new BitSetFeed(new PrecisFileStream(streamName));
-	ps[5] = new Stage2CandidateGenerator();
+	ps[5] = new CandidateGenerator(2);
+	ps[6] = new CandidateGenerator(3);
+	ps[7] = new CandidateGenerator(4);
+
     }
 
     public boolean initialize() throws Exception {
@@ -68,7 +71,7 @@ public class SanitationMain extends PrecisProcessor {
 	    sm.initialize();
 	    sm.process(vo);
 	    sm.unInitialize();
-	    System.err.println(vo);
+	    //System.err.println(vo);
 	    System.err.println();
 
 	} catch (Exception e) {

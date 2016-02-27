@@ -23,6 +23,7 @@ import com.fratics.precis.base.PrecisProcessor;
 
 public abstract class DimValIndexBase extends PrecisProcessor {
     public static String dimValDelimiter = Character.toString('\002'); // ^B
+    public static String dimDelimiter = Character.toString('\001'); //^A
     public static Map<String, MutableInt> dimMap = new TreeMap<String, MutableInt>();
     public static Map<MutableInt, String> revDimMap = new TreeMap<MutableInt, String>();
     public static Map<String, MutableInt> dimValMap = new TreeMap<String, MutableInt>();

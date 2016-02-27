@@ -1,5 +1,7 @@
 package com.fratics.precis.fis.feed;
 
+import java.io.File;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class BaseFeedPartitioner {
@@ -13,7 +15,7 @@ public class BaseFeedPartitioner {
 	private int currentIndex = 0;
 	
 	public BaseFeedPartitionerReader(int stage){
-	    this.currentStage = stage;
+	    this.currentStage = stage - 1; //index starts from "0".
 	    this.currentIndex = 0;
 	    while(this.currentStage < partitionMap.length && partitionMap[this.currentStage].size() == 0) this.currentStage++;
 	}
@@ -62,6 +64,17 @@ public class BaseFeedPartitioner {
     public void closeReader(){
 	bfpr = null;
     }
+    
+    public void dump() {
+ 	try {
+ 	    PrintWriter pw = new PrintWriter(new File("./data/bitSetFeed.txt"));
+ 	    pw.append(this.toString());
+ 	    pw.flush();
+ 	    pw.close();
+ 	} catch (Exception e) {
+ 	    e.printStackTrace();
+ 	}
+     }
 
     public String toString() {
 	String str = "";

@@ -1,6 +1,6 @@
 package com.fratics.precis.base;
 
-import java.util.ArrayList;
+import java.util.TreeSet;
 
 public class Schema {
 
@@ -8,7 +8,7 @@ public class Schema {
 	DIMENSION, METRIC, INVALID
     };
 
-    public class SchemaElement {
+    public class SchemaElement implements Comparable<SchemaElement> {
 	public SchemaElement(String fieldName, int fieldIndex,
 		FieldType fieldType) {
 	    this.fieldName = fieldName;
@@ -19,9 +19,13 @@ public class Schema {
 	public String fieldName;
 	public int fieldIndex;
 	public FieldType fieldType;
+	
+	public int compareTo(SchemaElement o) {
+	    return this.fieldName.compareTo(o.fieldName);
+	}
     };
 
-    private ArrayList<SchemaElement> list = new ArrayList<SchemaElement>();
+    private TreeSet<SchemaElement> list = new TreeSet<SchemaElement>();
 
     public int getNoOfFields() {
 	return list.size();
@@ -36,7 +40,7 @@ public class Schema {
 	list.add(e);
     }
 
-    public ArrayList<SchemaElement> getSchemaList() {
+    public TreeSet<SchemaElement> getSchemaList() {
 	return list;
     }
 }
