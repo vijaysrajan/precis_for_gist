@@ -45,8 +45,8 @@ public class BitSetFeed extends PrecisProcessor {
 			+ DimValIndexBase.dimValDelimiter + str[fi[i].getSchemaElement().fieldIndex];
 		if (DimValIndex.dimMap.containsKey(tmpDim)) {
 		    if (DimValIndex.dimValMap.containsKey(tmpDimVal)) {
-			int index1 = DimValIndex.dimMap.get(tmpDim).get();
-			int index2 = DimValIndex.dimValMap.get(tmpDimVal).get();
+			int index1 = DimValIndex.dimMap.get(tmpDim);
+			int index2 = DimValIndex.dimValMap.get(tmpDimVal);
 			e.setBit(index1);
 			e.setBit(index2);
 			elementAddedflag = true;

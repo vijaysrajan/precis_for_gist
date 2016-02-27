@@ -18,7 +18,7 @@ public class PrecisMain extends PrecisProcessor {
 	ps[0] = new PrecisSchemaProcessor(new PrecisFileStream(
 		"./data/schemaFile"));
 	ps[1] = new PrecisFileStreamProcessor(new PrecisFileStream(streamName));
-	ps[2] = new DimValIndex(10000.0);
+	ps[2] = new DimValIndex(36000.0);
 	ps[3] = new BitSetFeed(new PrecisFileStream(streamName));
 	ps[4] = new CandidateGenerator(2);
 	ps[5] = new CandidateGenerator(3);

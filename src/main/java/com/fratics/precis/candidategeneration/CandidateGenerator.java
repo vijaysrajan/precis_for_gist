@@ -72,7 +72,7 @@ public class CandidateGenerator extends PrecisProcessor {
 	//System.err.println(o.inputObject.getCurrentCandidateMap());
 	o.inputObject.selectSuccessfulCandidates();
 	bp.closeReader();
-	//Util.dump(currStage,o);
+	Util.dump(currStage,o);
 	return true;
     }
 }

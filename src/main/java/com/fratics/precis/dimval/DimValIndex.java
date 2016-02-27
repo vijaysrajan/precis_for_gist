@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.fratics.precis.base.FieldObject;
 import com.fratics.precis.base.MutableDouble;
-import com.fratics.precis.base.MutableInt;
 import com.fratics.precis.base.ValueObject;
 
 public class DimValIndex extends DimValIndexBase {
@@ -30,8 +29,8 @@ public class DimValIndex extends DimValIndexBase {
 		if (val.get() >= threshold) {
 		    if (!dimMap.containsKey(fi[i].getSchemaElement().fieldName)) {
 			dimMap.put(fi[i].getSchemaElement().fieldName,
-				new MutableInt(dimIndex));
-			revDimMap.put(new MutableInt(dimIndex),
+				dimIndex);
+			revDimMap.put(dimIndex,
 				fi[i].getSchemaElement().fieldName);
 			dimIndex++;
 		    }
@@ -39,8 +38,8 @@ public class DimValIndex extends DimValIndexBase {
 			    .containsKey(fi[i].getSchemaElement().fieldName
 				    + dimValDelimiter + key)) {
 			dimValMap.put(fi[i].getSchemaElement().fieldName
-				+ dimValDelimiter + key, new MutableInt(
-				valIndex));
+				+ dimValDelimiter + key, 
+				valIndex);
 			valIndex++;
 		    }
 		}
@@ -51,8 +50,8 @@ public class DimValIndex extends DimValIndexBase {
 	Iterator<String> it = dimValMap.keySet().iterator();
 	while (it.hasNext()) {
 	    String key = it.next();
-	    MutableInt m = dimValMap.get(key);
-	    m.incBy(inc);
+	    Integer m = dimValMap.get(key);
+	    m += inc;
 	    dimValMap.put(key, m);
 	    revDimValMap.put(m, key);
 	}
