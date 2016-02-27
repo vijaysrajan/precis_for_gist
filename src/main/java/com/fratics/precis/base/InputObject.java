@@ -45,12 +45,13 @@ public abstract class InputObject implements Serializable {
     public void addNextCandidateElement(BaseCandidateElement b){
 	if(currCandidateMap.containsKey(b.getBitSet())){
 	    currCandidateMap.get(b.getBitSet()).incrMetricBy(b.getMetric());
-	    if(currCandidateMap.get(b.getBitSet()).isPassedThreshold()) return;
-	    if(currCandidateMap.get(b.getBitSet()).getMetric() >= this.threshold){
-		currCandidateMap.get(b.getBitSet()).setPassedThreshold(true);
-	    }
 	}else{
 	    currCandidateMap.put(b.getBitSet(), b);
+	}
+	//Now set the threshold passing.
+	if(currCandidateMap.get(b.getBitSet()).isPassedThreshold()) return;
+	if(currCandidateMap.get(b.getBitSet()).getMetric() >= this.threshold){
+	    currCandidateMap.get(b.getBitSet()).setPassedThreshold(true);
 	}
     }
     

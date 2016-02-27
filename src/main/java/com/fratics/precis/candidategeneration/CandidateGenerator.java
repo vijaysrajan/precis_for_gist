@@ -68,9 +68,11 @@ public class CandidateGenerator extends PrecisProcessor {
 	    //System.err.println(be);
 	    crossProduct(be, it);
 	}
+	//System.err.println("Size Before pruning ::" + o.inputObject.getCurrentCandidateMap().size());
+	//System.err.println(o.inputObject.getCurrentCandidateMap());
 	o.inputObject.selectSuccessfulCandidates();
 	bp.closeReader();
-	Util.dump(currStage,o);
+	//Util.dump(currStage,o);
 	return true;
     }
 }

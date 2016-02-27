@@ -14,11 +14,11 @@ public class PrecisMain extends PrecisProcessor {
     private PrecisProcessor[] ps = null;
 
     public PrecisMain(String streamName) {
-	ps = new PrecisProcessor[11];
+	ps = new PrecisProcessor[23];
 	ps[0] = new PrecisSchemaProcessor(new PrecisFileStream(
 		"./data/schemaFile"));
 	ps[1] = new PrecisFileStreamProcessor(new PrecisFileStream(streamName));
-	ps[2] = new DimValIndex(36000.0);
+	ps[2] = new DimValIndex(10000.0);
 	ps[3] = new BitSetFeed(new PrecisFileStream(streamName));
 	ps[4] = new CandidateGenerator(2);
 	ps[5] = new CandidateGenerator(3);
@@ -27,6 +27,18 @@ public class PrecisMain extends PrecisProcessor {
 	ps[8] = new CandidateGenerator(6);
 	ps[9] = new CandidateGenerator(7);
 	ps[10] = new CandidateGenerator(8);
+	ps[11] = new CandidateGenerator(9);
+	ps[12] = new CandidateGenerator(10);
+	ps[13] = new CandidateGenerator(11);
+	ps[14] = new CandidateGenerator(12);
+	ps[15] = new CandidateGenerator(13);
+	ps[16] = new CandidateGenerator(14);
+	ps[17] = new CandidateGenerator(15);
+	ps[18] = new CandidateGenerator(16);
+	ps[19] = new CandidateGenerator(17);
+	ps[20] = new CandidateGenerator(18);
+	ps[21] = new CandidateGenerator(19);
+	ps[22] = new CandidateGenerator(20);
 	
     }
 
