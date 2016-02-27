@@ -7,6 +7,7 @@ import com.fratics.precis.base.ValueObject;
 import com.fratics.precis.candidategeneration.BaseCandidateElement;
 import com.fratics.precis.dimval.DimValIndex;
 import com.fratics.precis.dimval.DimValIndexBase;
+import com.fratics.precis.util.Util;
 
 public class BitSetFeed extends PrecisProcessor {
 
@@ -73,8 +74,8 @@ public class BitSetFeed extends PrecisProcessor {
 	    }
 	}
 	o.inputObject.setPartitioner(partitioner);
-	//partitioner.dump();
-	//Util.dump(1, o);
+	partitioner.dump();
+	Util.dump(1, o);
 	return true;
     }
 }

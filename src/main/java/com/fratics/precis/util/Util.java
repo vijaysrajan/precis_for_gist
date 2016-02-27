@@ -44,13 +44,11 @@ public class Util {
     public static void dump(int currStage, ValueObject o) {
  	try {
  	    PrintWriter pw = new PrintWriter(new File("./data/stage" + currStage + "_candidates.txt"));
- 	    //pw.append(new PrettyPrintingMap<BitSet, BaseCandidateElement>(o.inputObject.getCurrentCandidateMap()).toString());
  	    pw.append(formatCandidates(currStage, o.inputObject.getCurrentCandidateMap()));
  	    pw.flush();
  	    pw.close();
 	    pw = new PrintWriter(new File("./data/stage" + currStage + "_raw_candidates.txt"));
  	    pw.append(new PrettyPrintingMap<BitSet, BaseCandidateElement>(o.inputObject.getCurrentCandidateMap()).toString());
- 	    //pw.append(formatCandidates(currStage, o.inputObject.getCurrentCandidateMap()));
  	    pw.flush();
  	    pw.close();
  	} catch (Exception e) {

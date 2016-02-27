@@ -7,6 +7,7 @@ import com.fratics.precis.base.ValueObject;
 import com.fratics.precis.fis.feed.BaseFeedElement;
 import com.fratics.precis.fis.feed.BaseFeedPartitioner;
 import com.fratics.precis.fis.feed.BaseFeedPartitioner.BaseFeedPartitionerReader;
+import com.fratics.precis.util.Util;
 
 public class CandidateGenerator extends PrecisProcessor {
     private int currStage = 2;
@@ -69,7 +70,7 @@ public class CandidateGenerator extends PrecisProcessor {
 	}
 	o.inputObject.selectSuccessfulCandidates();
 	bp.closeReader();
-	//Util.dump(currStage,o);
+	Util.dump(currStage,o);
 	return true;
     }
 }

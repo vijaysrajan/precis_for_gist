@@ -26,10 +26,7 @@ public class SanitationInputObject extends InputObject {
     public void loadInput(Object o) throws Exception {
 	int index = 0;
 	String[] str = (String[]) o;
-	if (!this.isInitialized())
-	    throw new PrecisException("Schema Not Loaded");
-	// System.err.println("String Array ==> " + Arrays.toString(str));
-	// Load Values to the Value Object.
+	if (!this.isInitialized()) throw new PrecisException("Schema Not Loaded");
 	for (int i = 0; i < fieldObjects.length; i++) {
 	    index = fieldObjects[i].getSchemaElement().fieldIndex;
 	    if (str[index] == null) {
