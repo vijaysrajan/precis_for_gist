@@ -26,7 +26,6 @@ public class MutableDouble implements Comparable<MutableDouble> {
 	return "" + value;
     }
 
-    @Override
     public int compareTo(MutableDouble o) {
 	return (int) ((this.value - o.value) * 100);
     }

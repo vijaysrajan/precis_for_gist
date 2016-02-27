@@ -26,7 +26,6 @@ public class MutableInt implements Comparable<MutableInt> {
 	return "" + value;
     }
 
-    @Override
     public int compareTo(MutableInt o) {
 	return this.value - o.value;
     }
