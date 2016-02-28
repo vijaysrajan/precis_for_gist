@@ -3,16 +3,20 @@ package com.fratics.precis.candidategeneration;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import com.fratics.precis.base.PrecisProcessor;
 import com.fratics.precis.base.ValueObject;
 import com.fratics.precis.dimval.DimValIndex;
+import com.fratics.precis.fis.feed.BaseFeedElement;
 import com.fratics.precis.fis.feed.BaseFeedPartitioner;
+import com.fratics.precis.fis.feed.BaseFeedPartitioner.BaseFeedPartitionerReader;
 
 public class NewCandidateGeneratorSTGTK2 extends PrecisProcessor {
     private int currStage = 2;
     private ValueObject o;
-    private HashMap<BitSet, ArrayList<BitSet>> cdParttion; 
+    private HashMap<BitSet, ArrayList<BaseCandidateElement>> cdParttion; 
+    private HashSet<BitSet> cdSet;
     
     public boolean isPresent(BitSet bs1) {
 
@@ -36,15 +40,15 @@ public class NewCandidateGeneratorSTGTK2 extends PrecisProcessor {
  	    bs1.clear(dimIndex);
  	    bs1.clear(valIndex);
 
- 	    if (cdParttion.containsKey(bs1)) {
- 		System.out.println("--->BS present:" + bs1.toString());
+ 	    if (cdSet.contains(bs1)) {
+ 		
+ 		//System.out.println("--->BS present:" + bs1.toString());
  		bs1.set(dimIndex);
  		bs1.set(valIndex);
  	    } else {
  		result = false;
- 		System.out.println("dimIndex=" + dimIndex + "; metIndex="
- 			+ valIndex);
- 		System.out.println("BS Not present::" + bs1.toString());
+ 		//System.out.println("dimIndex=" + dimIndex + "; metIndex="+ valIndex);
+ 		//System.out.println("BS Not present::" + bs1.toString());
  		bs1.set(dimIndex);
  		bs1.set(valIndex);
  		break;
@@ -61,25 +65,22 @@ public class NewCandidateGeneratorSTGTK2 extends PrecisProcessor {
 	BitSet allOneBS2 = new BitSet(size);
 	allOneBS2.flip(0, size-1);
 
-	for (ArrayList<BitSet> bsList : cdParttion.values()) {
+	for (ArrayList<BaseCandidateElement> bsList : cdParttion.values()) {
 	    for (int i = 0; i < bsList.size() - 1; i++) {
-		allOneBS1.and(bsList.get(i));
+		allOneBS1.and(bsList.get(i).getBitSet());
 		for (int j = i + 1; j < bsList.size(); j++) {
-		    allOneBS1.xor(bsList.get(j));
+		    allOneBS1.xor(bsList.get(j).getBitSet());
 		    if (allOneBS1.cardinality() == 4) {
-			BitSet newCand = (BitSet) bsList.get(i).clone();
-			System.out.println("2 Sets --> ::" + bsList.get(i) + " " + bsList.get(j));
-			System.out.println("New Candidate::"
-				+ newCand.toString());
-			newCand.or(bsList.get(j));
-			System.out.println("New Candidate to test::"
-				+ newCand.toString());
+			BitSet newCand = (BitSet) bsList.get(i).getBitSet().clone();
+			newCand.or(bsList.get(j).getBitSet());
 			if (isPresent(newCand)) {
 			    o.inputObject.addCandidate(newCand);
 			}
-
 		    }
+		    allOneBS1.or(allOneBS2);
+		    allOneBS1.and(bsList.get(i).getBitSet());
 		}
+		allOneBS1.or(allOneBS2);
 	    }
 	}
     }
@@ -90,29 +91,37 @@ public class NewCandidateGeneratorSTGTK2 extends PrecisProcessor {
     
     public boolean process(ValueObject o) throws Exception {
 	this.o = o;
-	cdParttion = o.inputObject.prevCandidateSet;
+	cdParttion = o.inputObject.prevCandidatePart;
+	cdSet = o.inputObject.prevCandidateSet;
 	o.inputObject.currentStage = currStage;
 	o.inputObject.moveToNextStage();
 	BaseFeedPartitioner bp = o.inputObject.getPartitioner();
 	BaseCandidateElement [] it = (BaseCandidateElement []) o.inputObject.getPrevCandidateMap().values().toArray(new BaseCandidateElement[0]);
 	System.err.println("Current Stage ::" + this.currStage);
-	System.err.println("Lenght of Prev Candidates ::" + o.inputObject.prevCandidateSet.size());
+	System.err.println("No of Candidates from Previous Stage ::" + o.inputObject.prevCandidateSet.size());
 	bp.initReader(this.currStage);
 	crossProduct();
-	System.err.println("No of Candidates ::" + o.inputObject.currCandidateSet.size());
+	System.err.println("No of Candidates Before Applying Threshold::" + o.inputObject.currCandidateSet.size());
+	BaseFeedPartitionerReader bpr = bp.getReader();
+	boolean countPrecis = o.inputObject.isCountPrecis();
+	while(bpr.hasNext()){
+	    BaseFeedElement be = bpr.getNext();
+	    //System.err.println(be);
+	    for(ArrayList<BaseCandidateElement> al : o.inputObject.currCandidatePart.values()){
+		for(BaseCandidateElement bce : al){
+		    if(bce.and(be.getBitSet()).equals(bce.getBitSet())){
+			if(countPrecis)
+			    bce.incrMetric();
+        		else
+        		    bce.incrMetricBy(be.getMetric());
+		    }
+		}
+	    }
+	}
+	bp.closeReader();
+	o.inputObject.applyThreshold();
+	System.err.println("No of Candidates After Applying Threshold::" + o.inputObject.currCandidateSet.size());
 	o.inputObject.moveTo();
-	
-//	BaseFeedPartitionerReader bpr = bp.getReader();
-//	while(bpr.hasNext()){
-//	    BaseFeedElement be = bpr.getNext();
-//	    //System.err.println(be);
-//	    crossProduct(be, it);
-//	}
-//	//System.err.println("Size Before pruning ::" + o.inputObject.getCurrentCandidateMap().size());
-//	//System.err.println(o.inputObject.getCurrentCandidateMap());
-//	o.inputObject.selectSuccessfulCandidates();
-//	bp.closeReader();
-//	Util.dump(currStage,o);
 	return true;
     }
 }

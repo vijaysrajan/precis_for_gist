@@ -1,18 +1,20 @@
 package com.fratics.precis.candidategeneration;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.BitSet;
 
 import com.fratics.precis.base.PrecisProcessor;
 import com.fratics.precis.base.ValueObject;
+import com.fratics.precis.fis.feed.BaseFeedElement;
 import com.fratics.precis.fis.feed.BaseFeedPartitioner;
+import com.fratics.precis.fis.feed.BaseFeedPartitioner.BaseFeedPartitionerReader;
 
 public class NewCandidateGeneratorStage2 extends PrecisProcessor {
     private int currStage = 2;
     private ValueObject o;
     
     private void crossProduct(BaseCandidateElement [] it){
-	double metric = 0.0;
 	for(int i = 0; i < it.length; i++){
 	    for(int j = i + 1; j < it.length; j++){
 		if(it[i].xor(it[j]).cardinality() == 4){
@@ -33,22 +35,30 @@ public class NewCandidateGeneratorStage2 extends PrecisProcessor {
 	BaseFeedPartitioner bp = o.inputObject.getPartitioner();
 	BaseCandidateElement [] it = (BaseCandidateElement []) o.inputObject.getPrevCandidateMap().values().toArray(new BaseCandidateElement[0]);
 	System.err.println("Current Stage ::" + this.currStage);
-	System.err.println("Lenght of Prev Candidates ::" + it.length + " values ::" + Arrays.toString(it));
+	System.err.println("No of Candidates from Previous Stage ::" + it.length);
 	bp.initReader(this.currStage);
 	crossProduct(it);
-	System.err.println("No of Candidates ::" + o.inputObject.currCandidateSet.size() + " values:: " + o.inputObject.currCandidateSet);
+	System.err.println("No of Candidates Before Applying Threshold::" + o.inputObject.currCandidateSet.size());
+	BaseFeedPartitionerReader bpr = bp.getReader();
+	boolean countPrecis = o.inputObject.isCountPrecis();
+	while(bpr.hasNext()){
+	    BaseFeedElement be = bpr.getNext();
+	    //System.err.println(be);
+	    for(ArrayList<BaseCandidateElement> al : o.inputObject.currCandidatePart.values()){
+		for(BaseCandidateElement bce : al){
+		    if(bce.and(be.getBitSet()).equals(bce.getBitSet())){
+			if(countPrecis)
+			    bce.incrMetric();
+        		else
+        		    bce.incrMetricBy(be.getMetric());
+		    }
+		}
+	    }
+	}
+	bp.closeReader();
+	o.inputObject.applyThreshold();
+	System.err.println("No of Candidates After Applying Threshold::" + o.inputObject.currCandidateSet.size());
 	o.inputObject.moveTo();
-//	BaseFeedPartitionerReader bpr = bp.getReader();
-//	while(bpr.hasNext()){
-//	    BaseFeedElement be = bpr.getNext();
-//	    Iterator<ArrayList<BitSet>> itbs = o.inputObject.currCandidateSet.values().iterator();
-//	}
-//	
-//	//System.err.println("Size Before pruning ::" + o.inputObject.getCurrentCandidateMap().size());
-//	//System.err.println(o.inputObject.getCurrentCandidateMap());
-//	//o.inputObject.selectSuccessfulCandidates();
-//	bp.closeReader();
-//	Util.dump(currStage,o);
 	return true;
     }
 }

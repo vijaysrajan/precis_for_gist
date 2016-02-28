@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.TreeMap;
 
@@ -25,8 +26,11 @@ public abstract class InputObject implements Serializable {
     protected double threshold;
     protected TreeMap<BitSet,BaseCandidateElement> currCandidateMap = new TreeMap<BitSet,BaseCandidateElement>(new BitsComparator());
     protected TreeMap<BitSet,BaseCandidateElement> prevCandidateMap = new TreeMap<BitSet,BaseCandidateElement>(new BitsComparator());
-    public HashMap<BitSet, ArrayList<BitSet>> currCandidateSet = new HashMap<BitSet, ArrayList<BitSet>>();
-    public HashMap<BitSet, ArrayList<BitSet>> prevCandidateSet = new HashMap<BitSet, ArrayList<BitSet>>();
+    public HashMap<BitSet, ArrayList<BaseCandidateElement>> currCandidatePart = new HashMap<BitSet, ArrayList<BaseCandidateElement>>();
+    public HashMap<BitSet, ArrayList<BaseCandidateElement>> prevCandidatePart = new HashMap<BitSet, ArrayList<BaseCandidateElement>>();
+    public HashSet<BitSet> currCandidateSet = new HashSet<BitSet>();
+    public HashSet<BitSet> prevCandidateSet = new HashSet<BitSet>();
+    
     
     public int currentStage = -1;
     
@@ -50,23 +54,21 @@ public abstract class InputObject implements Serializable {
     public void addCandidate(BitSet b){
 	int dimSetBit = b.previousSetBit(DimValIndex.dimMap.size() - 1);
 	int valSetBit = b.previousSetBit(DimValIndex.dimMap.size() + DimValIndex.dimValMap.size() - 1);
-	
 	BitSet tmp = (BitSet)b.clone();
 	tmp.clear(dimSetBit);
 	tmp.clear(valSetBit);
 	//System.err.println("Dim Set Map Size :: " +  (DimValIndex.dimMap.size() - 1)  + " Value Set Map Size ::" + (DimValIndex.dimMap.size() + DimValIndex.dimValMap.size() - 1));
 	//System.err.println("Dim Bit Set to Clear :: " +  dimSetBit + " Value Set Bit to Clear ::" + valSetBit);
 	//System.err.println("Original Set" +  b + " Candidate ::" + tmp);
-	if(currCandidateSet.containsKey(tmp)){
-	   currCandidateSet.get(tmp).add(b);
+	if(currCandidatePart.containsKey(tmp)){
+	    currCandidatePart.get(tmp).add(new BaseCandidateElement(b, 0.0));
 	}else{
-	    ArrayList<BitSet> al = new ArrayList<BitSet>();
-	    al.add(b);
-	    currCandidateSet.put(tmp, al);
+	    ArrayList<BaseCandidateElement> al = new ArrayList<BaseCandidateElement>();
+	    al.add( new BaseCandidateElement(b,0.0));
+	    currCandidatePart.put(tmp, al);
 	}
+	currCandidateSet.add(b);
     }
-    
-    
     
     public void addNextCandidateElement(BaseCandidateElement b){
 	if(currCandidateMap.containsKey(b.getBitSet())){
@@ -77,11 +79,24 @@ public abstract class InputObject implements Serializable {
     }
     
     public void moveTo(){
+	prevCandidatePart = currCandidatePart;
+	currCandidatePart = new HashMap<BitSet,ArrayList<BaseCandidateElement>>();
 	prevCandidateSet = currCandidateSet;
-	currCandidateSet = new HashMap<BitSet,ArrayList<BitSet>>();
+	currCandidateSet = new HashSet<BitSet>();
     }
     
-    
+    public void applyThreshold(){
+	for(ArrayList<BaseCandidateElement> al : this.currCandidatePart.values()){
+	    ArrayList<BaseCandidateElement> removeList = new ArrayList<BaseCandidateElement>();
+	    for(BaseCandidateElement bce : al){
+		if(bce.getMetric() < this.threshold) removeList.add(bce);
+	    }
+	    for(BaseCandidateElement bce : removeList){
+		al.remove(bce);
+		this.currCandidateSet.remove(bce.getBitSet());
+	    }
+	}
+    }
     
     public void selectSuccessfulCandidates(){
 	Iterator<BaseCandidateElement> it = currCandidateMap.values().iterator();
