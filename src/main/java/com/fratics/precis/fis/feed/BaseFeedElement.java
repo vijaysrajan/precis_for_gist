@@ -16,11 +16,11 @@ public class BaseFeedElement {
     }
 
     public BitSet getBitSet() {
-        return b;
+	return b;
     }
 
     public void setBitSet(BitSet b) {
-        this.b = b;
+	this.b = b;
     }
 
     public BitSet and(BaseFeedElement b) {
@@ -32,7 +32,7 @@ public class BaseFeedElement {
     public BitSet or(BaseFeedElement b) {
 	BitSet bs = (BitSet) this.b.clone();
 	bs.or(b.getBitSet());
-	return bs;   
+	return bs;
     }
 
     public BitSet xor(BaseFeedElement b) {
@@ -50,7 +50,8 @@ public class BaseFeedElement {
     public BitSet or(BitSet b) {
 	BitSet bs = (BitSet) this.b.clone();
 	bs.or(b);
-	return bs;   }
+	return bs;
+    }
 
     public BitSet xor(BitSet b) {
 	BitSet bs = (BitSet) this.b.clone();
@@ -58,7 +59,6 @@ public class BaseFeedElement {
 	return bs;
     }
 
-    
     public void setBit(int e) {
 	this.b.set(e);
     }
@@ -66,7 +66,7 @@ public class BaseFeedElement {
     public void setMetric(double metric) {
 	this.metric = metric;
     }
-    
+
     public double getMetric() {
 	return metric;
     }

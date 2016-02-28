@@ -2,8 +2,8 @@ package com.fratics.precis.fis.app;
 
 import com.fratics.precis.base.PrecisProcessor;
 import com.fratics.precis.base.ValueObject;
-import com.fratics.precis.candidategeneration.NewCandidateGeneratorSTGTK2;
-import com.fratics.precis.candidategeneration.NewCandidateGeneratorStage2;
+import com.fratics.precis.candidategeneration.CandidateGeneratorStage2;
+import com.fratics.precis.candidategeneration.CandidateGeneratorStg3Onwards;
 import com.fratics.precis.dimval.DimValIndex;
 import com.fratics.precis.fis.feed.BitSetFeed;
 import com.fratics.precis.reader.PrecisFileStream;
@@ -15,20 +15,33 @@ public class PrecisMain extends PrecisProcessor {
     private PrecisProcessor[] ps = null;
 
     public PrecisMain(String streamName) {
-	ps = new PrecisProcessor[11];
+	ps = new PrecisProcessor[23];
 	ps[0] = new PrecisSchemaProcessor(new PrecisFileStream(
 		"./data/schemaFile"));
 	ps[1] = new PrecisFileStreamProcessor(new PrecisFileStream(streamName));
 	ps[2] = new DimValIndex(1000.0);
 	ps[3] = new BitSetFeed(new PrecisFileStream(streamName));
-	ps[4] = new NewCandidateGeneratorStage2(2);
-	ps[5] = new NewCandidateGeneratorSTGTK2(3);
-	ps[6] = new NewCandidateGeneratorSTGTK2(4);
-	ps[7] = new NewCandidateGeneratorSTGTK2(5);
-	ps[8] = new NewCandidateGeneratorSTGTK2(6);
-	ps[9] = new NewCandidateGeneratorSTGTK2(7);
-	ps[10] = new NewCandidateGeneratorSTGTK2(8);
-	
+	ps[4] = new CandidateGeneratorStage2(2);
+	ps[5] = new CandidateGeneratorStg3Onwards(3);
+	ps[6] = new CandidateGeneratorStg3Onwards(4);
+	ps[7] = new CandidateGeneratorStg3Onwards(5);
+	ps[8] = new CandidateGeneratorStg3Onwards(6);
+	ps[9] = new CandidateGeneratorStg3Onwards(7);
+	ps[10] = new CandidateGeneratorStg3Onwards(8);
+	ps[11] = new CandidateGeneratorStg3Onwards(9);
+	ps[12] = new CandidateGeneratorStg3Onwards(10);
+	ps[13] = new CandidateGeneratorStg3Onwards(11);
+	ps[14] = new CandidateGeneratorStg3Onwards(12);
+	ps[15] = new CandidateGeneratorStg3Onwards(13);
+	ps[16] = new CandidateGeneratorStg3Onwards(14);
+	ps[17] = new CandidateGeneratorStg3Onwards(15);
+	ps[18] = new CandidateGeneratorStg3Onwards(16);
+	ps[19] = new CandidateGeneratorStg3Onwards(17);
+	ps[20] = new CandidateGeneratorStg3Onwards(18);
+	ps[21] = new CandidateGeneratorStg3Onwards(19);
+	ps[22] = new CandidateGeneratorStg3Onwards(20);
+
+
     }
 
     public boolean initialize() throws Exception {
@@ -47,8 +60,9 @@ public class PrecisMain extends PrecisProcessor {
     public boolean process(ValueObject o) throws Exception {
 	// Initialize & run the various Processors in sequence on the Value
 	// Object
-	for (int i = 0; i < ps.length; i++){
-	    System.err.println("Executing Handler :: " + ps[i].getClass().getName());
+	for (int i = 0; i < ps.length; i++) {
+	    System.err.println("Executing Handler :: "
+		    + ps[i].getClass().getName());
 	    ps[i].process(o);
 	}
 	return true;
@@ -77,7 +91,7 @@ public class PrecisMain extends PrecisProcessor {
 	    sm.initialize();
 	    sm.process(vo);
 	    sm.unInitialize();
-	    //System.err.println(vo);
+	    // System.err.println(vo);
 	    System.err.println();
 
 	} catch (Exception e) {

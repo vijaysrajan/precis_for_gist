@@ -6,13 +6,14 @@ import com.fratics.precis.fis.feed.BaseFeedElement;
 
 public class BaseCandidateElement extends BaseFeedElement {
 
-    public BaseCandidateElement(){}
-    
-    public BaseCandidateElement(int size){
+    public BaseCandidateElement() {
+    }
+
+    public BaseCandidateElement(int size) {
 	this.b = new BitSet(size);
     }
-    
-    public BaseCandidateElement(BaseFeedElement e){
+
+    public BaseCandidateElement(BaseFeedElement e) {
 	this.b = (BitSet) e.getBitSet().clone();
 	this.metric = e.getMetric();
     }
@@ -22,18 +23,18 @@ public class BaseCandidateElement extends BaseFeedElement {
 	this.metric = metric;
     }
 
-    public void incrMetric(){
+    public void incrMetric() {
 	this.metric++;
     }
-    
-    public void incrMetricBy(double metric){
+
+    public void incrMetricBy(double metric) {
 	this.metric += metric;
     }
 
-    public boolean equals(BaseCandidateElement b){
+    public boolean equals(BaseCandidateElement b) {
 	return this.b == b.getBitSet();
     }
-    
+
     public String toString() {
 	return this.b.toString() + "," + metric;
     }

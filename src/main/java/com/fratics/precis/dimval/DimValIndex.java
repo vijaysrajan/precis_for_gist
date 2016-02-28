@@ -28,8 +28,7 @@ public class DimValIndex extends DimValIndexBase {
 		MutableDouble val = map.get(key);
 		if (val.get() >= threshold) {
 		    if (!dimMap.containsKey(fi[i].getSchemaElement().fieldName)) {
-			dimMap.put(fi[i].getSchemaElement().fieldName,
-				dimIndex);
+			dimMap.put(fi[i].getSchemaElement().fieldName, dimIndex);
 			revDimMap.put(dimIndex,
 				fi[i].getSchemaElement().fieldName);
 			dimIndex++;
@@ -38,8 +37,7 @@ public class DimValIndex extends DimValIndexBase {
 			    .containsKey(fi[i].getSchemaElement().fieldName
 				    + dimValDelimiter + key)) {
 			dimValMap.put(fi[i].getSchemaElement().fieldName
-				+ dimValDelimiter + key, 
-				valIndex);
+				+ dimValDelimiter + key, valIndex);
 			valIndex++;
 		    }
 		}

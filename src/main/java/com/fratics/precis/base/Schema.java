@@ -19,7 +19,7 @@ public class Schema {
 	public String fieldName;
 	public int fieldIndex;
 	public FieldType fieldType;
-	
+
 	public int compareTo(SchemaElement o) {
 	    return this.fieldName.compareTo(o.fieldName);
 	}

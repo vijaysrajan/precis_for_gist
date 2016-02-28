@@ -24,7 +24,7 @@ public class BitSetFeed extends PrecisProcessor {
     public boolean unInitialize() throws Exception {
 	return this.ps.unInitialize();
     }
- 
+
     public boolean process(ValueObject o) throws Exception {
 	o.inputObject.currentStage = 1;
 	String[] str = null;
@@ -35,14 +35,16 @@ public class BitSetFeed extends PrecisProcessor {
 	boolean metricGenerated = false;
 	double metric = 0.0;
 	while ((str = ps.readStream()) != null) {
-	    BaseFeedElement e = new BaseFeedElement((int) DimValIndexBase.getDimValBitSetLength());
+	    BaseFeedElement e = new BaseFeedElement(
+		    (int) DimValIndexBase.getDimValBitSetLength());
 	    elementAddedflag = false;
 	    metricGenerated = false;
 	    metric = 0.0;
 	    for (int i = 0; i < str.length; i++) {
 		String tmpDim = fi[i].getSchemaElement().fieldName;
 		String tmpDimVal = fi[i].getSchemaElement().fieldName
-			+ DimValIndexBase.dimValDelimiter + str[fi[i].getSchemaElement().fieldIndex];
+			+ DimValIndexBase.dimValDelimiter
+			+ str[fi[i].getSchemaElement().fieldIndex];
 		if (DimValIndex.dimMap.containsKey(tmpDim)) {
 		    if (DimValIndex.dimValMap.containsKey(tmpDimVal)) {
 			int index1 = DimValIndex.dimMap.get(tmpDim);
@@ -50,26 +52,28 @@ public class BitSetFeed extends PrecisProcessor {
 			e.setBit(index1);
 			e.setBit(index2);
 			elementAddedflag = true;
-			if (metricPrecis && !metricGenerated){
+			if (metricPrecis && !metricGenerated) {
 			    metricGenerated = true;
-			    metric = Double.parseDouble(str[o.inputObject.getMetricIndex()]);
+			    metric = Double.parseDouble(str[o.inputObject
+				    .getMetricIndex()]);
 			    e.setMetric(metric);
 			}
-			//add stage 1 candidates.
-			BaseCandidateElement bce = new BaseCandidateElement((int) DimValIndexBase.getDimValBitSetLength());
+			// add stage 1 candidates.
+			BaseCandidateElement bce = new BaseCandidateElement(
+				(int) DimValIndexBase.getDimValBitSetLength());
 			bce.setBit(index1);
 			bce.setBit(index2);
-			if(metricPrecis) 
+			if (metricPrecis)
 			    bce.setMetric(metric);
 			else
 			    bce.setMetric(1.0);
-			o.inputObject.addNextCandidateElement(bce);
+			o.inputObject.addFirstStageCandidateElement(bce);
 		    }
 		}
 	    }
 	    // e.setMetric(0.0); //for now, we need to change this.
-	    if (elementAddedflag){
-		//System.err.println(e);
+	    if (elementAddedflag) {
+		// System.err.println(e);
 		partitioner.addElement(e.getNumberofDimVals() - 1, e);
 	    }
 	}
