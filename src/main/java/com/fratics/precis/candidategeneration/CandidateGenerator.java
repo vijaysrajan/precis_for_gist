@@ -14,7 +14,6 @@ public class CandidateGenerator extends PrecisProcessor {
     private ValueObject o;
      
     private boolean compareEquals(BitSet b1, BitSet b2){
-	//it[i].getBitSet().nextSetBit(0) == it[j].getBitSet().nextSetBit(0)
 	if(this.currStage == 2) return true;
 	//Else we need to compare currStage - 2 dimBits.
 	int numToCompare = this.currStage - 2;
@@ -30,17 +29,13 @@ public class CandidateGenerator extends PrecisProcessor {
 	return true;
     }
     
-    private void crossProduct(BaseFeedElement be, BaseCandidateElement [] it){
-	double metric = 0.0;
+    private void crossProduct(BaseCandidateElement [] it){
 	for(int i = 0; i < it.length; i++){
 	    for(int j = i + 1; j < it.length; j++){
 		if(compareEquals(it[i].getBitSet(), it[j].getBitSet())) {
 		    if(it[i].xor(it[j]).cardinality() == 4){
 			BitSet b = it[i].or(it[j]);
-        		if(be.and(b).equals(b)){
-        		    metric = o.inputObject.isCountPrecis() ? 1 : be.getMetric();
-        		    o.inputObject.addNextCandidateElement(new BaseCandidateElement(b, metric));
-        		}
+        		o.inputObject.addNextCandidateElement(new BaseCandidateElement(b, 0.0));
 		    }
 		}else{
 		    break;
@@ -56,23 +51,32 @@ public class CandidateGenerator extends PrecisProcessor {
     public boolean process(ValueObject o) throws Exception {
 	this.o = o;
 	o.inputObject.currentStage = currStage;
-	o.inputObject.moveToNextStage();
 	BaseFeedPartitioner bp = o.inputObject.getPartitioner();
 	BaseCandidateElement [] it = (BaseCandidateElement []) o.inputObject.getPrevCandidateMap().values().toArray(new BaseCandidateElement[0]);
 	System.err.println("Current Stage ::" + this.currStage);
 	System.err.println("Lenght of Prev Candidates ::" + it.length);
 	bp.initReader(this.currStage);
+	crossProduct(it);
 	BaseFeedPartitionerReader bpr = bp.getReader();
+	boolean countPrecis = o.inputObject.isCountPrecis();
 	while(bpr.hasNext()){
 	    BaseFeedElement be = bpr.getNext();
 	    //System.err.println(be);
-	    crossProduct(be, it);
+	    for(BaseCandidateElement bce : o.inputObject.getCurrentCandidateMap().values()){
+		if(bce.and(be.getBitSet()).equals(bce.getBitSet())){
+		    if(countPrecis)
+			bce.incrMetric();
+		    else
+			bce.incrMetricBy(be.getMetric());
+		}
+	    }
 	}
-	//System.err.println("Size Before pruning ::" + o.inputObject.getCurrentCandidateMap().size());
-	//System.err.println(o.inputObject.getCurrentCandidateMap());
-	o.inputObject.selectSuccessfulCandidates();
 	bp.closeReader();
+	System.err.println("Size Before Candidates Generation ::" + o.inputObject.getCurrentCandidateMap().size());
+	o.inputObject.selectSuccessfulCandidates();
+	System.err.println("Size After Candidates Generation ::" + o.inputObject.getCurrentCandidateMap().size());
 	Util.dump(currStage,o);
+	o.inputObject.moveToNextStage();
 	return true;
     }
 }

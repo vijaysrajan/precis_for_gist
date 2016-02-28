@@ -2,7 +2,7 @@ package com.fratics.precis.sanitation;
 
 import com.fratics.precis.base.PrecisProcessor;
 import com.fratics.precis.base.ValueObject;
-import com.fratics.precis.candidategeneration.CandidateGenerator;
+import com.fratics.precis.candidategeneration.NewCandidateGeneratorStage2;
 import com.fratics.precis.dimval.DimValIndex;
 import com.fratics.precis.fis.feed.BitSetFeed;
 import com.fratics.precis.reader.PrecisFileStream;
@@ -21,9 +21,9 @@ public class SanitationMain extends PrecisProcessor {
 	ps[2] = new SanitationRuleProcessor();
 	ps[3] = new DimValIndex(2500.0);
 	ps[4] = new BitSetFeed(new PrecisFileStream(streamName));
-	ps[5] = new CandidateGenerator(2);
-	ps[6] = new CandidateGenerator(3);
-	ps[7] = new CandidateGenerator(4);
+	ps[5] = new NewCandidateGeneratorStage2(2);
+	ps[6] = new NewCandidateGeneratorStage2(3);
+	ps[7] = new NewCandidateGeneratorStage2(4);
 
     }
 

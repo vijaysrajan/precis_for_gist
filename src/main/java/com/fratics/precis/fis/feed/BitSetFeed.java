@@ -76,6 +76,7 @@ public class BitSetFeed extends PrecisProcessor {
 	o.inputObject.setPartitioner(partitioner);
 	partitioner.dump();
 	Util.dump(1, o);
+	o.inputObject.moveToNextStage();
 	return true;
     }
 }

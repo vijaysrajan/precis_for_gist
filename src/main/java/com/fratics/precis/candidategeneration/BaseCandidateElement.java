@@ -6,8 +6,6 @@ import com.fratics.precis.fis.feed.BaseFeedElement;
 
 public class BaseCandidateElement extends BaseFeedElement {
 
-    private boolean passedThreshold = false;
-    
     public BaseCandidateElement(){}
     
     public BaseCandidateElement(int size){
@@ -24,14 +22,6 @@ public class BaseCandidateElement extends BaseFeedElement {
 	this.metric = metric;
     }
 
-    public boolean isPassedThreshold() {
-        return passedThreshold;
-    }
-
-    public void setPassedThreshold(boolean passedThreshold) {
-        this.passedThreshold = passedThreshold;
-    }
-
     public void incrMetric(){
 	this.metric++;
     }
@@ -45,6 +35,6 @@ public class BaseCandidateElement extends BaseFeedElement {
     }
     
     public String toString() {
-	return this.b.toString() + "," + metric + "," + this.passedThreshold;
+	return this.b.toString() + "," + metric;
     }
 }
