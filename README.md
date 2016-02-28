@@ -16,3 +16,7 @@ precis_for_gist is rewriting precis for
   vii. If more than 25 columns in the table, pick only top 25 columns of interest and start a run of PRECIS.
   
 As for benchmarks, we will have to compare this with results from R's libraries. We will also have a minimum of 2% of total metric value of PRECIS as the benchmark. Anything below 2% leads to unnavigable bloat.
+
+=======================================================================================
+
+1) First Cut Made - Created a new branch "FirstCut" with working sets.
