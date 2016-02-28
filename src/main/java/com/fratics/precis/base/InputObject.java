@@ -25,7 +25,7 @@ public abstract class InputObject implements Serializable {
     public HashMap<BitSet, ArrayList<BaseCandidateElement>> prevCandidatePart = new HashMap<BitSet, ArrayList<BaseCandidateElement>>();
     public HashSet<BitSet> currCandidateSet = new HashSet<BitSet>();
     public HashSet<BitSet> prevCandidateSet = new HashSet<BitSet>();
-    public HashMap<BitSet, BaseCandidateElement> firstStageCandidates = new HashMap<BitSet,BaseCandidateElement>();
+    public HashMap<BitSet, BaseCandidateElement> firstStageCandidates = new HashMap<BitSet, BaseCandidateElement>();
 
     public int currentStage = -1;
 
@@ -61,9 +61,10 @@ public abstract class InputObject implements Serializable {
     }
 
     public void addFirstStageCandidateElement(BaseCandidateElement b) {
-	if(this.firstStageCandidates.containsKey(b.getBitSet())){
-	    this.firstStageCandidates.get(b.getBitSet()).incrMetricBy(b.getMetric());
-	}else{
+	if (this.firstStageCandidates.containsKey(b.getBitSet())) {
+	    this.firstStageCandidates.get(b.getBitSet()).incrMetricBy(
+		    b.getMetric());
+	} else {
 	    this.firstStageCandidates.put(b.getBitSet(), b);
 	}
     }

@@ -41,7 +41,6 @@ public class PrecisMain extends PrecisProcessor {
 	ps[21] = new CandidateGeneratorStg3Onwards(19);
 	ps[22] = new CandidateGeneratorStg3Onwards(20);
 
-
     }
 
     public boolean initialize() throws Exception {

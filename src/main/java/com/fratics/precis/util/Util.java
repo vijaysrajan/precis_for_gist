@@ -43,11 +43,12 @@ public class Util {
 	    throws Exception {
 	String ret = "";
 	if (stage == 1) {
-	    for (BaseCandidateElement bce : o.inputObject.firstStageCandidates.values()) {
+	    for (BaseCandidateElement bce : o.inputObject.firstStageCandidates
+		    .values()) {
 		ret = convertToDims(stage, bce);
 		pw.write(ret);
 	    }
-	    
+
 	} else {
 	    for (ArrayList<BaseCandidateElement> al : o.inputObject.currCandidatePart
 		    .values()) {
