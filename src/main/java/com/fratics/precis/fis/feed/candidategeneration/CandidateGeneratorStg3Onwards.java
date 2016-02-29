@@ -63,10 +63,10 @@ public class CandidateGeneratorStg3Onwards extends PrecisProcessor {
     private void crossProduct() {
 	int size = DimValIndex.dimMap.size() + DimValIndex.dimValMap.size();
 	BitSet allOneBS1 = new BitSet(size);
-	allOneBS1.flip(0, size - 1);
+	allOneBS1.flip(0, size);
 
 	BitSet allOneBS2 = new BitSet(size);
-	allOneBS2.flip(0, size - 1);
+	allOneBS2.flip(0, size);
 
 	for (ArrayList<BaseCandidateElement> bsList : cdParttion.values()) {
 	    for (int i = 0; i < bsList.size() - 1; i++) {
@@ -106,7 +106,8 @@ public class CandidateGeneratorStg3Onwards extends PrecisProcessor {
 	crossProduct();
 	System.err.println("No of Candidates Before Applying Threshold::"
 		+ o.inputObject.currCandidateSet.size());
-	System.err.println("No of Candidates Before Applying Threshold values:: " + o.inputObject.currCandidatePart);
+	// System.err.println("No of Candidates Before Applying Threshold values:: "
+	// + o.inputObject.currCandidatePart);
 	BaseFeedPartitionerReader bpr = bp.getReader();
 	boolean countPrecis = o.inputObject.isCountPrecis();
 	while (bpr.hasNext()) {
@@ -125,7 +126,8 @@ public class CandidateGeneratorStg3Onwards extends PrecisProcessor {
 	    }
 	}
 	bp.closeReader();
-	System.err.println("No of Candidates Before Applying Threshold values:: " + o.inputObject.currCandidatePart);
+	// System.err.println("No of Candidates Before Applying Threshold values:: "
+	// + o.inputObject.currCandidatePart);
 	o.inputObject.applyThreshold();
 	System.err.println("No of Candidates After Applying Threshold::"
 		+ o.inputObject.currCandidateSet.size());
