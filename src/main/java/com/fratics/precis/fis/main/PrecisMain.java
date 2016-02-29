@@ -90,7 +90,7 @@ public class PrecisMain extends PrecisProcessor {
 	    sm.initialize();
 	    sm.process(vo);
 	    sm.unInitialize();
-	    // System.err.println(vo);
+	    //System.err.println(vo);
 	    System.err.println();
 
 	} catch (Exception e) {

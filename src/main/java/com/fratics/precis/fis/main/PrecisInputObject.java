@@ -13,10 +13,6 @@ public class PrecisInputObject extends InputObject {
 	return (noOfFields > 0);
     }
 
-    public String toString() {
-	return "PrecisInputObject";
-    }
-
     public void loadInput(Object o) throws Exception {
 	int index = 0;
 	String[] str = (String[]) o;

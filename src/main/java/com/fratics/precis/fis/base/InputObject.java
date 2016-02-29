@@ -2,6 +2,7 @@ package com.fratics.precis.fis.base;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.BitSet;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -150,5 +151,13 @@ public abstract class InputObject implements Serializable {
 
     protected abstract boolean isInitialized();
 
-    public abstract String toString();
+    public String toString() {
+	 return "=====================================================\n" + 
+		"\nNo of Records :: " + this.getNoOfValues() + "\n\n" +
+		"isCountPrecis :: " +  this.isCountPrecis() + "\n\n" +
+		"Field Objects :: " + Arrays.toString(fieldObjects) + "\n\n" +
+		"Stages Run :: " + this.currentStage + "\n\n" + 
+		"DimVal Indexes :: " +  DimValIndex.dumpIndexes() +  "\n" +
+		"=====================================================\n";
+    }
 }

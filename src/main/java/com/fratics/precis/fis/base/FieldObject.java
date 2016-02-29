@@ -49,8 +49,9 @@ public class FieldObject {
 
     public String toString() {
 	String str = "fieldName :: " + this.schElement.fieldName
-		+ " fieldIndex :: " + this.schElement.fieldIndex
-		+ " Map Values ==>{ " + this.map.toString() + " } \n";
+		+ ", fieldIndex :: " + this.schElement.fieldIndex
+		+ ", fieldType :: " + this.schElement.fieldType
+		+ ", Values :: " + this.map.toString() + "\n";
 	return str;
     }
 
