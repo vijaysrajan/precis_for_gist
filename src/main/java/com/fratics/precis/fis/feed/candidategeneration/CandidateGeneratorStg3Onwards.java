@@ -106,6 +106,7 @@ public class CandidateGeneratorStg3Onwards extends PrecisProcessor {
 	crossProduct();
 	System.err.println("No of Candidates Before Applying Threshold::"
 		+ o.inputObject.currCandidateSet.size());
+	System.err.println("No of Candidates Before Applying Threshold values:: " + o.inputObject.currCandidatePart);
 	BaseFeedPartitionerReader bpr = bp.getReader();
 	boolean countPrecis = o.inputObject.isCountPrecis();
 	while (bpr.hasNext()) {
@@ -124,6 +125,7 @@ public class CandidateGeneratorStg3Onwards extends PrecisProcessor {
 	    }
 	}
 	bp.closeReader();
+	System.err.println("No of Candidates Before Applying Threshold values:: " + o.inputObject.currCandidatePart);
 	o.inputObject.applyThreshold();
 	System.err.println("No of Candidates After Applying Threshold::"
 		+ o.inputObject.currCandidateSet.size());
