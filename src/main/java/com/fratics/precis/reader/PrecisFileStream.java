@@ -12,9 +12,15 @@ import com.fratics.precis.fis.util.PrecisConfigProperties;
 public class PrecisFileStream extends PrecisStream {
 
     private BufferedReader br = null;
-
+    private String recordSeperator = PrecisConfigProperties.INPUT_RECORD_SEPERATOR;
+    
     public PrecisFileStream(String fileName) {
 	super(fileName);
+    }
+    
+    public PrecisFileStream(String fileName, String recordSeperator){
+	super(fileName);
+	this.recordSeperator = recordSeperator;
     }
 
     public boolean initialize() throws Exception {
@@ -54,7 +60,7 @@ public class PrecisFileStream extends PrecisStream {
 	    //Handle Comments
 	    while(thisLine != null && thisLine.startsWith("#")) thisLine = br.readLine();
 	    if (thisLine != null) {
-		return thisLine.split(PrecisConfigProperties.INPUT_RECORD_SEPERATOR);
+		return thisLine.split(this.recordSeperator);
 	    } else {
 		return null;
 	    }

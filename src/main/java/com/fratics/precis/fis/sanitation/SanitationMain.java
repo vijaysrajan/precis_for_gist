@@ -18,7 +18,7 @@ public class SanitationMain extends PrecisProcessor {
     public SanitationMain() {
 	//Atleast 2 stages will be run, even if the configuration is less.
 	ps = new PrecisProcessor[PrecisConfigProperties.NO_OF_STAGES + 4];
-	ps[0] = new PrecisSchemaProcessor(new PrecisFileStream(PrecisConfigProperties.INPUT_SCHEMA_FILE));
+	ps[0] = new PrecisSchemaProcessor(new PrecisFileStream(PrecisConfigProperties.INPUT_SCHEMA_FILE, ":"));
 	ps[1] = new PrecisFileStreamProcessor(new PrecisFileStream(PrecisConfigProperties.INPUT_DATA_FILE));
 	ps[2] = new SanitationRuleProcessor();
 	ps[3] = new DimValIndex(PrecisConfigProperties.THRESHOLD);

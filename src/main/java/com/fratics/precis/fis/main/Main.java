@@ -1,8 +1,8 @@
 package com.fratics.precis.fis.main;
 
+import java.io.File;
+
 import com.fratics.precis.fis.sanitation.SanitationMain;
-
-
 import com.fratics.precis.fis.util.PrecisConfigProperties;
 import com.fratics.precis.util.ConfigObject;
 
@@ -26,6 +26,7 @@ public class Main {
     public static void main(String[] args) {
 	try {
 	    if (args.length > 0) {
+		if(!new File(args[0]).exists()) throw new Exception("Configuration File " + args[0] + " doesn't exist");
 		ConfigObject.setConfigFile(args[0]);
 	    }
 	    ConfigObject c = new ConfigObject();

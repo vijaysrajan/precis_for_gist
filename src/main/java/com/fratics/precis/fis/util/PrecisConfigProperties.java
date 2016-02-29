@@ -16,6 +16,22 @@ public class PrecisConfigProperties {
     public static double THRESHOLD = 36000;
     public static String OUTPUT_DIMVAL_SEPERATOR = Character.toString('\002');
     public static String OUPUT_RAW_CANDIDATE_FILE_PATTERN = "stage_${stage_number}_raw_candidate_file.txt";
+    
+    private static String convertSpecialChar(String s){
+	if(s.charAt(0) == '\\' && s.charAt(1) == 'u'){
+	    String tmp = s.substring(2);
+	    String ret = "";
+	    try{
+		int hexVal = Integer.parseInt(tmp, 16);
+		ret += hexVal;
+		return ret;
+	    }catch(Exception e){
+		return null;
+	    }
+	}else{
+	    return s;
+	}
+    }
 
     public static void loadConfig(ConfigObject c) {
 
@@ -26,7 +42,8 @@ public class PrecisConfigProperties {
 
 	tmp = c.getProperties().getProperty("INPUT_RECORD_SEPERATOR");
 	if (!(tmp == null || tmp.equalsIgnoreCase(""))) {
-	    INPUT_RECORD_SEPERATOR = tmp;
+	    String s = convertSpecialChar(tmp);
+	    if (s !=  null) INPUT_RECORD_SEPERATOR = s;
 	}
 
 	tmp = c.getProperties().getProperty("INPUT_DATA_FILE");
@@ -36,7 +53,8 @@ public class PrecisConfigProperties {
 
 	tmp = c.getProperties().getProperty("OUTPUT_RECORD_SEPERATOR");
 	if (!(tmp == null || tmp.equalsIgnoreCase(""))) {
-	    OUTPUT_RECORD_SEPERATOR = tmp;
+	    String s = convertSpecialChar(tmp);
+	    if (s !=  null) OUTPUT_RECORD_SEPERATOR = s;
 	}
 
 	tmp = c.getProperties().getProperty("INPUT_SCHEMA_FILE");
@@ -79,7 +97,8 @@ public class PrecisConfigProperties {
 
 	tmp = c.getProperties().getProperty("OUTPUT_DIMVAL_SEPERATOR");
 	if (!(tmp == null || tmp.equalsIgnoreCase(""))) {
-	    OUTPUT_DIMVAL_SEPERATOR = tmp;
+	    String s = convertSpecialChar(tmp);
+	    if (s !=  null) OUTPUT_DIMVAL_SEPERATOR = s;
 	}
 
 	tmp = c.getProperties().getProperty("OUPUT_RAW_CANDIDATE_FILE_PATTERN");
