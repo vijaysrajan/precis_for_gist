@@ -6,6 +6,7 @@ import java.util.Map;
 import com.fratics.precis.fis.base.FieldObject;
 import com.fratics.precis.fis.base.MutableDouble;
 import com.fratics.precis.fis.base.ValueObject;
+import com.fratics.precis.fis.util.PrecisConfigProperties;
 
 public class DimValIndex extends DimValIndexBase {
 
@@ -35,9 +36,9 @@ public class DimValIndex extends DimValIndexBase {
 		    }
 		    if (!dimValMap
 			    .containsKey(fi[i].getSchemaElement().fieldName
-				    + dimValDelimiter + key)) {
+				    + PrecisConfigProperties.OUTPUT_DIMVAL_SEPERATOR + key)) {
 			dimValMap.put(fi[i].getSchemaElement().fieldName
-				+ dimValDelimiter + key, valIndex);
+				+ PrecisConfigProperties.OUTPUT_DIMVAL_SEPERATOR + key, valIndex);
 			valIndex++;
 		    }
 		}

@@ -8,6 +8,7 @@ import com.fratics.precis.fis.base.PrecisStream;
 import com.fratics.precis.fis.base.ValueObject;
 import com.fratics.precis.fis.feed.dimval.DimValIndex;
 import com.fratics.precis.fis.feed.dimval.DimValIndexBase;
+import com.fratics.precis.fis.util.PrecisConfigProperties;
 import com.fratics.precis.fis.util.Util;
 
 public class BitSetFeed extends PrecisProcessor {
@@ -44,7 +45,7 @@ public class BitSetFeed extends PrecisProcessor {
 	    for (int i = 0; i < str.length; i++) {
 		String tmpDim = fi[i].getSchemaElement().fieldName;
 		String tmpDimVal = fi[i].getSchemaElement().fieldName
-			+ DimValIndexBase.dimValDelimiter
+			+ PrecisConfigProperties.OUTPUT_DIMVAL_SEPERATOR
 			+ str[fi[i].getSchemaElement().fieldIndex];
 		if (DimValIndex.dimMap.containsKey(tmpDim)) {
 		    if (DimValIndex.dimValMap.containsKey(tmpDimVal)) {
