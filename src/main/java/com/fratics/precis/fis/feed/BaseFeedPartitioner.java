@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import com.fratics.precis.fis.base.BaseFeedElement;
+
 public class BaseFeedPartitioner {
 
     public class BaseFeedElementList extends ArrayList<BaseFeedElement> {

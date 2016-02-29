@@ -5,8 +5,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-import com.fratics.precis.base.PrecisStream;
 import com.fratics.precis.exception.PrecisException;
+import com.fratics.precis.fis.base.PrecisStream;
 
 public class PrecisFileStream extends PrecisStream {
 

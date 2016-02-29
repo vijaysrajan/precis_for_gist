@@ -1,13 +1,14 @@
 package com.fratics.precis.fis.feed;
 
-import com.fratics.precis.base.FieldObject;
-import com.fratics.precis.base.PrecisProcessor;
-import com.fratics.precis.base.PrecisStream;
-import com.fratics.precis.base.ValueObject;
-import com.fratics.precis.candidategeneration.BaseCandidateElement;
-import com.fratics.precis.dimval.DimValIndex;
-import com.fratics.precis.dimval.DimValIndexBase;
-import com.fratics.precis.util.Util;
+import com.fratics.precis.fis.base.BaseCandidateElement;
+import com.fratics.precis.fis.base.BaseFeedElement;
+import com.fratics.precis.fis.base.FieldObject;
+import com.fratics.precis.fis.base.PrecisProcessor;
+import com.fratics.precis.fis.base.PrecisStream;
+import com.fratics.precis.fis.base.ValueObject;
+import com.fratics.precis.fis.feed.dimval.DimValIndex;
+import com.fratics.precis.fis.feed.dimval.DimValIndexBase;
+import com.fratics.precis.fis.util.Util;
 
 public class BitSetFeed extends PrecisProcessor {
 

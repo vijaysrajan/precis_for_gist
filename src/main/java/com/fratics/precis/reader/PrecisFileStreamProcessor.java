@@ -1,8 +1,8 @@
 package com.fratics.precis.reader;
 
-import com.fratics.precis.base.PrecisProcessor;
-import com.fratics.precis.base.PrecisStream;
-import com.fratics.precis.base.ValueObject;
+import com.fratics.precis.fis.base.PrecisProcessor;
+import com.fratics.precis.fis.base.PrecisStream;
+import com.fratics.precis.fis.base.ValueObject;
 
 public class PrecisFileStreamProcessor extends PrecisProcessor {
 
