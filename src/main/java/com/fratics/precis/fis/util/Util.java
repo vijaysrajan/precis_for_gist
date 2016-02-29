@@ -32,9 +32,10 @@ public class Util {
 	    startIndex = val + 1;
 	    index--;
 	    if (index > 0)
-		ret = ret + DimValIndex.dimDelimiter;
+		ret = ret + PrecisConfigProperties.OUTPUT_RECORD_SEPERATOR;
 	}
-	ret = ret + DimValIndex.dimDelimiter + bce.getMetric() + "\n";
+	ret = ret + PrecisConfigProperties.OUTPUT_RECORD_SEPERATOR
+		+ bce.getMetric() + "\n";
 	return ret;
 
     }
@@ -68,13 +69,15 @@ public class Util {
 	    writeCandidates(currStage, pw, o);
 	    pw.flush();
 	    pw.close();
-	    /*
-	     * pw = new PrintWriter(new File("./data/stage" + currStage +
-	     * "_raw_candidates.txt")); pw.append(new PrettyPrintingMap<BitSet,
-	     * BaseCandidateElement
-	     * >(o.inputObject.getCurrentCandidateMap()).toString());
-	     * pw.flush(); pw.close();
-	     */
+
+	    if (PrecisConfigProperties.GENERATE_RAW_CANDIDATE_FILE) {
+		pw = new PrintWriter(new File("./data/stage" + currStage
+			+ "_raw_candidates.txt"));
+		pw.append(o.inputObject.currCandidatePart.toString());
+		pw.flush();
+		pw.close();
+	    }
+
 	} catch (Exception e) {
 	    e.printStackTrace();
 	}

@@ -7,11 +7,10 @@ import java.io.IOException;
 
 import com.fratics.precis.exception.PrecisException;
 import com.fratics.precis.fis.base.PrecisStream;
+import com.fratics.precis.fis.util.PrecisConfigProperties;
 
 public class PrecisFileStream extends PrecisStream {
 
-    // private static String recordSeperator = Character.toString('\n');
-    private static String fieldSeparator = Character.toString('\001');
     private BufferedReader br = null;
 
     public PrecisFileStream(String fileName) {
@@ -52,8 +51,10 @@ public class PrecisFileStream extends PrecisStream {
     private String[] read() throws Exception {
 	try {
 	    String thisLine = br.readLine();
+	    //Handle Comments
+	    while(thisLine != null && thisLine.startsWith("#")) thisLine = br.readLine();
 	    if (thisLine != null) {
-		return thisLine.split(PrecisFileStream.fieldSeparator);
+		return thisLine.split(PrecisConfigProperties.INPUT_RECORD_SEPERATOR);
 	    } else {
 		return null;
 	    }

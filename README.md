@@ -1,22 +1,37 @@
-# precis_for_gist
-precis_for_gist is rewriting precis for
-1. Being fully in memory
-2. Efficiency using
-  i.   Multi Threading
-  ii.  Finding only Frequent Item Sets without getting actual numbers during the multi stage phase
-  iii. Using the trick of Apriori+
-  iv.  Eliminate data records that have only few dims at later stages.
-3. Configurability with user input. When the user submits a file or directory containing files in GIST for analysis,
-  i.   We run an initial column level group by on each column
-  ii.  Find columns with same values to omit
-  iii. Find columns with a distinct value for each row so as to omit.
-  iv.  Find columns where one value is very dominant and is more than 50%. Offer to run PRECIS for rows with that values and rows without.
-  v.   List all distinct values and counts for each dimension and allow the user to block the tracking of this value. This is really useful for removing certain domninant column values that are futile like null, n/a, empty string etc. This makes GIST reveal only useful frequent itemsets. It also speeds up the total processing of GIST.
-  vi.  For columns with low count of distint values(cardinality) all of which are fairly well represented, like Gender (which has 2 distinct values male & female), offer to run PRECIS for each separate sets of data for each value of the column. This would only apply to columns from 2 to 4 distinct values.
-  vii. If more than 25 columns in the table, pick only top 25 columns of interest and start a run of PRECIS.
-  
-As for benchmarks, we will have to compare this with results from R's libraries. We will also have a minimum of 2% of total metric value of PRECIS as the benchmark. Anything below 2% leads to unnavigable bloat.
+Precis V0.2
 
-=======================================================================================
+Precis needs to be build using maven project.
 
-1) First Cut Made - Created a new branch "FirstCut" with working sets.
+Running Precis in Maven:-
+
+1) Download & install java, maven (if you don't have).
+
+2) create a folder "precis", go to the folder.
+
+3) Run the command --> git clone https://github.com/vijaysrajan/precis_for_gist
+
+4) cd precis_for_gist
+
+5) Run maven compile --> mvn clean package
+
+6) java com.fratics.precis.fis.main.Main
+
+7) you can change the Precis configuration under "conf/precisconfig.properties"
+
+8) All the configuration and schema files are self descriptory.
+
+Running Precis in eclipse:-
+
+1) Download & install java, eclipse (if you don't have).
+
+2) create a folder "precis", go to the folder.
+
+3) Run the command --> git clone https://github.com/vijaysrajan/precis_for_gist
+
+4) Open eclipse, import as maven project (or java project) what ever you wish.
+
+5) Open Run Configurations for this current project, Search Main Class to Run.
+
+6) Select "com.fratics.precis.fis.main.Main", Apply & RUn.
+
+Happy Preciing.

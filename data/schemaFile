@@ -1,3 +1,12 @@
+#
+# Input Schema File Definition.
+# Control A Separated Schema File,Please use a vi editor to change.
+# Every Field in the Input Data has to defined as follows:-
+# 1) DIM_NAME^A
+# 2) DIM_TYPE^A - "d" for dimension & "m" for metric
+# 3) DIM_DATA_TYPE^A - Basic Java Data Types.
+# 4) INCLUDED_FOR_PRECIS_CALCULATION - "t" for true & "f" for false.
+#
 spaceIddstringt
 bucketdstringt
 browserdstringt
