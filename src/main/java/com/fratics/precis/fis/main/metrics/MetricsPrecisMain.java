@@ -1,4 +1,4 @@
-package com.fratics.precis.fis.main;
+package com.fratics.precis.fis.main.metrics;
 
 import com.fratics.precis.fis.base.PrecisProcessor;
 import com.fratics.precis.fis.base.ValueObject;
@@ -11,14 +11,14 @@ import com.fratics.precis.fis.util.PrecisConfigProperties;
 import com.fratics.precis.reader.PrecisFileStream;
 import com.fratics.precis.reader.PrecisFileStreamProcessor;
 
-public class PrecisMain extends PrecisProcessor {
+public class MetricsPrecisMain extends PrecisProcessor {
 
     private PrecisProcessor[] ps = null;
 
-    public PrecisMain() {
+    public MetricsPrecisMain() {
 	//Atleast 2 stages will be run, even if the configuration is less.
 	ps = new PrecisProcessor[PrecisConfigProperties.NO_OF_STAGES + 3];
-	ps[0] = new PrecisSchemaProcessor(new PrecisFileStream(PrecisConfigProperties.INPUT_SCHEMA_FILE, ":"));
+	ps[0] = new PrecisSchemaProcessor(new PrecisFileStream(PrecisConfigProperties.INPUT_SCHEMA_FILE, PrecisConfigProperties.SCHEMA_RECORD_SEPERATOR));
 	ps[1] = new PrecisFileStreamProcessor(new PrecisFileStream(PrecisConfigProperties.INPUT_DATA_FILE));
 	ps[2] = new DimValIndex(PrecisConfigProperties.THRESHOLD);
 	ps[3] = new BitSetFeed(new PrecisFileStream(PrecisConfigProperties.INPUT_DATA_FILE));
@@ -55,9 +55,9 @@ public class PrecisMain extends PrecisProcessor {
     public static void run(String[] args) {
 	try {
 	    ValueObject vo = new ValueObject();
-	    vo.inputObject = new PrecisInputObject();
-	    vo.resultObject = new PrecisOutputObject();
-	    PrecisMain sm = new PrecisMain();
+	    vo.inputObject = new MetricsPrecisInputObject();
+	    vo.resultObject = new MetricsPrecisOutputObject();
+	    MetricsPrecisMain sm = new MetricsPrecisMain();
 	    sm.initialize();
 	    sm.process(vo);
 	    sm.unInitialize();

@@ -16,6 +16,7 @@ public class PrecisConfigProperties {
     public static double THRESHOLD = 36000;
     public static String OUTPUT_DIMVAL_SEPERATOR = Character.toString('\002');
     public static String OUPUT_RAW_CANDIDATE_FILE_PATTERN = "stage_${stage_number}_raw_candidate_file.txt";
+    public static String SCHEMA_RECORD_SEPERATOR = ":";
     
     private static String convertSpecialChar(String s){
 	if(s.charAt(0) == '\\' && s.charAt(1) == 'u'){
@@ -31,6 +32,12 @@ public class PrecisConfigProperties {
 	}else{
 	    return s;
 	}
+    }
+    
+    public static void init() throws Exception {
+	    ConfigObject c = new ConfigObject();
+	    c.initialize();
+	    loadConfig(c);
     }
 
     public static void loadConfig(ConfigObject c) {

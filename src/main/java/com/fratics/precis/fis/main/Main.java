@@ -2,7 +2,8 @@ package com.fratics.precis.fis.main;
 
 import java.io.File;
 
-import com.fratics.precis.fis.sanitation.SanitationMain;
+import com.fratics.precis.fis.main.count.CountPrecisMain;
+import com.fratics.precis.fis.main.metrics.MetricsPrecisMain;
 import com.fratics.precis.fis.util.PrecisConfigProperties;
 import com.fratics.precis.util.ConfigObject;
 
@@ -29,13 +30,11 @@ public class Main {
 		if(!new File(args[0]).exists()) throw new Exception("Configuration File " + args[0] + " doesn't exist");
 		ConfigObject.setConfigFile(args[0]);
 	    }
-	    ConfigObject c = new ConfigObject();
-	    c.initialize();
-	    PrecisConfigProperties.loadConfig(c);
+	    PrecisConfigProperties.init();
 	    if (PrecisConfigProperties.IS_COUNT_PRECIS) {
-		SanitationMain.run(args);
+		CountPrecisMain.run(args);
 	    } else {
-		PrecisMain.run(args);
+		MetricsPrecisMain.run(args);
 	    }
 	} catch (Exception e) {
 	    System.err.println("Exception Raised ::" + e.toString());

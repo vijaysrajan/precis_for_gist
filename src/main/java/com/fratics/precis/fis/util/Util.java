@@ -62,24 +62,28 @@ public class Util {
 	}
     }
 
-    public static void dump(int currStage, ValueObject o) {
+    public static void dump(int currStage, ValueObject o) throws Exception {
 	try {
-	    PrintWriter pw = new PrintWriter(new File("./data/stage"
-		    + currStage + "_candidates.txt"));
+	    String outputDir = PrecisConfigProperties.OUTPUT_DIR + "/";
+	    String fileName = PrecisConfigProperties.OUPUT_CANDIDATE_FILE_PATTERN.replace("${stage_number}", ""+currStage);
+	    PrintWriter pw = new PrintWriter(new File(outputDir + fileName));
 	    writeCandidates(currStage, pw, o);
 	    pw.flush();
 	    pw.close();
 
 	    if (PrecisConfigProperties.GENERATE_RAW_CANDIDATE_FILE) {
-		pw = new PrintWriter(new File("./data/stage" + currStage
-			+ "_raw_candidates.txt"));
-		pw.append(o.inputObject.currCandidatePart.toString());
+		fileName = PrecisConfigProperties.OUPUT_RAW_CANDIDATE_FILE_PATTERN.replace("${stage_number}", ""+currStage);
+		pw = new PrintWriter(new File(outputDir + fileName));
+		if(currStage  == 1)
+		    pw.append(o.inputObject.firstStageCandidates.keySet().toString());
+		else
+		    pw.append(o.inputObject.currCandidateSet.toString());
 		pw.flush();
 		pw.close();
 	    }
 
 	} catch (Exception e) {
-	    e.printStackTrace();
+	    throw e;
 	}
     }
 }

@@ -2,10 +2,10 @@ package com.fratics.precis.util;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Properties;
-import java.io.FileOutputStream;
 
 import com.fratics.precis.fis.base.PrecisBase;
 

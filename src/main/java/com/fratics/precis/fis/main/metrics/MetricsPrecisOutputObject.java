@@ -1,12 +1,12 @@
-package com.fratics.precis.fis.main;
+package com.fratics.precis.fis.main.metrics;
 
 import com.fratics.precis.fis.base.OutputObject;
 
-public class PrecisOutputObject extends OutputObject {
+public class MetricsPrecisOutputObject extends OutputObject {
     private static final long serialVersionUID = 8259727611192043540L;
 
     public String toString() {
-	return "PrecisOutputObject = {}\n";
+	return "MetricsPrecisOutputObject = {}\n";
     }
 
     public void loadResult(Object o) throws Exception {
