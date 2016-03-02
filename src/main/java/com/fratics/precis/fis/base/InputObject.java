@@ -16,7 +16,8 @@ import com.fratics.precis.fis.feed.dimval.DimValIndex;
  * The is the main holder class on which all the data is captured from the input feed.
  * 
  * The input object will be passed from one flow processor to the other in sequence of data massaging steps.
- * The Input objects state alters and captured as we progress in applying all our data massaging processors.
+ * The Input feed's state alters the input object and gets captured as we progress in applying all our data 
+ * massaging processors.
  *  
  */
 
@@ -46,8 +47,8 @@ public abstract class InputObject implements Serializable {
     protected double threshold;
     
     //Current Precis Stage's Candidate Partition,
-    //The Candidates as partitioned & grouped in a arraylist again by a bitset object.
-    //The bitset object derived from the first (n-1) dim bits set & (n-1) value bits set.
+    //The Candidates as partitioned & grouped in a arraylist by a bitset object.
+    //The bitset object is derived from the first (n-1) dim bits set & (n-1) value bits set.
     public HashMap<BitSet, ArrayList<BaseCandidateElement>> currCandidatePart = new HashMap<BitSet, ArrayList<BaseCandidateElement>>();
     
     //Previous Precis Stage's Candidates Partition, the current candidate Partition

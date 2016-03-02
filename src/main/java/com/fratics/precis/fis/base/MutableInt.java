@@ -1,5 +1,12 @@
 package com.fratics.precis.fis.base;
 
+/*
+ * A envelop for the int data type.
+ * Added my helper methods to provide functions like increments, comparator etc.
+ * Can be extended to provide many more technical functionalities to primitive data types.
+ * 
+ */
+
 public class MutableInt implements Comparable<MutableInt> {
     int value = 1;
 

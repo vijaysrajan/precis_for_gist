@@ -1,5 +1,12 @@
 package com.fratics.precis.fis.base;
 
+/*
+ * A envelop for the double data type.
+ * Added my helper methods to provide functions like increments, comparator etc.
+ * Can be extended to provide many more technical functionalities to primitive data types.
+ * 
+ */
+
 public class MutableDouble implements Comparable<MutableDouble> {
     double value = 1.0;
 
