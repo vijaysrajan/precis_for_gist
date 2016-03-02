@@ -10,7 +10,7 @@ import com.fratics.precis.fis.base.ValueObject;
 public class DimOrMetricRule extends SanitationRuleBase {
     public void applyRule(ValueObject vo) throws Exception {
 	this.setRuleName("DimOrMetricRule");
-	long numOfLines = vo.inputObject.getNoOfValues();
+	long numOfLines = vo.inputObject.getNoOfLines();
 	FieldObject[] fo = vo.inputObject.getFieldObjects();
 	for (int i = 0; i < fo.length; i++) {
 	    Map<String, MutableDouble> map = fo[i].getMap();

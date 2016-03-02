@@ -26,7 +26,7 @@ public class PrecisFileStreamProcessor extends PrecisProcessor {
 	    o.inputObject.loadInput(str);
 	}
 	// Set the Number of Lines as Well.
-	o.inputObject.setNoOfValues(ps.getNoOfLines());
+	o.inputObject.setNoOfLines(ps.getNoOfLines());
 	return true;
     }
 }

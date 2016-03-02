@@ -2,6 +2,11 @@ package com.fratics.precis.fis.base;
 
 import java.util.BitSet;
 
+/*
+ * This class is the actual bit representation of a record in the input feed. 
+ * 
+ */
+
 public class BaseFeedElement {
 
     protected BitSet b;
@@ -75,6 +80,12 @@ public class BaseFeedElement {
 	return this.b.cardinality();
     }
 
+    /*
+     * Cardinality divided by 2 gives you the actual number of 
+     * dimensions or values in the input record.
+     * 
+     */
+    
     public int getNumberofDimVals() {
 	return this.b.cardinality() / 2;
     }

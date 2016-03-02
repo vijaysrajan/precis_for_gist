@@ -2,6 +2,16 @@ package com.fratics.precis.fis.base;
 
 import java.util.BitSet;
 
+/*
+ * Candidates Generated from Precis execution are captured in this holder class.
+ * The candidate element class is a simple bit representation of a candidate, along with 
+ * metric and threshold passed flag.
+ * 
+ * This class inherits from the Base Feed Element class, which is the actual bit
+ * representation of a record in the input feed. 
+ * 
+ */
+
 public class BaseCandidateElement extends BaseFeedElement {
 
     public BaseCandidateElement() {
