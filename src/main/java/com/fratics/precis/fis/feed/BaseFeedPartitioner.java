@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import com.fratics.precis.fis.base.BaseFeedElement;
+import com.fratics.precis.fis.util.PrecisConfigProperties;
 
 /*
  * The input data feed is removed of all the values that were below threshold.
@@ -108,7 +109,7 @@ public class BaseFeedPartitioner {
     //Method to dump the contents of the partition.
     public void dump() {
 	try {
-	    PrintWriter pw = new PrintWriter(new File("./data/bitSetFeed.txt"));
+	    PrintWriter pw = new PrintWriter(new File(PrecisConfigProperties.BITSET_FEED_FILENAME));
 	    pw.append(this.toString());
 	    pw.flush();
 	    pw.close();
