@@ -114,7 +114,7 @@ public class BitSetFeed extends PrecisProcessor {
 	//Set the partitioner to the input object.
 	o.inputObject.setPartitioner(partitioner);
 	//Dump the contents of partitioner as a file.
-	partitioner.dump();
+	if(PrecisConfigProperties.DUMP_BITSET_FEED) partitioner.dump();
 	//Dump the contents of First Stage Candidates.
 	Util.dump(1, o);
 	//Move the context of Precis execution to next stage (i.e) stage 2.

@@ -18,6 +18,11 @@ public class PrecisConfigProperties {
     public static String OUPUT_RAW_CANDIDATE_FILE_PATTERN = "stage_${stage_number}_raw_candidate_file.txt";
     public static String SCHEMA_RECORD_SEPERATOR = ":";
     public static String BITSET_FEED_FILENAME = "./data/bitSetFeed.txt";
+    public static String DIM_FEED = "./data/dimFeed.txt";
+    public static String DIMVAL_FEED = "./data/dimValFeed.txt";
+    public static boolean DUMP_DIM_FEED = false;
+    public static boolean DUMP_BITSET_FEED = false;
+    
     
     private static String convertSpecialChar(String s){
 	if(s.charAt(0) == '\\' && s.charAt(1) == 'u'){
@@ -77,7 +82,6 @@ public class PrecisConfigProperties {
 		if(NO_OF_STAGES <= 0) NO_OF_STAGES = 1;
 	    } catch (NumberFormatException e) {
 	    }
-
 	}
 
 	tmp = c.getProperties().getProperty("OUPUT_CANDIDATE_FILE_PATTERN");
@@ -93,6 +97,16 @@ public class PrecisConfigProperties {
 	tmp = c.getProperties().getProperty("GENERATE_RAW_CANDIDATE_FILE");
 	if (!(tmp == null || tmp.equalsIgnoreCase(""))) {
 	    GENERATE_RAW_CANDIDATE_FILE = Boolean.parseBoolean(tmp);
+	}
+
+	tmp = c.getProperties().getProperty("DUMP_DIM_FEED");
+	if (!(tmp == null || tmp.equalsIgnoreCase(""))) {
+	    DUMP_DIM_FEED = Boolean.parseBoolean(tmp);
+	}
+	
+	tmp = c.getProperties().getProperty("DUMP_BITSET_FEED");
+	if (!(tmp == null || tmp.equalsIgnoreCase(""))) {
+	    DUMP_BITSET_FEED = Boolean.parseBoolean(tmp);
 	}
 
 	tmp = c.getProperties().getProperty("THRESHOLD");

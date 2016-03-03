@@ -171,11 +171,13 @@ public abstract class InputObject implements Serializable {
      * Applies the Threshold on the current stage candidates, keeps the candidates which
      * has passed the threshold and rejects/removes the fail over candidates.
      * 
+     * Returns success if candidates are available for next stage, failure otherwise.
+     * 
      */
     
     public boolean applyThreshold() {
 	
-	if(this.currCandidatePart.size() <= 0) return false;
+	if(this.currCandidateSet.size() <= 0) return false;
 	
 	for (ArrayList<BaseCandidateElement> al : this.currCandidatePart
 		.values()) {
@@ -189,7 +191,7 @@ public abstract class InputObject implements Serializable {
 		this.currCandidateSet.remove(bce.getBitSet());
 	    }
 	}
-	return true;
+	return (this.currCandidateSet.size() > 0);
     }
 
     /*

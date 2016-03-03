@@ -123,9 +123,8 @@ public class BaseFeedPartitioner {
 	String str = "";
 	for (int i = 0; i < partitionMap.length; i++) {
 	    ArrayList<BaseFeedElement> al = partitionMap[i];
-	    // if(al.size() > 0 )
-	    str = str + "PN ==> " + i + ", NS ==> " + al.size() + ", ==> {"
-		    + al.toString() + "}\n";
+	    //if(al.size() > 0 ) 
+	    str = str + "Partition Number :: " + i + ", No Of Elements :: " + al.size() + ", Values :: "+ al.toString() + "\n";
 	}
 	return str;
     }

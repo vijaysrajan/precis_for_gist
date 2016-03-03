@@ -1,9 +1,12 @@
 package com.fratics.precis.fis.feed.dimval;
 
+import java.io.File;
+import java.io.PrintWriter;
 import java.util.Map;
 import java.util.TreeMap;
 
 import com.fratics.precis.fis.base.PrecisProcessor;
+import com.fratics.precis.fis.util.PrecisConfigProperties;
 
 /*
  * Indexes are created for all the dims and values that cross the threshold in stage 1.
@@ -33,6 +36,21 @@ public abstract class DimValIndexBase extends PrecisProcessor {
     public static String dumpIndexes() {
 	return dimMap + "\n" + dimValMap + "\n" + revDimMap + "\n"
 		+ revDimValMap + "\n";
+    }
+    
+    public void dump() throws Exception {
+	try {
+	    PrintWriter pw = new PrintWriter(new File(PrecisConfigProperties.DIM_FEED));
+	    pw.append(dimMap.toString());
+	    pw.flush();
+	    pw.close();
+	    pw = new PrintWriter(new File(PrecisConfigProperties.DIMVAL_FEED));
+	    pw.append(dimValMap.toString());
+	    pw.flush();
+	    pw.close();
+	} catch (Exception e) {
+	    throw e;
+	}
     }
 
 }

@@ -54,6 +54,7 @@ public class DimValIndex extends DimValIndexBase {
 	    dimValMap.put(key, m);
 	    revDimValMap.put(m, key);
 	}
+	if(PrecisConfigProperties.DUMP_DIM_FEED) this.dump();
 	return true;
     }
 }
