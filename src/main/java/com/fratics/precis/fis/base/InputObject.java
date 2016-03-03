@@ -173,7 +173,10 @@ public abstract class InputObject implements Serializable {
      * 
      */
     
-    public void applyThreshold() {
+    public boolean applyThreshold() {
+	
+	if(this.currCandidatePart.size() <= 0) return false;
+	
 	for (ArrayList<BaseCandidateElement> al : this.currCandidatePart
 		.values()) {
 	    ArrayList<BaseCandidateElement> removeList = new ArrayList<BaseCandidateElement>();
@@ -186,6 +189,7 @@ public abstract class InputObject implements Serializable {
 		this.currCandidateSet.remove(bce.getBitSet());
 	    }
 	}
+	return true;
     }
 
     /*

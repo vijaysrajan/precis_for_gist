@@ -61,11 +61,11 @@ public class CandidateGeneratorStage2 extends PrecisProcessor {
 	    }
 	}
 	bp.closeReader();
-	o.inputObject.applyThreshold();
+	boolean ret = o.inputObject.applyThreshold();
 	System.err.println("No of Candidates After Applying Threshold::"
 		+ o.inputObject.currCandidateSet.size());
-	Util.dump(this.currStage, o);
+	if(ret) Util.dump(this.currStage, o);
 	o.inputObject.moveToNextStage();
-	return true;
+	return ret;
     }
 }

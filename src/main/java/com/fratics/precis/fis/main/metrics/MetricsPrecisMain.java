@@ -44,10 +44,10 @@ public class MetricsPrecisMain extends PrecisProcessor {
     public boolean process(ValueObject o) throws Exception {
 	// Initialize & run the various Processors in sequence on the Value
 	// Object
-	for (int i = 0; i < ps.length; i++) {
-	    System.err.println("Executing Handler :: "
-		    + ps[i].getClass().getName());
-	    ps[i].process(o);
+	boolean successFlag = true;
+	for (int i = 0; i < ps.length && successFlag; i++) {
+	    System.err.println("Executing Handler :: " + ps[i].getClass().getName());
+	    successFlag = ps[i].process(o);
 	}
 	return true;
     }

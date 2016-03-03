@@ -128,11 +128,11 @@ public class CandidateGeneratorStg3Onwards extends PrecisProcessor {
 	bp.closeReader();
 	// System.err.println("No of Candidates Before Applying Threshold values:: "
 	// + o.inputObject.currCandidatePart);
-	o.inputObject.applyThreshold();
+	boolean ret = o.inputObject.applyThreshold();
 	System.err.println("No of Candidates After Applying Threshold::"
 		+ o.inputObject.currCandidateSet.size());
-	Util.dump(this.currStage, o);
+	if(ret) Util.dump(this.currStage, o);
 	o.inputObject.moveToNextStage();
-	return true;
+	return ret;
     }
 }

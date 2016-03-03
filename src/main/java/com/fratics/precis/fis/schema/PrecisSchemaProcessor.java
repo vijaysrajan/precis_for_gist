@@ -38,6 +38,6 @@ public class PrecisSchemaProcessor extends PrecisProcessor {
 	    i++;
 	}
 	o.inputObject.loadSchema(schema);
-	return false;
+	return true;
     }
 }
