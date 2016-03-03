@@ -22,7 +22,7 @@ public class CountPrecisMain extends PrecisProcessor {
 	ps[1] = new PrecisFileStreamProcessor(new PrecisFileStream(PrecisConfigProperties.INPUT_DATA_FILE));
 	ps[2] = new DimValIndex(PrecisConfigProperties.THRESHOLD);
 	ps[3] = new BitSetFeed(new PrecisFileStream(PrecisConfigProperties.INPUT_DATA_FILE));
-	ps[4] = new CandidateGeneratorStage2(2);
+	ps[4] = new CandidateGeneratorStage2();
 	for(int i = 3; i <= PrecisConfigProperties.NO_OF_STAGES; i++){
 	    ps[i+2] = new CandidateGeneratorStg3Onwards(i);
 	}
