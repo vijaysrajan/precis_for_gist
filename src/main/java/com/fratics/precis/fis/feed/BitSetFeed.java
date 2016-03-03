@@ -65,7 +65,7 @@ public class BitSetFeed extends PrecisProcessor {
 	//read the input stream object
 	while ((str = ps.readStream()) != null) {
 	    BaseFeedElement e = new BaseFeedElement(
-		    (int) DimValIndexBase.getDimValBitSetLength());
+		    DimValIndexBase.getPrecisBitSetLength());
 	    elementAddedflag = false;
 	    metricGenerated = false;
 	    metric = 0.0;
@@ -94,7 +94,7 @@ public class BitSetFeed extends PrecisProcessor {
 			}
 			//Add the Value to the Fist Stage Candidates.
 			BaseCandidateElement bce = new BaseCandidateElement(
-				(int) DimValIndexBase.getDimValBitSetLength());
+				DimValIndexBase.getPrecisBitSetLength());
 			bce.setBit(index1);
 			bce.setBit(index2);
 			if (metricPrecis)

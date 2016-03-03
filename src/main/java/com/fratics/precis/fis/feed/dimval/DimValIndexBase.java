@@ -24,20 +24,25 @@ import com.fratics.precis.fis.util.PrecisConfigProperties;
  */
 
 public abstract class DimValIndexBase extends PrecisProcessor {
+    
+    //Definition of the Dimension , Dimension Value & reverse Index Maps.
     public static Map<String, Integer> dimMap = new TreeMap<String, Integer>();
     public static Map<Integer, String> revDimMap = new TreeMap<Integer, String>();
     public static Map<String, Integer> dimValMap = new TreeMap<String, Integer>();
     public static Map<Integer, String> revDimValMap = new TreeMap<Integer, String>();
 
-    public static long getDimValBitSetLength() {
+    //Length of the Precis Bit Set
+    public static int getPrecisBitSetLength() {
 	return dimMap.size() + dimValMap.size();
     }
 
+    //To String method to dump all Maps.
     public static String dumpIndexes() {
 	return dimMap + "\n" + dimValMap + "\n" + revDimMap + "\n"
 		+ revDimValMap + "\n";
     }
     
+    //Dumps the Maps to a feed file for debugging.
     public void dump() throws Exception {
 	try {
 	    PrintWriter pw = new PrintWriter(new File(PrecisConfigProperties.DIM_FEED));

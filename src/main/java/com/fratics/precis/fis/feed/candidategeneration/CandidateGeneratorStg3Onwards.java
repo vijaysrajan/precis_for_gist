@@ -65,7 +65,7 @@ public class CandidateGeneratorStg3Onwards extends PrecisProcessor {
     //Produces the cross product of the previous stage candidates to 
     //generate the current Stage potential candidates.
     private void crossProduct() {
-	int size = DimValIndex.dimMap.size() + DimValIndex.dimValMap.size();
+	int size = DimValIndex.getPrecisBitSetLength();
 	BitSet allOneBS1 = new BitSet(size);
 	allOneBS1.flip(0, size);
 
