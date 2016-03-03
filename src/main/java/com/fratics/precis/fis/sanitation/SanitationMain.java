@@ -1,11 +1,14 @@
 package com.fratics.precis.fis.sanitation;
 
+import java.io.File;
+
 import com.fratics.precis.fis.base.PrecisProcessor;
 import com.fratics.precis.fis.base.ValueObject;
 import com.fratics.precis.fis.schema.PrecisSchemaProcessor;
 import com.fratics.precis.fis.util.PrecisConfigProperties;
 import com.fratics.precis.reader.PrecisFileStream;
 import com.fratics.precis.reader.PrecisFileStreamProcessor;
+import com.fratics.precis.util.ConfigObject;
 
 public class SanitationMain extends PrecisProcessor {
 
@@ -40,16 +43,31 @@ public class SanitationMain extends PrecisProcessor {
     }
  
 
-    public static void run(String[] args) {
+    public static void main(String[] args) {
 	try {
+
+	    //Check for configuration file in command line args.
+	    if (args.length > 0) {
+		if(!new File(args[0]).exists()) throw new Exception("Configuration File " + args[0] + " doesn't exist");
+		ConfigObject.setConfigFile(args[0]);
+	    }
+	    
+	    //Initialize the precis configuration.
+	    PrecisConfigProperties.init();
+
+	    //Initialize the Value Objects.
 	    ValueObject vo = new ValueObject();
+	    
+	    //Create & Link the input and output objects to Value Objects.
 	    vo.inputObject = new SanitationInputObject();
 	    vo.resultObject = new SanitationOutputObject();
+	    
+	    //Spawn the main Driver & run.
 	    SanitationMain sm = new SanitationMain();
 	    sm.initialize();
 	    sm.process(vo);
 	    sm.unInitialize();
-	    //System.err.println(vo);
+	    System.err.println(vo);
 	    System.err.println();
 
 	} catch (Exception e) {
