@@ -9,7 +9,9 @@ import com.fratics.precis.fis.base.ValueObject;
 import com.fratics.precis.fis.util.PrecisConfigProperties;
 
 /*
- * DimValIndex Generates the values from the input feed which pass the metics threshold.
+ * DimValIndex Generates the values from the Input Characteristics Loaded from the Input feed.
+ * This Class checks if the metrics passed the threshold, adds the dimension value to the
+ * Dimension & Dimension Value Maps.
  * 
  * Two types of maps are created, they are:-
  * 1) Dimension map.
@@ -28,7 +30,8 @@ public class DimValIndex extends DimValIndexBase {
 	this.threshold = threshold;
     }
 
-    //
+    //Read the input characteristics, apply thershold to the field values,
+    //Add them to the Dim / Dim Val Maps.
     public boolean process(ValueObject o) throws Exception {
 	int valIndex = 0;
 	int dimIndex = 0;
@@ -57,7 +60,8 @@ public class DimValIndex extends DimValIndexBase {
 		}
 	    }
 	}
-	// inc dimValMap by dim_size.
+	//Increment the DimVal Index by the Dim Size().
+	//Create the reverse index maps also.
 	int inc = dimMap.size();
 	Iterator<String> it = dimValMap.keySet().iterator();
 	while (it.hasNext()) {
@@ -67,6 +71,7 @@ public class DimValIndex extends DimValIndexBase {
 	    dimValMap.put(key, m);
 	    revDimValMap.put(m, key);
 	}
+	//Dump the feed if necessary.
 	if(PrecisConfigProperties.DUMP_DIM_FEED) this.dump();
 	return true;
     }
