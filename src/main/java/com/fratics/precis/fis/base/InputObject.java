@@ -215,14 +215,14 @@ public abstract class InputObject implements Serializable {
     /*
      * The actual input data needs to loaded as per the input feed characteristics.
      * The feed characteristics, delimiters, definitions, serialization, deserialization,
-     * data formats, block data, sequence data, encryption formats needs to be taken care
+     * data formats, block data, sequence data, encryption formats, field info needs to be taken care
      * in the loadInput() method by the Deriving Class.
      * 
-     * So loadInput() method is a abstract method.
+     * So loadInputCharacteristics() method is a abstract method.
      * 
      */
 
-    public abstract void loadInput(Object o) throws Exception;
+    public abstract void loadInputCharacteristics(Object o) throws Exception;
 
     /*
      * A checker method to verify data initializations.

@@ -23,7 +23,7 @@ public class PrecisFileStreamProcessor extends PrecisProcessor {
     public boolean process(ValueObject o) throws Exception {
 	String[] str = null;
 	while ((str = ps.readStream()) != null) {
-	    o.inputObject.loadInput(str);
+	    o.inputObject.loadInputCharacteristics(str);
 	}
 	// Set the Number of Lines as Well.
 	o.inputObject.setNoOfLines(ps.getNoOfLines());

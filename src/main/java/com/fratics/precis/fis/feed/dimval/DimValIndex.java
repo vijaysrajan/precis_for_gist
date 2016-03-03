@@ -8,14 +8,27 @@ import com.fratics.precis.fis.base.MutableDouble;
 import com.fratics.precis.fis.base.ValueObject;
 import com.fratics.precis.fis.util.PrecisConfigProperties;
 
+/*
+ * DimValIndex Generates the values from the input feed which pass the metics threshold.
+ * 
+ * Two types of maps are created, they are:-
+ * 1) Dimension map.
+ * 2) Dimension Value map.
+ * 
+ * The reverse index maps are also created for the above.
+ * 
+ */
+
 public class DimValIndex extends DimValIndexBase {
 
+    //Threshold for the entire Precis application.
     private double threshold = 0.0;
 
     public DimValIndex(double threshold) {
 	this.threshold = threshold;
     }
 
+    //
     public boolean process(ValueObject o) throws Exception {
 	int valIndex = 0;
 	int dimIndex = 0;

@@ -12,7 +12,7 @@ public class CountPrecisInputObject extends InputObject {
     }
 
 
-    public void loadInput(Object o) throws Exception {
+    public void loadInputCharacteristics(Object o) throws Exception {
 	int index = 0;
 	String[] str = (String[]) o;
 	if (!this.isInitialized())

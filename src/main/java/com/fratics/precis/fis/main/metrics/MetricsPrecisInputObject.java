@@ -13,7 +13,7 @@ public class MetricsPrecisInputObject extends InputObject {
 	return (noOfFields > 0);
     }
 
-    public void loadInput(Object o) throws Exception {
+    public void loadInputCharacteristics(Object o) throws Exception {
 	int index = 0;
 	String[] str = (String[]) o;
 	if (!this.isInitialized())
