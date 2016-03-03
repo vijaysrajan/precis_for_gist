@@ -35,6 +35,6 @@ Running Precis in eclipse:-
 
 5) Open Run Configurations for this current project, Search Main Class to Run.
 
-6) Select "com.fratics.precis.fis.main.Main", Apply & RUn.
+6) Select "com.fratics.precis.fis.main.Main", Apply & Run.
 
 Happy Preciiiiiing.
