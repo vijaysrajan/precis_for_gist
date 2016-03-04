@@ -1,5 +1,6 @@
 package com.fratics.precis.fis.schema;
 
+import com.fratics.precis.exception.PrecisException;
 import com.fratics.precis.fis.base.PrecisProcessor;
 import com.fratics.precis.fis.base.PrecisStream;
 import com.fratics.precis.fis.base.Schema;
@@ -24,6 +25,7 @@ public class PrecisSchemaProcessor extends PrecisProcessor {
 	String[] str = null;
 	Schema schema = new Schema();
 	int i = 0;
+	int metricCount = 0;
 	while ((str = ps.readStream()) != null) {
 	    if (str[3].equalsIgnoreCase("t")) {
 		Schema.FieldType fieldType;
@@ -32,6 +34,8 @@ public class PrecisSchemaProcessor extends PrecisProcessor {
 		} else {
 		    fieldType = Schema.FieldType.METRIC;
 		    o.inputObject.setMetricIndex(i);
+		    if(metricCount > 0) throw new PrecisException("More than 1 Metric Count in Schema");
+		    metricCount++;
 		}
 		schema.addSchemaElement(str[0], i, fieldType);
 	    }

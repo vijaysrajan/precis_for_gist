@@ -9,6 +9,10 @@ public class MetricsPrecisInputObject extends InputObject {
     private static final long serialVersionUID = 6369672872079922497L;
     protected static final String DEF_VALUE = "";
 
+    public MetricsPrecisInputObject(){
+	this.countPrecis = false;
+    }
+    
     protected boolean isInitialized() {
 	return (noOfFields > 0);
     }
@@ -20,7 +24,6 @@ public class MetricsPrecisInputObject extends InputObject {
 	if (!this.isInitialized()) throw new PrecisException("Schema Not Loaded");
 	//Schema is loaded, check if metrics index is set. 
 	if(this.getMetricIndex() < 0) throw new PrecisException("No Metrics Field in Schema");
-	this.countPrecis = false;
 	for (int i = 0; i < fieldObjects.length; i++) {
 	    if (fieldObjects[i].getSchemaElement().fieldType == FieldType.METRIC)
 		continue;
