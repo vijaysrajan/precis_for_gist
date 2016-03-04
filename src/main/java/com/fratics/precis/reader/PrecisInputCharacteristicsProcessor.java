@@ -1,5 +1,7 @@
 package com.fratics.precis.reader;
 
+import java.util.Arrays;
+
 import com.fratics.precis.fis.base.PrecisProcessor;
 import com.fratics.precis.fis.base.PrecisStream;
 import com.fratics.precis.fis.base.ValueObject;
@@ -27,6 +29,7 @@ public class PrecisInputCharacteristicsProcessor extends PrecisProcessor {
 	}
 	// Set the Number of Lines as Well.
 	o.inputObject.setNoOfLines(ps.getNoOfLines());
+	//System.err.println(Arrays.toString(o.inputObject.getFieldObjects()));
 	return true;
     }
 }

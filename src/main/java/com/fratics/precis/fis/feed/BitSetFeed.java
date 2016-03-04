@@ -69,7 +69,7 @@ public class BitSetFeed extends PrecisProcessor {
 	    elementAddedflag = false;
 	    metricGenerated = false;
 	    metric = 0.0;
-	    for (int i = 0; i < str.length; i++) {
+	    for (int i = 0; i < fi.length; i++) {
 		
 		//Create the keys from input feed to check in DimValIndex.
 		String tmpDim = fi[i].getSchemaElement().fieldName;
