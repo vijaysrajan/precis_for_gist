@@ -9,7 +9,7 @@ import com.fratics.precis.fis.feed.dimval.DimValIndex;
 import com.fratics.precis.fis.schema.PrecisSchemaProcessor;
 import com.fratics.precis.fis.util.PrecisConfigProperties;
 import com.fratics.precis.reader.PrecisFileStream;
-import com.fratics.precis.reader.PrecisFileStreamProcessor;
+import com.fratics.precis.reader.PrecisInputCharacteristicsProcessor;
 
 public class CountPrecisMain extends PrecisProcessor {
 
@@ -19,7 +19,7 @@ public class CountPrecisMain extends PrecisProcessor {
 	//Atleast 2 stages will be run, even if the configuration is less.
 	ps = new PrecisProcessor[PrecisConfigProperties.NO_OF_STAGES + 3];
 	ps[0] = new PrecisSchemaProcessor(new PrecisFileStream(PrecisConfigProperties.INPUT_SCHEMA_FILE, PrecisConfigProperties.SCHEMA_RECORD_SEPERATOR));
-	ps[1] = new PrecisFileStreamProcessor(new PrecisFileStream(PrecisConfigProperties.INPUT_DATA_FILE));
+	ps[1] = new PrecisInputCharacteristicsProcessor(new PrecisFileStream(PrecisConfigProperties.INPUT_DATA_FILE));
 	ps[2] = new DimValIndex(PrecisConfigProperties.THRESHOLD);
 	ps[3] = new BitSetFeed(new PrecisFileStream(PrecisConfigProperties.INPUT_DATA_FILE));
 	ps[4] = new CandidateGeneratorStage2();

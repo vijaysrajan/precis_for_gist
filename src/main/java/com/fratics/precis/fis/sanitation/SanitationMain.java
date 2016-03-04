@@ -7,7 +7,7 @@ import com.fratics.precis.fis.base.ValueObject;
 import com.fratics.precis.fis.schema.PrecisSchemaProcessor;
 import com.fratics.precis.fis.util.PrecisConfigProperties;
 import com.fratics.precis.reader.PrecisFileStream;
-import com.fratics.precis.reader.PrecisFileStreamProcessor;
+import com.fratics.precis.reader.PrecisInputCharacteristicsProcessor;
 import com.fratics.precis.util.ConfigObject;
 
 public class SanitationMain extends PrecisProcessor {
@@ -17,7 +17,7 @@ public class SanitationMain extends PrecisProcessor {
     public SanitationMain() {
 	ps = new PrecisProcessor[3];
 	ps[0] = new PrecisSchemaProcessor(new PrecisFileStream(PrecisConfigProperties.INPUT_SCHEMA_FILE, PrecisConfigProperties.SCHEMA_RECORD_SEPERATOR));
-	ps[1] = new PrecisFileStreamProcessor(new PrecisFileStream(PrecisConfigProperties.INPUT_DATA_FILE));
+	ps[1] = new PrecisInputCharacteristicsProcessor(new PrecisFileStream(PrecisConfigProperties.INPUT_DATA_FILE));
 	ps[2] = new SanitationRuleProcessor();
     }
 

@@ -4,11 +4,11 @@ import com.fratics.precis.fis.base.PrecisProcessor;
 import com.fratics.precis.fis.base.PrecisStream;
 import com.fratics.precis.fis.base.ValueObject;
 
-public class PrecisFileStreamProcessor extends PrecisProcessor {
+public class PrecisInputCharacteristicsProcessor extends PrecisProcessor {
 
     private PrecisStream ps = null;
 
-    public PrecisFileStreamProcessor(PrecisStream ps) {
+    public PrecisInputCharacteristicsProcessor(PrecisStream ps) {
 	this.ps = ps;
     }
 
