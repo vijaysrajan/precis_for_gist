@@ -16,8 +16,10 @@ public class MetricsPrecisInputObject extends InputObject {
     public void loadInputCharacteristics(Object o) throws Exception {
 	int index = 0;
 	String[] str = (String[]) o;
-	if (!this.isInitialized())
-	    throw new PrecisException("Schema Not Loaded");
+	//Check if Schema is loaded
+	if (!this.isInitialized()) throw new PrecisException("Schema Not Loaded");
+	//Schema is loaded, check if metrics index is set. 
+	if(this.getMetricIndex() < 0) throw new PrecisException("No Metrics Field in Schema");
 	this.countPrecis = false;
 	for (int i = 0; i < fieldObjects.length; i++) {
 	    if (fieldObjects[i].getSchemaElement().fieldType == FieldType.METRIC)

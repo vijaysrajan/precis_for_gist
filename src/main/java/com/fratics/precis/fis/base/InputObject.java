@@ -41,7 +41,7 @@ public abstract class InputObject implements Serializable {
     protected BaseFeedPartitioner partitioner = null;
     
     //Column index of the metric field in the input data record.
-    protected int metricIndex;
+    protected int metricIndex = -1;
     
     //Threshold applied for candidate generation.
     protected double threshold;

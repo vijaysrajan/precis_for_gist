@@ -1,7 +1,5 @@
 package com.fratics.precis.reader;
 
-import java.util.Arrays;
-
 import com.fratics.precis.fis.base.PrecisProcessor;
 import com.fratics.precis.fis.base.PrecisStream;
 import com.fratics.precis.fis.base.ValueObject;
