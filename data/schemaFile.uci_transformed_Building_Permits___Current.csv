@@ -1,0 +1,20 @@
+Application/Permit Number:d:string:t
+Permit Type:d:string:t
+Address:d:string:t
+Description:d:string:t
+Category:d:string:t
+Action Type:d:string:t
+Work Type:d:string:t
+Value:d:string:t
+Applicant Name:d:string:t
+Application Date:d:string:t
+Issue Date:d:string:t
+Final Date:d:string:t
+Expiration Date:d:string:t
+Status:d:string:t
+Contractor:d:string:t
+Permit and Complaint Status URL:d:string:t
+Master Use Permit:d:string:t
+Latitude:d:string:t
+Longitude:d:string:t
+Location:d:string:t
