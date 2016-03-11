@@ -60,7 +60,7 @@ public class PrecisFileStream extends PrecisStream {
 	    //Handle Comments
 	    while(thisLine != null && thisLine.startsWith("#")) thisLine = br.readLine();
 	    if (thisLine != null) {
-		return thisLine.split(this.recordSeperator);
+		return thisLine.split(this.recordSeperator, -1); //added limit of -1 to allow trailing empty strings.
 	    } else {
 		return null;
 	    }
