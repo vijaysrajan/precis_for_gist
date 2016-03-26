@@ -20,7 +20,7 @@ Running Precis in Maven:-
 
 	a) Precis Generation     - java -cp target/precis-0.0.1-SNAPSHOT.jar com.fratics.precis.fis.main.Main
 	b) Threshold Generation  - java -cp target/precis-0.0.1-SNAPSHOT.jar com.fratics.precis.fis.threshold.ThresholdMain
-	c) Sanitation Generation - java -cp target/precis-0.0.1-SNAPSHOT.jar com.fratics.precis.fis.sanitation.SaniationMain
+	c) Sanitation Generation - java -cp target/precis-0.0.1-SNAPSHOT.jar com.fratics.precis.fis.sanitation.SanitationMain
 
 7) you can change the Precis configuration under "conf/precisconfig.properties"
 
@@ -43,6 +43,6 @@ Running Precis in eclipse:-
 
 	a) Precis Generation     - com.fratics.precis.fis.main.Main
 	b) Threshold Generation  - com.fratics.precis.fis.threshold.ThresholdMain
-	c) Sanitation Generation - com.fratics.precis.fis.sanitation.SaniationMain
+	c) Sanitation Generation - com.fratics.precis.fis.sanitation.SanitationMain
 
 Happy Preciiiiiing.
