@@ -16,7 +16,11 @@ Running Precis in Maven:-
 
 5) Run maven compile with the command --> "mvn clean package"
 
-6) Run the java -cp target/precis-0.0.1-SNAPSHOT.jar com.fratics.precis.fis.main.Main
+6) Run the Programs as below :-
+
+	a) Precis Generation     - java -cp target/precis-0.0.1-SNAPSHOT.jar com.fratics.precis.fis.main.Main
+	b) Threshold Generation  - java -cp target/precis-0.0.1-SNAPSHOT.jar com.fratics.precis.fis.threshold.ThresholdMain
+	c) Sanitation Generation - java -cp target/precis-0.0.1-SNAPSHOT.jar com.fratics.precis.fis.sanitation.SaniationMain
 
 7) you can change the Precis configuration under "conf/precisconfig.properties"
 
@@ -35,6 +39,10 @@ Running Precis in eclipse:-
 
 5) Open Run Configurations for this current project, Search Main Class to Run.
 
-6) Select "com.fratics.precis.fis.main.Main", Apply & Run.
+6) Select the corresponding main class as required as given below, Apply & Run.
+
+	a) Precis Generation     - com.fratics.precis.fis.main.Main
+	b) Threshold Generation  - com.fratics.precis.fis.threshold.ThresholdMain
+	c) Sanitation Generation - com.fratics.precis.fis.sanitation.SaniationMain
 
 Happy Preciiiiiing.
