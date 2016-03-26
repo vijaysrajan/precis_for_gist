@@ -3,16 +3,16 @@ package com.fratics.precis.fis.feed.candidategeneration;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.Iterator;
 
 import com.fratics.precis.fis.base.BaseCandidateElement;
 import com.fratics.precis.fis.base.BaseFeedElement;
+import com.fratics.precis.fis.base.InputObject.CandidateElementList;
 import com.fratics.precis.fis.base.PrecisProcessor;
 import com.fratics.precis.fis.base.ValueObject;
 import com.fratics.precis.fis.feed.BaseFeedPartitioner;
 import com.fratics.precis.fis.feed.BaseFeedPartitioner.BaseFeedPartitionerReader;
 import com.fratics.precis.fis.feed.dimval.DimValIndex;
-import com.fratics.precis.fis.util.Util;
 
 /*
  * This is the Candidate Generator from 3rd Stage Onwards. This is developed as a flow processor.
@@ -25,14 +25,14 @@ import com.fratics.precis.fis.util.Util;
  */
 
 public class CandidateGeneratorStg3Onwards extends PrecisProcessor {
-    
+
     private int currStage = 3;
     private ValueObject o;
     private HashMap<BitSet, ArrayList<BaseCandidateElement>> cdParttion;
-    private HashSet<BitSet> cdSet;
+    private CandidateElementList cdSet;
 
-    //Checks if all the subset of the generated candidates
-    //are present in the previous stage candidate set.
+    // Checks if all the subset of the generated candidates
+    // are present in the previous stage candidate set.
     public boolean isPresent(BitSet bs1) {
 	boolean result = true;
 	int valIndex = -1;
@@ -49,7 +49,7 @@ public class CandidateGeneratorStg3Onwards extends PrecisProcessor {
 	    bs1.clear(dimIndex);
 	    bs1.clear(valIndex);
 
-	    if (cdSet.contains(bs1)) {
+	    if (cdSet.isPresent(new BaseCandidateElement(bs1, 0.0))) {
 		bs1.set(dimIndex);
 		bs1.set(valIndex);
 	    } else {
@@ -62,8 +62,8 @@ public class CandidateGeneratorStg3Onwards extends PrecisProcessor {
 	return result;
     }
 
-    //Produces the cross product of the previous stage candidates to 
-    //generate the current Stage potential candidates.
+    // Produces the cross product of the previous stage candidates to
+    // generate the current Stage potential candidates.
     private void crossProduct() {
 	int size = DimValIndex.getPrecisBitSetLength();
 	BitSet allOneBS1 = new BitSet(size);
@@ -81,8 +81,8 @@ public class CandidateGeneratorStg3Onwards extends PrecisProcessor {
 			BitSet newCand = (BitSet) bsList.get(i).getBitSet()
 				.clone();
 			newCand.or(bsList.get(j).getBitSet());
-			//Check all combinations of the current candidate in the 
-			//previous stage candidates.
+			// Check all combinations of the current candidate in
+			// the previous stage candidates.
 			if (isPresent(newCand)) {
 			    o.inputObject.addCandidate(newCand);
 			}
@@ -108,45 +108,49 @@ public class CandidateGeneratorStg3Onwards extends PrecisProcessor {
 	System.err.println("Current Stage ::" + this.currStage);
 	System.err.println("No of Candidates from Previous Stage ::"
 		+ o.inputObject.prevCandidateSet.size());
-	
-	//Initialize Reader
+
+	// Initialize Reader
 	bp.initReader(this.currStage);
 
-	//Generate Cross Product
+	// Generate Cross Product
 	crossProduct();
+
 	System.err.println("No of Candidates Before Applying Threshold::"
 		+ o.inputObject.currCandidateSet.size());
+
 	BaseFeedPartitionerReader bpr = bp.getReader();
 	boolean countPrecis = o.inputObject.isCountPrecis();
-	
-	//Read the Input feed from Partitioner as bit set feed and apply the metrics
-	//to the candidates.
+
+	// Read the Input feed from Partitioner as bit set feed and apply the
+	// metrics
+	// to the candidates.
 	while (bpr.hasNext()) {
 	    BaseFeedElement be = bpr.getNext();
 	    // System.err.println(be);
-	    for (ArrayList<BaseCandidateElement> al : o.inputObject.currCandidatePart
-		    .values()) {
-		for (BaseCandidateElement bce : al) {
-		    if (bce.and(be.getBitSet()).equals(bce.getBitSet())) {
-			if (countPrecis)
-			    bce.incrMetric();
-			else
-			    bce.incrMetricBy(be.getMetric());
-		    }
+	    for (Iterator<BaseCandidateElement> i = o.inputObject.currCandidateSet
+		    .iterator(); i.hasNext();) {
+		BaseCandidateElement bce = i.next();
+		if (bce.and(be.getBitSet()).equals(bce.getBitSet())) {
+		    if (countPrecis)
+			bce.incrMetric();
+		    else
+			bce.incrMetricBy(be.getMetric());
+		}
+		// apply threshold
+		if (bce.getMetric() >= o.inputObject.getThreshold()) {
+		    i.remove();
+		    o.inputObject.addSuccessFulCandidate(bce.getBitSet());
 		}
 	    }
 	}
 	bp.closeReader();
-	
-	//Apply the threshold handler.
-	boolean ret = o.inputObject.applyThreshold();
-	System.err.println("No of Candidates After Applying Threshold::"
-		+ o.inputObject.currCandidateSet.size());
 
-	//Dump the Candidate Stage.
-	if(ret) Util.dump(this.currStage, o);
-	
-	//Move the precis context to next stage - 3
+	// Apply the threshold handler.
+	boolean ret = (o.inputObject.succCandidateSet.size() > 0);
+	System.err.println("No of Candidates After Applying Threshold::"
+		+ o.inputObject.succCandidateSet.size());
+
+	// Move the precis context to next stage - 3
 	o.inputObject.moveToNextStage();
 	return ret;
     }

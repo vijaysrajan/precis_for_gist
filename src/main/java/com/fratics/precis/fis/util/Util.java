@@ -2,8 +2,8 @@ package com.fratics.precis.fis.util;
 
 import java.io.File;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.HashSet;
 
 import com.fratics.precis.fis.base.BaseCandidateElement;
 import com.fratics.precis.fis.base.ValueObject;
@@ -51,13 +51,10 @@ public class Util {
 	    }
 
 	} else {
-	    for (ArrayList<BaseCandidateElement> al : o.inputObject.currCandidatePart
-		    .values()) {
-
-		for (BaseCandidateElement bce : al) {
-		    ret = convertToDims(stage, bce);
-		    pw.write(ret);
-		}
+	    HashSet<BaseCandidateElement> al = o.inputObject.candidateStore[stage - 1];
+	    for (BaseCandidateElement bce : al) {
+		ret = convertToDims(stage, bce);
+		pw.write(ret);
 	    }
 	}
     }
@@ -65,19 +62,23 @@ public class Util {
     public static void dump(int currStage, ValueObject o) throws Exception {
 	try {
 	    String outputDir = PrecisConfigProperties.OUTPUT_DIR + "/";
-	    String fileName = PrecisConfigProperties.OUPUT_CANDIDATE_FILE_PATTERN.replace("${stage_number}", ""+currStage);
+	    String fileName = PrecisConfigProperties.OUPUT_CANDIDATE_FILE_PATTERN
+		    .replace("${stage_number}", "" + currStage);
 	    PrintWriter pw = new PrintWriter(new File(outputDir + fileName));
 	    writeCandidates(currStage, pw, o);
 	    pw.flush();
 	    pw.close();
 
 	    if (PrecisConfigProperties.GENERATE_RAW_CANDIDATE_FILE) {
-		fileName = PrecisConfigProperties.OUPUT_RAW_CANDIDATE_FILE_PATTERN.replace("${stage_number}", ""+currStage);
+		fileName = PrecisConfigProperties.OUPUT_RAW_CANDIDATE_FILE_PATTERN
+			.replace("${stage_number}", "" + currStage);
 		pw = new PrintWriter(new File(outputDir + fileName));
-		if(currStage  == 1)
-		    pw.append(o.inputObject.firstStageCandidates.keySet().toString());
+		if (currStage == 1)
+		    for (BitSet b : o.inputObject.firstStageCandidates.keySet())
+			pw.write(b.toString() + "\n");
 		else
-		    pw.append(o.inputObject.currCandidateSet.toString());
+		    for (BaseCandidateElement bce : o.inputObject.candidateStore[currStage - 1])
+			pw.write(bce.getBitSet().toString() + "\n");
 		pw.flush();
 		pw.close();
 	    }

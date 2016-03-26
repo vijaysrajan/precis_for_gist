@@ -39,8 +39,16 @@ public class BaseCandidateElement extends BaseFeedElement {
 	this.metric += metric;
     }
 
-    public boolean equals(BaseCandidateElement b) {
-	return this.b == b.getBitSet();
+    public int hashCode() {
+	return this.b.hashCode();
+    }
+
+    public boolean equals(Object b) {
+	if (b instanceof BaseCandidateElement) {
+	    BaseCandidateElement e = (BaseCandidateElement) b;
+	    return this.b.equals(e.getBitSet());
+	}
+	return false;
     }
 
     public String toString() {

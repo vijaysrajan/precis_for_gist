@@ -23,15 +23,15 @@ import com.fratics.precis.fis.util.PrecisConfigProperties;
 
 public class DimValIndex extends DimValIndexBase {
 
-    //Threshold for the entire Precis application.
+    // Threshold for the entire Precis application.
     private double threshold = 0.0;
 
     public DimValIndex(double threshold) {
 	this.threshold = threshold;
     }
 
-    //Read the input characteristics, apply thershold to the field values,
-    //Add them to the Dim / Dim Val Maps.
+    // Read the input characteristics, apply thershold to the field values,
+    // Add them to the Dim / Dim Val Maps.
     public boolean process(ValueObject o) throws Exception {
 	int valIndex = 0;
 	int dimIndex = 0;
@@ -52,16 +52,19 @@ public class DimValIndex extends DimValIndexBase {
 		    }
 		    if (!dimValMap
 			    .containsKey(fi[i].getSchemaElement().fieldName
-				    + PrecisConfigProperties.OUTPUT_DIMVAL_SEPERATOR + key)) {
-			dimValMap.put(fi[i].getSchemaElement().fieldName
-				+ PrecisConfigProperties.OUTPUT_DIMVAL_SEPERATOR + key, valIndex);
+				    + PrecisConfigProperties.OUTPUT_DIMVAL_SEPERATOR
+				    + key)) {
+			dimValMap
+				.put(fi[i].getSchemaElement().fieldName
+					+ PrecisConfigProperties.OUTPUT_DIMVAL_SEPERATOR
+					+ key, valIndex);
 			valIndex++;
 		    }
 		}
 	    }
 	}
-	//Increment the DimVal Index by the Dim Size().
-	//Create the reverse index maps also.
+	// Increment the DimVal Index by the Dim Size().
+	// Create the reverse index maps also.
 	int inc = dimMap.size();
 	Iterator<String> it = dimValMap.keySet().iterator();
 	while (it.hasNext()) {
@@ -71,8 +74,9 @@ public class DimValIndex extends DimValIndexBase {
 	    dimValMap.put(key, m);
 	    revDimValMap.put(m, key);
 	}
-	//Dump the feed if necessary.
-	if(PrecisConfigProperties.DUMP_DIM_FEED) this.dump();
+	// Dump the feed if necessary.
+	if (PrecisConfigProperties.DUMP_DIM_FEED)
+	    this.dump();
 	return true;
     }
 }

@@ -22,28 +22,27 @@ public class PrecisConfigProperties {
     public static String DIMVAL_FEED = "./data/dimValFeed.txt";
     public static boolean DUMP_DIM_FEED = false;
     public static boolean DUMP_BITSET_FEED = false;
-    
-    
-    private static String convertSpecialChar(String s){
-	if(s.charAt(0) == '\\' && s.charAt(1) == 'u'){
+
+    private static String convertSpecialChar(String s) {
+	if (s.charAt(0) == '\\' && s.charAt(1) == 'u') {
 	    String tmp = s.substring(2);
 	    String ret = "";
-	    try{
+	    try {
 		int hexVal = Integer.parseInt(tmp, 16);
 		ret += hexVal;
 		return ret;
-	    }catch(Exception e){
+	    } catch (Exception e) {
 		return null;
 	    }
-	}else{
+	} else {
 	    return s;
 	}
     }
-    
+
     public static void init() throws Exception {
-	    ConfigObject c = new ConfigObject();
-	    c.initialize();
-	    loadConfig(c);
+	ConfigObject c = new ConfigObject();
+	c.initialize();
+	loadConfig(c);
     }
 
     public static void loadConfig(ConfigObject c) {
@@ -56,7 +55,8 @@ public class PrecisConfigProperties {
 	tmp = c.getProperties().getProperty("INPUT_RECORD_SEPERATOR");
 	if (!(tmp == null || tmp.equalsIgnoreCase(""))) {
 	    String s = convertSpecialChar(tmp);
-	    if (s !=  null) INPUT_RECORD_SEPERATOR = s;
+	    if (s != null)
+		INPUT_RECORD_SEPERATOR = s;
 	}
 
 	tmp = c.getProperties().getProperty("INPUT_DATA_FILE");
@@ -67,7 +67,8 @@ public class PrecisConfigProperties {
 	tmp = c.getProperties().getProperty("OUTPUT_RECORD_SEPERATOR");
 	if (!(tmp == null || tmp.equalsIgnoreCase(""))) {
 	    String s = convertSpecialChar(tmp);
-	    if (s !=  null) OUTPUT_RECORD_SEPERATOR = s;
+	    if (s != null)
+		OUTPUT_RECORD_SEPERATOR = s;
 	}
 
 	tmp = c.getProperties().getProperty("INPUT_SCHEMA_FILE");
@@ -79,7 +80,8 @@ public class PrecisConfigProperties {
 	if (!(tmp == null || tmp.equalsIgnoreCase(""))) {
 	    try {
 		NO_OF_STAGES = Integer.parseInt(tmp);
-		if(NO_OF_STAGES <= 0) NO_OF_STAGES = 1;
+		if (NO_OF_STAGES <= 0)
+		    NO_OF_STAGES = 1;
 	    } catch (NumberFormatException e) {
 	    }
 	}
@@ -103,7 +105,7 @@ public class PrecisConfigProperties {
 	if (!(tmp == null || tmp.equalsIgnoreCase(""))) {
 	    DUMP_DIM_FEED = Boolean.parseBoolean(tmp);
 	}
-	
+
 	tmp = c.getProperties().getProperty("DUMP_BITSET_FEED");
 	if (!(tmp == null || tmp.equalsIgnoreCase(""))) {
 	    DUMP_BITSET_FEED = Boolean.parseBoolean(tmp);
@@ -120,7 +122,8 @@ public class PrecisConfigProperties {
 	tmp = c.getProperties().getProperty("OUTPUT_DIMVAL_SEPERATOR");
 	if (!(tmp == null || tmp.equalsIgnoreCase(""))) {
 	    String s = convertSpecialChar(tmp);
-	    if (s !=  null) OUTPUT_DIMVAL_SEPERATOR = s;
+	    if (s != null)
+		OUTPUT_DIMVAL_SEPERATOR = s;
 	}
 
 	tmp = c.getProperties().getProperty("OUPUT_RAW_CANDIDATE_FILE_PATTERN");

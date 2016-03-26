@@ -6,10 +6,12 @@ import java.util.Arrays;
 import java.util.BitSet;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.fratics.precis.fis.base.Schema.SchemaElement;
 import com.fratics.precis.fis.feed.BaseFeedPartitioner;
 import com.fratics.precis.fis.feed.dimval.DimValIndex;
+import com.fratics.precis.fis.util.PrecisConfigProperties;
 
 /*
  * The Input Object is the Abstract Base Class for all the Input Objects in this application.
@@ -24,45 +26,78 @@ import com.fratics.precis.fis.feed.dimval.DimValIndex;
 public abstract class InputObject implements Serializable {
 
     private static final long serialVersionUID = -6326248205037370805L;
-    
-    //No of Dimensions in the Input feed.
+
+    // No of Dimensions in the Input feed.
     protected int noOfFields = 0;
-    
-    //No of Lines in the data stream (or) flat file.
+
+    // No of Lines in the data stream (or) flat file.
     private long noOfLines = 0;
-    
-    //Field Objects represents a column in the data feed.
+
+    // Field Objects represents a column in the data feed.
     protected FieldObject[] fieldObjects = null;
-    
-    //the current application is a Count Precis (or) Metric Precis.
+
+    // the current application is a Count Precis (or) Metric Precis.
     protected boolean countPrecis = true;
-    
-    //Partitioned Input Feed.
+
+    // Partitioned Input Feed.
     protected BaseFeedPartitioner partitioner = null;
-    
-    //Column index of the metric field in the input data record.
+
+    // Column index of the metric field in the input data record.
     protected int metricIndex = -1;
-    
-    //Threshold applied for candidate generation.
+
+    // Threshold applied for candidate generation.
     protected double threshold;
-    
-    //Current Precis Stage's Candidate Partition,
-    //The Candidates as partitioned & grouped in a arraylist by a bitset object.
-    //The bitset object is derived from the first (n-1) dim bits set & (n-1) value bits set.
+
+    // Current Precis Stage's Candidate Partition,
+    // The Candidates as partitioned & grouped in a arraylist by a bitset
+    // object.
+    // The bitset object is derived from the first (n-1) dim bits set & (n-1)
+    // value bits set.
     public HashMap<BitSet, ArrayList<BaseCandidateElement>> currCandidatePart = new HashMap<BitSet, ArrayList<BaseCandidateElement>>();
-    
-    //Previous Precis Stage's Candidates Partition, the current candidate Partition
-    //is generated from the previous candidate partition.
+
+    // Previous Precis Stage's Candidates Partition, the current candidate
+    // Partition
+    // is generated from the previous candidate partition.
     public HashMap<BitSet, ArrayList<BaseCandidateElement>> prevCandidatePart = new HashMap<BitSet, ArrayList<BaseCandidateElement>>();
-    
-    //Current Precis Stage's Candidates List.
-    public HashSet<BitSet> currCandidateSet = new HashSet<BitSet>();
-    
-    //Previous Precis Stage's Candidate List.
-    public HashSet<BitSet> prevCandidateSet = new HashSet<BitSet>();
-    
-    //Precis First Stage Candidate Partition.
+
+    // Current Precis Stage's Candidates List.
+    public CandidateElementList currCandidateSet = new CandidateElementList();
+
+    // Successful Precis Stage's Candidates List.
+    public CandidateElementList succCandidateSet = new CandidateElementList();
+
+    // Previous Precis Stage's Candidate List.
+    public CandidateElementList prevCandidateSet = new CandidateElementList();
+
+    // Precis First Stage Candidate Partition.
     public HashMap<BitSet, BaseCandidateElement> firstStageCandidates = new HashMap<BitSet, BaseCandidateElement>();
+
+    // Tells the threads invoked that processing has infact completed & which
+    // stage its completed.
+    public int exitedStage = 2;
+    public boolean processingCompleted = false;
+
+    // Thread Handler for Writing
+    public Thread threadHandle = null;
+
+    // Candidates Persistant Store, used at the end to generate Candidates and
+    // their metrics.
+    public class CandidateElementList extends HashSet<BaseCandidateElement> {
+	private static final long serialVersionUID = 1L;
+	public AtomicBoolean dataLoaded = new AtomicBoolean(false);
+	public boolean isPresent(BaseCandidateElement bce) {
+	    return super.contains(bce);
+	}
+    }
+
+    public CandidateElementList[] candidateStore = new CandidateElementList[PrecisConfigProperties.NO_OF_STAGES];
+
+    public InputObject() {
+
+	for (int i = 0; i < PrecisConfigProperties.NO_OF_STAGES; i++) {
+	    candidateStore[i] = new CandidateElementList();
+	}
+    }
 
     public int currentStage = -1;
 
@@ -73,7 +108,7 @@ public abstract class InputObject implements Serializable {
     public void setThreshold(double threshold) {
 	this.threshold = threshold;
     }
-    
+
     public BaseFeedPartitioner getPartitioner() {
 	return partitioner;
     }
@@ -119,30 +154,33 @@ public abstract class InputObject implements Serializable {
     }
 
     /*
-     * Add a candidate to the Candidate Partition and Candidate List.  
-     * 
+     * Add a candidate to the Candidate Partition and Candidate List.
      */
-    
+
     public void addCandidate(BitSet b) {
+	currCandidateSet.add(new BaseCandidateElement(b, 0.0));
+    }
+
+    public void addSuccessFulCandidate(BitSet b) {
 	int dimSetBit = b.previousSetBit(DimValIndex.dimMap.size() - 1);
 	int valSetBit = b.previousSetBit(DimValIndex.dimMap.size()
 		+ DimValIndex.dimValMap.size() - 1);
 	BitSet tmp = (BitSet) b.clone();
 	tmp.clear(dimSetBit);
 	tmp.clear(valSetBit);
+	BaseCandidateElement e = new BaseCandidateElement(b, 0.0);
 	if (currCandidatePart.containsKey(tmp)) {
-	    currCandidatePart.get(tmp).add(new BaseCandidateElement(b, 0.0));
+	    currCandidatePart.get(tmp).add(e);
 	} else {
 	    ArrayList<BaseCandidateElement> al = new ArrayList<BaseCandidateElement>();
-	    al.add(new BaseCandidateElement(b, 0.0));
+	    al.add(e);
 	    currCandidatePart.put(tmp, al);
 	}
-	currCandidateSet.add(b);
+	succCandidateSet.add(e);
     }
-    
+
     /*
      * Add a Fist Stage Candidate.
-     * 
      */
 
     public void addFirstStageCandidateElement(BaseCandidateElement b) {
@@ -153,51 +191,27 @@ public abstract class InputObject implements Serializable {
 	    this.firstStageCandidates.put(b.getBitSet(), b);
 	}
     }
-    
+
     /*
-     * As a Precis Stage Completes, this method moves Precis Execution context from the current stage
-     * to the Next Stage. 
-     * 
+     * As a Precis Stage Completes, this method moves Precis Execution context
+     * from the current stage to the Next Stage.
      */
 
     public void moveToNextStage() {
 	prevCandidatePart = currCandidatePart;
 	currCandidatePart = new HashMap<BitSet, ArrayList<BaseCandidateElement>>();
-	prevCandidateSet = currCandidateSet;
-	currCandidateSet = new HashSet<BitSet>();
+	// preserve the current stage.
+	candidateStore[this.currentStage - 1] = succCandidateSet;
+	candidateStore[this.currentStage - 1].dataLoaded.compareAndSet(false, true);
+	prevCandidateSet = succCandidateSet;
+	currCandidateSet = new CandidateElementList();
+	succCandidateSet = new CandidateElementList();
     }
 
     /*
-     * Applies the Threshold on the current stage candidates, keeps the candidates which
-     * has passed the threshold and rejects/removes the fail over candidates.
-     * 
-     * Returns success if candidates are available for next stage, failure otherwise.
-     * 
-     */
-    
-    public boolean applyThreshold() {
-	
-	if(this.currCandidateSet.size() <= 0) return false;
-	
-	for (ArrayList<BaseCandidateElement> al : this.currCandidatePart
-		.values()) {
-	    ArrayList<BaseCandidateElement> removeList = new ArrayList<BaseCandidateElement>();
-	    for (BaseCandidateElement bce : al) {
-		if (bce.getMetric() < this.threshold)
-		    removeList.add(bce);
-	    }
-	    for (BaseCandidateElement bce : removeList) {
-		al.remove(bce);
-		this.currCandidateSet.remove(bce.getBitSet());
-	    }
-	}
-	return (this.currCandidateSet.size() > 0);
-    }
-
-    /*
-     * Applies the Schema Object, generated by the PrecisSchemaProcessor on the input data feed.
-     * The schema elements are added to the respective fields in the field objects.
-     * 
+     * Applies the Schema Object, generated by the PrecisSchemaProcessor on the
+     * input data feed. The schema elements are added to the respective fields
+     * in the field objects.
      */
 
     public void loadSchema(Schema sch) {
@@ -211,38 +225,36 @@ public abstract class InputObject implements Serializable {
 	    fieldObjects[i].setSchemaElement(list[i]);
 	}
     }
-    
+
     /*
-     * The actual input data needs to loaded as per the input feed characteristics.
-     * The feed characteristics, delimiters, definitions, serialization, deserialization,
-     * data formats, block data, sequence data, encryption formats, field info needs to be taken care
-     * in the loadInput() method by the Deriving Class.
+     * The actual input data needs to loaded as per the input feed
+     * characteristics. The feed characteristics, delimiters, definitions,
+     * serialization, deserialization, data formats, block data, sequence data,
+     * encryption formats, field info needs to be taken care in the loadInput()
+     * method by the Deriving Class.
      * 
      * So loadInputCharacteristics() method is a abstract method.
-     * 
      */
 
     public abstract void loadInputCharacteristics(Object o) throws Exception;
 
     /*
      * A checker method to verify data initializations.
-     * 
      */
     protected abstract boolean isInitialized();
 
     /*
-     * A simple toString() method defined to provide the current state of the 
+     * A simple toString() method defined to provide the current state of the
      * Precis Execution and its relevent objects contained in the input object.
-     * 
      */
- 
+
     public String toString() {
-	 return "=====================================================\n" + 
-		"\nNo of Records :: " + this.getNoOfLines() + "\n\n" +
-		"isCountPrecis :: " +  this.isCountPrecis() + "\n\n" +
-		"Field Objects :: " + Arrays.toString(fieldObjects) + "\n\n" +
-		"Stages Run :: " + this.currentStage + "\n\n" + 
-		"DimVal Indexes :: " +  DimValIndex.dumpIndexes() +  "\n" +
-		"=====================================================\n";
+	return "=====================================================\n"
+		+ "\nNo of Records :: " + this.getNoOfLines() + "\n\n"
+		+ "isCountPrecis :: " + this.isCountPrecis() + "\n\n"
+		+ "Field Objects :: " + Arrays.toString(fieldObjects) + "\n\n"
+		+ "Stages Run :: " + this.currentStage + "\n\n"
+		+ "DimVal Indexes :: " + DimValIndex.dumpIndexes() + "\n"
+		+ "=====================================================\n";
     }
 }

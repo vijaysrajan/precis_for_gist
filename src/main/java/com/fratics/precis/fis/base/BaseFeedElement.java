@@ -81,11 +81,10 @@ public class BaseFeedElement {
     }
 
     /*
-     * Cardinality divided by 2 gives you the actual number of 
-     * dimensions or values in the input record.
-     * 
+     * Cardinality divided by 2 gives you the actual number of dimensions or
+     * values in the input record.
      */
-    
+
     public int getNumberofDimVals() {
 	return this.b.cardinality() / 2;
     }

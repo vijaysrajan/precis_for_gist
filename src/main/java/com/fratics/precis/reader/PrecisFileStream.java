@@ -13,12 +13,12 @@ public class PrecisFileStream extends PrecisStream {
 
     private BufferedReader br = null;
     private String recordSeperator = PrecisConfigProperties.INPUT_RECORD_SEPERATOR;
-    
+
     public PrecisFileStream(String fileName) {
 	super(fileName);
     }
-    
-    public PrecisFileStream(String fileName, String recordSeperator){
+
+    public PrecisFileStream(String fileName, String recordSeperator) {
 	super(fileName);
 	this.recordSeperator = recordSeperator;
     }
@@ -57,10 +57,16 @@ public class PrecisFileStream extends PrecisStream {
     private String[] read() throws Exception {
 	try {
 	    String thisLine = br.readLine();
-	    //Handle Comments
-	    while(thisLine != null && thisLine.startsWith("#")) thisLine = br.readLine();
+	    // Handle Comments
+	    while (thisLine != null && thisLine.startsWith("#"))
+		thisLine = br.readLine();
 	    if (thisLine != null) {
-		return thisLine.split(this.recordSeperator, -1); //added limit of -1 to allow trailing empty strings.
+		return thisLine.split(this.recordSeperator, -1); // added limit
+								 // of -1 to
+								 // allow
+								 // trailing
+								 // empty
+								 // strings.
 	    } else {
 		return null;
 	    }
