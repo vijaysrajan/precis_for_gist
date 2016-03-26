@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.BitSet;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.TreeMap;
 
 import com.fratics.precis.fis.base.Schema.SchemaElement;
 import com.fratics.precis.fis.feed.BaseFeedPartitioner;
@@ -63,6 +64,9 @@ public abstract class InputObject implements Serializable {
     
     //Precis First Stage Candidate Partition.
     public HashMap<BitSet, BaseCandidateElement> firstStageCandidates = new HashMap<BitSet, BaseCandidateElement>();
+
+    //Threshold Counter Object
+    public TreeMap<String, MutableDouble> thresholdCounter = new TreeMap<String, MutableDouble>();
 
     public int currentStage = -1;
 
