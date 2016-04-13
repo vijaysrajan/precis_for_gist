@@ -9,11 +9,11 @@ package com.fratics.precis.fis.base;
  */
 
 public abstract class PrecisStream extends PrecisBase {
-    
-    //No of lines in the stream.
+
+    // No of lines in the stream.
     private long noOfLines = 0;
-    
-    //Stream Name.
+
+    // Stream Name.
     private String streamName = null;
 
     public PrecisStream(String streamName) {
@@ -27,12 +27,12 @@ public abstract class PrecisStream extends PrecisBase {
     public void setStreamName(String streamName) {
 	this.streamName = streamName;
     }
-    
-    //Abstract method to read stream.
+
+    // Abstract method to read stream.
     public abstract String[] readStream() throws Exception;
 
-    //Increment method for no of Lines in the stream,
-    //to be called in conjunction with the readStream() method.
+    // Increment method for no of Lines in the stream,
+    // to be called in conjunction with the readStream() method.
     protected void incLines() {
 	++noOfLines;
     }

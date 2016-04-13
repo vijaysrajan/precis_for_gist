@@ -9,12 +9,13 @@ import java.util.TreeSet;
 
 public class Schema {
 
-    //Type of the Field as Enum
+    // Type of the Field as Enum
     public static enum FieldType {
 	DIMENSION, METRIC, INVALID
     };
 
-    //Each Schema Element is defined by the fieldName, fieldType & fieldIndex (in the input feed).
+    // Each Schema Element is defined by the fieldName, fieldType & fieldIndex
+    // (in the input feed).
     public class SchemaElement implements Comparable<SchemaElement> {
 	public SchemaElement(String fieldName, int fieldIndex,
 		FieldType fieldType) {
@@ -32,21 +33,21 @@ public class Schema {
 	}
     };
 
-    //List of all the SchemaElements for all the Records in the Input Feed.
+    // List of all the SchemaElements for all the Records in the Input Feed.
     private TreeSet<SchemaElement> list = new TreeSet<SchemaElement>();
 
-    //No of Fields in the input feed.
+    // No of Fields in the input feed.
     public int getNoOfFields() {
 	return list.size();
     }
 
-    //Add a Schema Element to the Record List.
+    // Add a Schema Element to the Record List.
     public void addSchemaElement(String fieldName, int fieldIndex,
 	    FieldType fieldType) {
 	addSchemaElement(new SchemaElement(fieldName, fieldIndex, fieldType));
     }
 
-    //Add a Schema Element to the Record List.
+    // Add a Schema Element to the Record List.
     public void addSchemaElement(SchemaElement e) {
 	list.add(e);
     }

@@ -33,8 +33,8 @@ public class BitSetFeed extends PrecisProcessor {
 
     private PrecisStream ps = null;
 
-    //Takes a PrecisStream object to read a file stream (or) data stream 
-    //of the input data feed.
+    // Takes a PrecisStream object to read a file stream (or) data stream
+    // of the input data feed.
     public BitSetFeed(PrecisStream ps) {
 	this.ps = ps;
     }
@@ -47,11 +47,12 @@ public class BitSetFeed extends PrecisProcessor {
 	return this.ps.unInitialize();
     }
 
-    //Process methods holds the logic of this flow processor.
-    //In this case, the processor reads the input feed values in sequence.
-    //verifies if they are present in DimValIndex Object.
-    //If present returns the index for the incoming value from the input feed.
-    //The returned index is set in a new BitSet() object and added to the partitioner.
+    // Process methods holds the logic of this flow processor.
+    // In this case, the processor reads the input feed values in sequence.
+    // verifies if they are present in DimValIndex Object.
+    // If present returns the index for the incoming value from the input feed.
+    // The returned index is set in a new BitSet() object and added to the
+    // partitioner.
     public boolean process(ValueObject o) throws Exception {
 	o.inputObject.currentStage = 1;
 	String[] str = null;
@@ -61,8 +62,8 @@ public class BitSetFeed extends PrecisProcessor {
 	boolean elementAddedflag = false;
 	boolean metricGenerated = false;
 	double metric = 0.0;
-	
-	//read the input stream object
+
+	// read the input stream object
 	while ((str = ps.readStream()) != null) {
 	    BaseFeedElement e = new BaseFeedElement(
 		    DimValIndexBase.getPrecisBitSetLength());
@@ -70,17 +71,17 @@ public class BitSetFeed extends PrecisProcessor {
 	    metricGenerated = false;
 	    metric = 0.0;
 	    for (int i = 0; i < fi.length; i++) {
-		
-		//Create the keys from input feed to check in DimValIndex.
+
+		// Create the keys from input feed to check in DimValIndex.
 		String tmpDim = fi[i].getSchemaElement().fieldName;
 		String tmpDimVal = fi[i].getSchemaElement().fieldName
 			+ PrecisConfigProperties.OUTPUT_DIMVAL_SEPERATOR
 			+ str[fi[i].getSchemaElement().fieldIndex];
-		
-		//Checks if the value is present in DimValindex.
+
+		// Checks if the value is present in DimValindex.
 		if (DimValIndex.dimMap.containsKey(tmpDim)) {
 		    if (DimValIndex.dimValMap.containsKey(tmpDimVal)) {
-			//If present, add them to a bit set object.
+			// If present, add them to a bit set object.
 			int index1 = DimValIndex.dimMap.get(tmpDim);
 			int index2 = DimValIndex.dimValMap.get(tmpDimVal);
 			e.setBit(index1);
@@ -92,7 +93,7 @@ public class BitSetFeed extends PrecisProcessor {
 				    .getMetricIndex()]);
 			    e.setMetric(metric);
 			}
-			//Add the Value to the Fist Stage Candidates.
+			// Add the Value to the Fist Stage Candidates.
 			BaseCandidateElement bce = new BaseCandidateElement(
 				DimValIndexBase.getPrecisBitSetLength());
 			bce.setBit(index1);
@@ -101,23 +102,24 @@ public class BitSetFeed extends PrecisProcessor {
 			    bce.setMetric(metric);
 			else
 			    bce.setMetric(1.0);
-			o.inputObject.addFirstStageCandidateElement(bce);
+			o.inputObject.addFirstStageCandidateElement(bce, 0);
 		    }
 		}
 	    }
-	    //add the element to the respective partition.
+	    // add the element to the respective partition.
 	    if (elementAddedflag) {
 		// System.err.println(e);
 		partitioner.addElement(e.getNumberofDimVals() - 1, e);
 	    }
 	}
-	//Set the partitioner to the input object.
+	// Set the partitioner to the input object.
 	o.inputObject.setPartitioner(partitioner);
-	//Dump the contents of partitioner as a file.
-	if(PrecisConfigProperties.DUMP_BITSET_FEED) partitioner.dump();
-	//Dump the contents of First Stage Candidates.
+	// Dump the contents of partitioner as a file.
+	if (PrecisConfigProperties.DUMP_BITSET_FEED)
+	    partitioner.dump();
+	// Dump the contents of First Stage Candidates.
 	Util.dump(1, o);
-	//Move the context of Precis execution to next stage (i.e) stage 2.
+	// Move the context of Precis execution to next stage (i.e) stage 2.
 	o.inputObject.moveToNextStage();
 	return true;
     }

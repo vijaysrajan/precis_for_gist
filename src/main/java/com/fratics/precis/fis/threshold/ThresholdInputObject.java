@@ -12,24 +12,24 @@ public class ThresholdInputObject extends InputObject {
     }
 
     public String toString() {
-	 return "\nNo of Records :: " + thresholdCounter.size() + "\n\n"; 
+	return "\nNo of Records :: " + thresholdCounter.size() + "\n\n";
     }
 
     public void loadInputCharacteristics(Object o) throws Exception {
 	String[] str = (String[]) o;
-	//No Schema will be provided.
-	for(int i = 0;  i < str.length; i++){
+	// No Schema will be provided.
+	for (int i = 0; i < str.length; i++) {
 	    String field_value = "";
-	    if(str[i] == null){
-		field_value = "field"+i+DEF_VALUE;
-	    }else{
-		field_value = "field"+i+str[i];
+	    if (str[i] == null) {
+		field_value = "field" + i + DEF_VALUE;
+	    } else {
+		field_value = "field" + i + str[i];
 	    }
-	    
+
 	    MutableDouble x = thresholdCounter.get(field_value);
-	    if(x == null){
+	    if (x == null) {
 		thresholdCounter.put(field_value, new MutableDouble());
-	    }else{
+	    } else {
 		x.inc();
 	    }
 	}

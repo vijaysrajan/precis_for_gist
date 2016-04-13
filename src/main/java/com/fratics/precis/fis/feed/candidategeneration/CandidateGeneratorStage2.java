@@ -25,8 +25,8 @@ public class CandidateGeneratorStage2 extends PrecisProcessor {
     private int currStage = 2;
     private ValueObject o;
 
-    //Produces the cross product of the first stage candidates to 
-    //generate the 2nd Stage potential candidates.
+    // Produces the cross product of the first stage candidates to
+    // generate the 2nd Stage potential candidates.
     private void crossProduct() {
 	BaseCandidateElement[] it = o.inputObject.firstStageCandidates.values()
 		.toArray(new BaseCandidateElement[0]);
@@ -40,7 +40,8 @@ public class CandidateGeneratorStage2 extends PrecisProcessor {
 	}
     }
 
-    public CandidateGeneratorStage2() {}
+    public CandidateGeneratorStage2() {
+    }
 
     public boolean process(ValueObject o) throws Exception {
 	this.o = o;
@@ -49,19 +50,20 @@ public class CandidateGeneratorStage2 extends PrecisProcessor {
 	System.err.println("Current Stage ::" + this.currStage);
 	System.err.println("No of Candidates from Previous Stage ::"
 		+ o.inputObject.firstStageCandidates.values().size());
-	
-	//Initialize Reader
+
+	// Initialize Reader
 	bp.initReader(this.currStage);
-	
-	//Generate Cross Product
+
+	// Generate Cross Product
 	crossProduct();
 	System.err.println("No of Candidates Before Applying Threshold::"
 		+ o.inputObject.currCandidateSet.size());
 	BaseFeedPartitionerReader bpr = bp.getReader();
 	boolean countPrecis = o.inputObject.isCountPrecis();
-	
-	//Read the Input feed from Partitioner as bit set feed and apply the metrics
-	//to the candidates.
+
+	// Read the Input feed from Partitioner as bit set feed and apply the
+	// metrics
+	// to the candidates.
 	while (bpr.hasNext()) {
 	    BaseFeedElement be = bpr.getNext();
 	    // System.err.println(be);
@@ -78,16 +80,17 @@ public class CandidateGeneratorStage2 extends PrecisProcessor {
 	    }
 	}
 	bp.closeReader();
-	
-	//Apply the threshold handler.
+
+	// Apply the threshold handler.
 	boolean ret = o.inputObject.applyThreshold();
 	System.err.println("No of Candidates After Applying Threshold::"
 		+ o.inputObject.currCandidateSet.size());
-	
-	//Dump the Candidate Stage.
-	if(ret) Util.dump(this.currStage, o);
-	
-	//Move the precis context to next stage - 3
+
+	// Dump the Candidate Stage.
+	if (ret)
+	    Util.dump(this.currStage, o);
+
+	// Move the precis context to next stage - 3
 	o.inputObject.moveToNextStage();
 	return ret;
     }

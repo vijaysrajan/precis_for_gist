@@ -16,8 +16,11 @@ public class SanitationMain extends PrecisProcessor {
 
     public SanitationMain() {
 	ps = new PrecisProcessor[3];
-	ps[0] = new PrecisSchemaProcessor(new PrecisFileStream(PrecisConfigProperties.INPUT_SCHEMA_FILE, PrecisConfigProperties.SCHEMA_RECORD_SEPERATOR));
-	ps[1] = new PrecisInputCharacteristicsProcessor(new PrecisFileStream(PrecisConfigProperties.INPUT_DATA_FILE));
+	ps[0] = new PrecisSchemaProcessor(new PrecisFileStream(
+		PrecisConfigProperties.INPUT_SCHEMA_FILE,
+		PrecisConfigProperties.SCHEMA_RECORD_SEPERATOR));
+	ps[1] = new PrecisInputCharacteristicsProcessor(new PrecisFileStream(
+		PrecisConfigProperties.INPUT_DATA_FILE));
 	ps[2] = new SanitationRuleProcessor();
     }
 
@@ -41,28 +44,29 @@ public class SanitationMain extends PrecisProcessor {
 	    ps[i].process(o);
 	return true;
     }
- 
 
     public static void main(String[] args) {
 	try {
 
-	    //Check for configuration file in command line args.
+	    // Check for configuration file in command line args.
 	    if (args.length > 0) {
-		if(!new File(args[0]).exists()) throw new Exception("Configuration File " + args[0] + " doesn't exist");
+		if (!new File(args[0]).exists())
+		    throw new Exception("Configuration File " + args[0]
+			    + " doesn't exist");
 		ConfigObject.setConfigFile(args[0]);
 	    }
-	    
-	    //Initialize the precis configuration.
+
+	    // Initialize the precis configuration.
 	    PrecisConfigProperties.init();
 
-	    //Initialize the Value Objects.
+	    // Initialize the Value Objects.
 	    ValueObject vo = new ValueObject();
-	    
-	    //Create & Link the input and output objects to Value Objects.
+
+	    // Create & Link the input and output objects to Value Objects.
 	    vo.inputObject = new SanitationInputObject();
 	    vo.resultObject = new SanitationOutputObject();
-	    
-	    //Spawn the main Driver & run.
+
+	    // Spawn the main Driver & run.
 	    SanitationMain sm = new SanitationMain();
 	    sm.initialize();
 	    sm.process(vo);

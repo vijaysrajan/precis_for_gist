@@ -21,19 +21,21 @@ import com.fratics.precis.fis.util.PrecisConfigProperties;
 
 public class BaseFeedPartitioner {
 
-    //Created a dummy list inner class to create array of ArrayLists.
+    // Created a dummy list inner class to create array of ArrayLists.
     public class BaseFeedElementList extends ArrayList<BaseFeedElement> {
 	private static final long serialVersionUID = 1L;
     }
 
-    //Base Feed Partition Reader inner class, a simple stream / byte array reader to provide
-    //sequential access of the records, irrespective of where it is stored in the 
-    //base feed partition object.
+    // Base Feed Partition Reader inner class, a simple stream / byte array
+    // reader to provide
+    // sequential access of the records, irrespective of where it is stored in
+    // the
+    // base feed partition object.
     public class BaseFeedPartitionerReader {
 	private int currentStage = 2;
 	private int currentIndex = 0;
 
-	//Need to initialize the reader with the current stage.
+	// Need to initialize the reader with the current stage.
 	public BaseFeedPartitionerReader(int stage) {
 	    this.currentStage = stage - 1; // index starts from "0".
 	    this.currentIndex = 0;
@@ -42,15 +44,15 @@ public class BaseFeedPartitioner {
 		this.currentStage++;
 	}
 
-	//Checks if Base Feed Elements are present for the stage
-	//in the partition object.
+	// Checks if Base Feed Elements are present for the stage
+	// in the partition object.
 	public boolean hasNext() {
 	    return ((this.currentStage < partitionMap.length) && (this.currentIndex < partitionMap[this.currentStage]
 		    .size()));
 	}
 
-	//Returns the next available base feed element from the 
-	//partition object.
+	// Returns the next available base feed element from the
+	// partition object.
 	public BaseFeedElement getNext() {
 	    // System.err.println("Current Index ::" + this.currentIndex +
 	    // " Current Stage ::" + this.currentStage);
@@ -69,14 +71,14 @@ public class BaseFeedPartitioner {
 
     }
 
-    //Reader object instance for the current partition.
+    // Reader object instance for the current partition.
     private BaseFeedPartitionerReader bfpr = null;
-    
-    //Base Feed elements partitions.
+
+    // Base Feed elements partitions.
     private BaseFeedElementList[] partitionMap = null;
 
-    //BaseFeed Partitioner initialized to the no of fields.
-    //So some of the partitions may be empty.
+    // BaseFeed Partitioner initialized to the no of fields.
+    // So some of the partitions may be empty.
     public BaseFeedPartitioner(int length) {
 	partitionMap = new BaseFeedElementList[length];
 	for (int i = 0; i < partitionMap.length; i++) {
@@ -84,32 +86,33 @@ public class BaseFeedPartitioner {
 	}
     }
 
-    //Add a new BaseFeed Element to the partition.
+    // Add a new BaseFeed Element to the partition.
     public void addElement(int index, BaseFeedElement e) {
 	partitionMap[index].add(e);
     }
 
-    //Return the reader object.
+    // Return the reader object.
     public BaseFeedPartitionerReader getReader() throws Exception {
 	if (this.bfpr == null)
 	    throw new Exception("BaseFeedPartitionerReader not initialized");
 	return this.bfpr;
     }
 
-    //Initialize the reader object.
+    // Initialize the reader object.
     public void initReader(int stage) {
 	this.bfpr = new BaseFeedPartitionerReader(stage);
     }
 
-    //unInitialize the reader.
+    // unInitialize the reader.
     public void closeReader() {
 	bfpr = null;
     }
 
-    //Method to dump the contents of the partition.
+    // Method to dump the contents of the partition.
     public void dump() {
 	try {
-	    PrintWriter pw = new PrintWriter(new File(PrecisConfigProperties.BITSET_FEED_FILENAME));
+	    PrintWriter pw = new PrintWriter(new File(
+		    PrecisConfigProperties.BITSET_FEED_FILENAME));
 	    pw.append(this.toString());
 	    pw.flush();
 	    pw.close();
@@ -118,13 +121,14 @@ public class BaseFeedPartitioner {
 	}
     }
 
-    //Returns the contents of the partition formatted.
+    // Returns the contents of the partition formatted.
     public String toString() {
 	String str = "";
 	for (int i = 0; i < partitionMap.length; i++) {
 	    ArrayList<BaseFeedElement> al = partitionMap[i];
-	    //if(al.size() > 0 ) 
-	    str = str + "Partition Number :: " + i + ", No Of Elements :: " + al.size() + ", Values :: "+ al.toString() + "\n";
+	    // if(al.size() > 0 )
+	    str = str + "Partition Number :: " + i + ", No Of Elements :: "
+		    + al.size() + ", Values :: " + al.toString() + "\n";
 	}
 	return str;
     }

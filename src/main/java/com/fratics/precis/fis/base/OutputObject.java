@@ -12,19 +12,19 @@ import java.io.Serializable;
  */
 
 public abstract class OutputObject implements Serializable {
-    
+
     private static final long serialVersionUID = -6326248205032370705L;
 
-    //Initialization method, 
+    // Initialization method,
     public abstract void init(int noOfFields);
 
-    //Uploads/persists the results of the processing.
+    // Uploads/persists the results of the processing.
     public abstract void loadResult(Object o) throws Exception;
 
-    //Checker method for Initializatioln.
+    // Checker method for Initializatioln.
     protected abstract boolean isInitialized();
 
-    //A simple toString() method to provide the state of 
-    //the current stage of Precis Processing.
+    // A simple toString() method to provide the state of
+    // the current stage of Precis Processing.
     public abstract String toString();
 }

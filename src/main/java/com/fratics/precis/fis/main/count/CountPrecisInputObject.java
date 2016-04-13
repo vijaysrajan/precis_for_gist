@@ -1,5 +1,7 @@
 package com.fratics.precis.fis.main.count;
 
+import java.util.Arrays;
+
 import com.fratics.precis.exception.PrecisException;
 import com.fratics.precis.fis.base.InputObject;
 
@@ -11,19 +13,23 @@ public class CountPrecisInputObject extends InputObject {
 	return (noOfFields > 0);
     }
 
-
     public void loadInputCharacteristics(Object o) throws Exception {
 	int index = 0;
 	String[] str = (String[]) o;
 	if (!this.isInitialized())
 	    throw new PrecisException("Schema Not Loaded");
-	for (int i = 0; i < fieldObjects.length; i++) {
-	    index = fieldObjects[i].getSchemaElement().fieldIndex;
-	    if (str[index] == null) {
-		fieldObjects[i].addFieldValue(DEF_VALUE);
-	    } else {
-		fieldObjects[i].addFieldValue(str[index].trim());
+	try {
+	    for (int i = 0; i < fieldObjects.length; i++) {
+		index = fieldObjects[i].getSchemaElement().fieldIndex;
+		if (str[index] == null) {
+		    fieldObjects[i].addFieldValue(DEF_VALUE);
+		} else {
+		    fieldObjects[i].addFieldValue(str[index].trim());
+		}
 	    }
+	} catch (Exception e) {
+	    System.err.println("Error Rec ::" + Arrays.toString(str));
+	    e.printStackTrace();
 	}
     }
 

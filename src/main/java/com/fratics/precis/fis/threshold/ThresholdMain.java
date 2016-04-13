@@ -13,7 +13,8 @@ public class ThresholdMain extends PrecisProcessor {
 
     public ThresholdMain(String dataFileName) {
 	ps = new PrecisProcessor[2];
-	ps[0] = new PrecisInputCharacteristicsProcessor(new PrecisFileStream(dataFileName));
+	ps[0] = new PrecisInputCharacteristicsProcessor(new PrecisFileStream(
+		dataFileName));
 	ps[1] = new ThresholdProcessor();
     }
 
@@ -37,32 +38,33 @@ public class ThresholdMain extends PrecisProcessor {
 	    ps[i].process(o);
 	return true;
     }
- 
 
     public static void main(String[] args) {
 	try {
 
-	    if(args.length <= 0){
+	    if (args.length <= 0) {
 		throw new Exception("Data File Needs to be Passed as Arguement");
 	    }
-	    
+
 	    if (args.length > 0) {
-		if(!new File(args[0]).exists()) throw new Exception("Data File " + args[0] + " doesn't exist");
+		if (!new File(args[0]).exists())
+		    throw new Exception("Data File " + args[0]
+			    + " doesn't exist");
 	    }
-	    
-	    //Initialize the Value Objects.
+
+	    // Initialize the Value Objects.
 	    ValueObject vo = new ValueObject();
-	    
-	    //Create & Link the input and output objects to Value Objects.
+
+	    // Create & Link the input and output objects to Value Objects.
 	    vo.inputObject = new ThresholdInputObject();
 	    vo.resultObject = new ThresholdOutputObject();
-	    
-	    //Spawn the main Driver & run.
+
+	    // Spawn the main Driver & run.
 	    ThresholdMain sm = new ThresholdMain(args[0]);
 	    sm.initialize();
 	    sm.process(vo);
 	    sm.unInitialize();
-	    //System.err.println(vo);
+	    // System.err.println(vo);
 	    System.err.println();
 
 	} catch (Exception e) {

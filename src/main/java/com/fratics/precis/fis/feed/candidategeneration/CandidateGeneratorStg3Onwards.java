@@ -2,6 +2,7 @@ package com.fratics.precis.fis.feed.candidategeneration;
 
 import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -25,14 +26,14 @@ import com.fratics.precis.fis.util.Util;
  */
 
 public class CandidateGeneratorStg3Onwards extends PrecisProcessor {
-    
+
     private int currStage = 3;
     private ValueObject o;
     private HashMap<BitSet, ArrayList<BaseCandidateElement>> cdParttion;
     private HashSet<BitSet> cdSet;
 
-    //Checks if all the subset of the generated candidates
-    //are present in the previous stage candidate set.
+    // Checks if all the subset of the generated candidates
+    // are present in the previous stage candidate set.
     public boolean isPresent(BitSet bs1) {
 	boolean result = true;
 	int valIndex = -1;
@@ -62,8 +63,8 @@ public class CandidateGeneratorStg3Onwards extends PrecisProcessor {
 	return result;
     }
 
-    //Produces the cross product of the previous stage candidates to 
-    //generate the current Stage potential candidates.
+    // Produces the cross product of the previous stage candidates to
+    // generate the current Stage potential candidates.
     private void crossProduct() {
 	int size = DimValIndex.getPrecisBitSetLength();
 	BitSet allOneBS1 = new BitSet(size);
@@ -81,8 +82,9 @@ public class CandidateGeneratorStg3Onwards extends PrecisProcessor {
 			BitSet newCand = (BitSet) bsList.get(i).getBitSet()
 				.clone();
 			newCand.or(bsList.get(j).getBitSet());
-			//Check all combinations of the current candidate in the 
-			//previous stage candidates.
+			// Check all combinations of the current candidate in
+			// the
+			// previous stage candidates.
 			if (isPresent(newCand)) {
 			    o.inputObject.addCandidate(newCand);
 			}
@@ -108,19 +110,25 @@ public class CandidateGeneratorStg3Onwards extends PrecisProcessor {
 	System.err.println("Current Stage ::" + this.currStage);
 	System.err.println("No of Candidates from Previous Stage ::"
 		+ o.inputObject.prevCandidateSet.size());
-	
-	//Initialize Reader
+
+	// Initialize Reader
 	bp.initReader(this.currStage);
 
-	//Generate Cross Product
+	// Generate Cross Product
+	long milliSec1 = new Date().getTime();
 	crossProduct();
+	long milliSec2 = new Date().getTime();
 	System.err.println("No of Candidates Before Applying Threshold::"
 		+ o.inputObject.currCandidateSet.size());
+	System.err.println("Time taken in MilliSec for Candidate Gen ::"
+		+ (milliSec2 - milliSec1));
+
 	BaseFeedPartitionerReader bpr = bp.getReader();
 	boolean countPrecis = o.inputObject.isCountPrecis();
-	
-	//Read the Input feed from Partitioner as bit set feed and apply the metrics
-	//to the candidates.
+	milliSec1 = new Date().getTime();
+	// Read the Input feed from Partitioner as bit set feed and apply the
+	// metrics
+	// to the candidates.
 	while (bpr.hasNext()) {
 	    BaseFeedElement be = bpr.getNext();
 	    // System.err.println(be);
@@ -137,16 +145,19 @@ public class CandidateGeneratorStg3Onwards extends PrecisProcessor {
 	    }
 	}
 	bp.closeReader();
-	
-	//Apply the threshold handler.
+
+	// Apply the threshold handler.
 	boolean ret = o.inputObject.applyThreshold();
+	milliSec2 = new Date().getTime();
 	System.err.println("No of Candidates After Applying Threshold::"
 		+ o.inputObject.currCandidateSet.size());
+	System.err.println("Time taken in MilliSec for Applying Threshold ::"
+		+ (milliSec2 - milliSec1));
+	// Dump the Candidate Stage.
+	if (ret)
+	    Util.dump(this.currStage, o);
 
-	//Dump the Candidate Stage.
-	if(ret) Util.dump(this.currStage, o);
-	
-	//Move the precis context to next stage - 3
+	// Move the precis context to next stage - 3
 	o.inputObject.moveToNextStage();
 	return ret;
     }
