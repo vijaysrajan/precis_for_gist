@@ -1,7 +1,6 @@
 package com.fratics.precis.fis.util;
 
-import java.io.File;
-import java.io.PrintWriter;
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.BitSet;
 
@@ -40,23 +39,22 @@ public class Util {
 
     }
 
-    private static void writeCandidates(int stage, PrintWriter pw, ValueObject o)
+    private static void writeCandidates(int stage, RandomAccessFile pw, ValueObject o)
 	    throws Exception {
 	String ret = "";
 	if (stage == 1) {
 	    for (BaseCandidateElement bce : o.inputObject.firstStageCandidates
 		    .values()) {
 		ret = convertToDims(stage, bce);
-		pw.write(ret);
+		pw.writeBytes(ret);
 	    }
 
 	} else {
 	    for (ArrayList<BaseCandidateElement> al : o.inputObject.currCandidatePart
 		    .values()) {
-
 		for (BaseCandidateElement bce : al) {
 		    ret = convertToDims(stage, bce);
-		    pw.write(ret);
+		    pw.writeBytes(ret);
 		}
 	    }
 	}
@@ -67,21 +65,28 @@ public class Util {
 	    String outputDir = PrecisConfigProperties.OUTPUT_DIR + "/";
 	    String fileName = PrecisConfigProperties.OUPUT_CANDIDATE_FILE_PATTERN
 		    .replace("${stage_number}", "" + currStage);
-	    PrintWriter pw = new PrintWriter(new File(outputDir + fileName));
+	    RandomAccessFile pw = new RandomAccessFile(outputDir + fileName, "rw");
+		    
+	    // FileWriter pw = new FileWriter(new File(outputDir + fileName));
 	    writeCandidates(currStage, pw, o);
-	    pw.flush();
+	    // pw.flush();
 	    pw.close();
 
 	    if (PrecisConfigProperties.GENERATE_RAW_CANDIDATE_FILE) {
 		fileName = PrecisConfigProperties.OUPUT_RAW_CANDIDATE_FILE_PATTERN
 			.replace("${stage_number}", "" + currStage);
-		pw = new PrintWriter(new File(outputDir + fileName));
-		if (currStage == 1)
-		    pw.append(o.inputObject.firstStageCandidates.keySet()
-			    .toString());
-		else
-		    pw.append(o.inputObject.currCandidateSet.toString());
-		pw.flush();
+		// pw = new FileWriter(new File(outputDir + fileName));
+		pw = new RandomAccessFile(outputDir + fileName, "rw");
+			
+		if (currStage == 1) {
+		    String x = o.inputObject.firstStageCandidates.keySet()
+			    .toString();
+		    pw.writeBytes(x);
+		} else {
+		    String x = o.inputObject.currCandidateSet.toString();
+		    pw.writeBytes(x);
+		}
+		// pw.flush();
 		pw.close();
 	    }
 
