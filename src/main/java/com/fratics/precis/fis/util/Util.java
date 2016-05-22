@@ -31,9 +31,9 @@ public class Util {
 	    startIndex = val + 1;
 	    index--;
 	    if (index > 0)
-		ret = ret + PrecisConfigProperties.OUTPUT_RECORD_SEPERATOR;
+		ret = ret + PrecisConfigProperties.OUTPUT_RECORD_SEPERATOR_DIMENSION;
 	}
-	ret = ret + PrecisConfigProperties.OUTPUT_RECORD_SEPERATOR
+	ret = ret + PrecisConfigProperties.OUTPUT_RECORD_SEPERATOR_METRIC
 		+ bce.getMetric() + "\n";
 	return ret;
 
