@@ -9,6 +9,7 @@ public class PrecisConfigProperties {
     public static String INPUT_DATA_FILE = "./data/dataFile";
     public static String OUTPUT_RECORD_SEPERATOR_DIMENSION = Character.toString('\001');
     public static String OUTPUT_RECORD_SEPERATOR_METRIC = Character.toString('\003');
+    public static String OUTPUT_RECORD_SEPERATOR_STAGENUMBER = Character.toString('\004');
     public static String INPUT_SCHEMA_FILE = "./data/schemaFile";
     public static int NO_OF_STAGES = 8;
     public static String OUPUT_CANDIDATE_FILE_PATTERN = "stage_${stage_number}_candidate_file.txt";
@@ -78,6 +79,15 @@ public class PrecisConfigProperties {
 	    if (s != null)
 		OUTPUT_RECORD_SEPERATOR_METRIC = s;
 	}
+	
+	tmp = c.getProperties().getProperty("OUTPUT_RECORD_SEPERATOR_STAGENUMBER");
+	if (!(tmp == null || tmp.equalsIgnoreCase(""))) {
+	    String s = convertSpecialChar(tmp);
+	    if (s != null)
+	    	OUTPUT_RECORD_SEPERATOR_STAGENUMBER = s;
+	}
+	
+	
 	
 	tmp = c.getProperties().getProperty("INPUT_SCHEMA_FILE");
 	if (!(tmp == null || tmp.equalsIgnoreCase(""))) {

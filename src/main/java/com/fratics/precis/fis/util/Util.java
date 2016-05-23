@@ -15,7 +15,10 @@ public class Util {
     }
 
     private static String convertToDims(int stage, BaseCandidateElement bce) {
-	String ret = "";
+    StringBuilder ret = new StringBuilder();
+    ret.append(stage);
+    ret.append(PrecisConfigProperties.OUTPUT_RECORD_SEPERATOR_STAGENUMBER);
+	//String ret = sb.toString();
 	int startIndex = 0;
 	int val = 0;
 	int index = stage;
@@ -23,19 +26,20 @@ public class Util {
 	BitSet b = bce.getBitSet();
 	index = stage;
 	val = 0;
-	ret = "";
+	//ret = "";
 	startIndex = DimValIndex.dimMap.size();
 	while (index > 0) {
 	    val = b.nextSetBit(startIndex);
-	    ret = ret + DimValIndex.revDimValMap.get(val);
+	    ret.append(DimValIndex.revDimValMap.get(val));
 	    startIndex = val + 1;
 	    index--;
 	    if (index > 0)
-		ret = ret + PrecisConfigProperties.OUTPUT_RECORD_SEPERATOR_DIMENSION;
+		ret.append(PrecisConfigProperties.OUTPUT_RECORD_SEPERATOR_DIMENSION);
 	}
-	ret = ret + PrecisConfigProperties.OUTPUT_RECORD_SEPERATOR_METRIC
-		+ bce.getMetric() + "\n";
-	return ret;
+	ret.append(PrecisConfigProperties.OUTPUT_RECORD_SEPERATOR_METRIC);
+	ret.append(bce.getMetric());
+	ret.append("\n");
+	return ret.toString();
 
     }
 
