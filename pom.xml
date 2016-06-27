@@ -63,7 +63,6 @@
      <artifactId>opencsv</artifactId>
      <version>3.7</version>
   	</dependency>
-  		 -->
   	<dependency>
     	<groupId>com.google.code.gson</groupId>
     	<artifactId>gson</artifactId>
@@ -86,6 +85,7 @@
 	<artifactId>lucene-core</artifactId>
 	<version>5.2.1</version>
 	</dependency>
+	  		 -->
   </dependencies>
     <reporting>
     <plugins>
