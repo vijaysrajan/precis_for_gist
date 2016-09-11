@@ -17,15 +17,15 @@ public abstract class PrecisStream extends PrecisBase {
     private String streamName = null;
 
     public PrecisStream(String streamName) {
-	this.streamName = streamName;
+        this.streamName = streamName;
     }
 
     public String getStreamName() {
-	return streamName;
+        return streamName;
     }
 
     public void setStreamName(String streamName) {
-	this.streamName = streamName;
+        this.streamName = streamName;
     }
 
     // Abstract method to read stream.
@@ -34,10 +34,10 @@ public abstract class PrecisStream extends PrecisBase {
     // Increment method for no of Lines in the stream,
     // to be called in conjunction with the readStream() method.
     protected void incLines() {
-	++noOfLines;
+        ++noOfLines;
     }
 
     public long getNoOfLines() {
-	return this.noOfLines;
+        return this.noOfLines;
     }
 }

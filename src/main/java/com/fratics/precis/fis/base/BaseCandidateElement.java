@@ -18,32 +18,32 @@ public class BaseCandidateElement extends BaseFeedElement {
     }
 
     public BaseCandidateElement(int size) {
-	this.b = new BitSet(size);
+        this.b = new BitSet(size);
     }
 
     public BaseCandidateElement(BaseFeedElement e) {
-	this.b = (BitSet) e.getBitSet().clone();
-	this.metric = e.getMetric();
+        this.b = (BitSet) e.getBitSet().clone();
+        this.metric = e.getMetric();
     }
 
     public BaseCandidateElement(BitSet b, double metric) {
-	this.b = b;
-	this.metric = metric;
+        this.b = b;
+        this.metric = metric;
     }
 
     public void incrMetric() {
-	this.metric++;
+        this.metric++;
     }
 
     public void incrMetricBy(double metric) {
-	this.metric += metric;
+        this.metric += metric;
     }
 
     public boolean equals(BaseCandidateElement b) {
-	return this.b == b.getBitSet();
+        return this.b == b.getBitSet();
     }
 
     public String toString() {
-	return this.b.toString() + "," + metric;
+        return this.b.toString() + "," + metric;
     }
 }

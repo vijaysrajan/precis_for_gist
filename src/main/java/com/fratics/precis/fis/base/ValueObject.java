@@ -16,6 +16,6 @@ public class ValueObject implements Serializable {
 
     // A Simple toString() method, used in printing both Input & Output Objects.
     public String toString() {
-	return inputObject.toString() + "\n" + resultObject.toString();
+        return inputObject.toString() + "\n" + resultObject.toString();
     }
 }

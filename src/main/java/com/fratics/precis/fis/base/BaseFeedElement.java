@@ -13,71 +13,71 @@ public class BaseFeedElement {
     protected double metric;
 
     public BaseFeedElement() {
-	b = new BitSet();
+        b = new BitSet();
     }
 
     public BaseFeedElement(int noOfBits) {
-	b = new BitSet(noOfBits);
+        b = new BitSet(noOfBits);
     }
 
     public BitSet getBitSet() {
-	return b;
+        return b;
     }
 
     public void setBitSet(BitSet b) {
-	this.b = b;
+        this.b = b;
     }
 
     public BitSet and(BaseFeedElement b) {
-	BitSet bs = (BitSet) this.b.clone();
-	bs.and(b.getBitSet());
-	return bs;
+        BitSet bs = (BitSet) this.b.clone();
+        bs.and(b.getBitSet());
+        return bs;
     }
 
     public BitSet or(BaseFeedElement b) {
-	BitSet bs = (BitSet) this.b.clone();
-	bs.or(b.getBitSet());
-	return bs;
+        BitSet bs = (BitSet) this.b.clone();
+        bs.or(b.getBitSet());
+        return bs;
     }
 
     public BitSet xor(BaseFeedElement b) {
-	BitSet bs = (BitSet) this.b.clone();
-	bs.xor(b.getBitSet());
-	return bs;
+        BitSet bs = (BitSet) this.b.clone();
+        bs.xor(b.getBitSet());
+        return bs;
     }
 
     public BitSet and(BitSet b) {
-	BitSet bs = (BitSet) this.b.clone();
-	bs.and(b);
-	return bs;
+        BitSet bs = (BitSet) this.b.clone();
+        bs.and(b);
+        return bs;
     }
 
     public BitSet or(BitSet b) {
-	BitSet bs = (BitSet) this.b.clone();
-	bs.or(b);
-	return bs;
+        BitSet bs = (BitSet) this.b.clone();
+        bs.or(b);
+        return bs;
     }
 
     public BitSet xor(BitSet b) {
-	BitSet bs = (BitSet) this.b.clone();
-	bs.xor(b);
-	return bs;
+        BitSet bs = (BitSet) this.b.clone();
+        bs.xor(b);
+        return bs;
     }
 
     public void setBit(int e) {
-	this.b.set(e);
-    }
-
-    public void setMetric(double metric) {
-	this.metric = metric;
+        this.b.set(e);
     }
 
     public double getMetric() {
-	return metric;
+        return metric;
+    }
+
+    public void setMetric(double metric) {
+        this.metric = metric;
     }
 
     public int getCardinality() {
-	return this.b.cardinality();
+        return this.b.cardinality();
     }
 
     /*
@@ -86,10 +86,10 @@ public class BaseFeedElement {
      */
 
     public int getNumberofDimVals() {
-	return this.b.cardinality() / 2;
+        return this.b.cardinality() / 2;
     }
 
     public String toString() {
-	return this.b.toString() + "," + metric;
+        return this.b.toString() + "," + metric;
     }
 }

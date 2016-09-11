@@ -6,14 +6,14 @@ public class ThresholdOutputObject extends OutputObject {
     private static final long serialVersionUID = 8259727611192043540L;
 
     protected boolean isInitialized() {
-	return true;
+        return true;
     }
 
     public void init(int numOfFields) {
     }
 
     public String toString() {
-	return "";
+        return "";
     }
 
     public void loadResult(Object o) throws Exception {

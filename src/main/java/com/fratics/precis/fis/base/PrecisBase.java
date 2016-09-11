@@ -21,18 +21,18 @@ public abstract class PrecisBase {
 
     // A default Initializer / template.
     public boolean initialize() throws Exception {
-	return true;
+        return true;
     }
 
     // A default unInitializer / template.
     public boolean unInitialize() throws Exception {
-	return true;
+        return true;
     }
 
     // A default reInitializer / template.
     public boolean reInitialize() throws Exception {
-	if (this.unInitialize())
-	    return this.initialize();
-	return false;
+        if (this.unInitialize())
+            return this.initialize();
+        return false;
     }
 }

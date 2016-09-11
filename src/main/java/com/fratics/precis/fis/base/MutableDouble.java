@@ -14,26 +14,26 @@ public class MutableDouble implements Comparable<MutableDouble> {
     }
 
     public MutableDouble(double val) {
-	value = val;
+        value = val;
     }
 
     public void inc() {
-	++value;
+        ++value;
     }
 
     public void incBy(double inc) {
-	value += inc;
+        value += inc;
     }
 
     public double get() {
-	return value;
+        return value;
     }
 
     public String toString() {
-	return "" + value;
+        return "" + value;
     }
 
     public int compareTo(MutableDouble o) {
-	return (int) ((this.value - o.value) * 100);
+        return (int) ((this.value - o.value) * 100);
     }
 }

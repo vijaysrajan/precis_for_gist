@@ -6,9 +6,9 @@ public class SingleRuleResult {
     public int fieldIndex;
 
     public SingleRuleResult(String ruleName, boolean result, int fieldIndex) {
-	this.ruleName = ruleName;
-	this.result = result;
-	this.fieldIndex = fieldIndex;
+        this.ruleName = ruleName;
+        this.result = result;
+        this.fieldIndex = fieldIndex;
     }
 
 }

@@ -1,9 +1,9 @@
 package com.fratics.precis.fis.base;
 
+import com.fratics.precis.fis.base.Schema.SchemaElement;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import com.fratics.precis.fis.base.Schema.SchemaElement;
 
 /*
  * A Single Column & its characteristics in the input feed is captured
@@ -27,19 +27,19 @@ public class FieldObject {
     private Map<String, MutableDouble> map = new HashMap<String, MutableDouble>();
 
     public SchemaElement getSchemaElement() {
-	return schElement;
-    }
-
-    public Map<String, MutableDouble> getMap() {
-	return map;
+        return schElement;
     }
 
     public void setSchemaElement(SchemaElement schElement) {
-	this.schElement = schElement;
+        this.schElement = schElement;
+    }
+
+    public Map<String, MutableDouble> getMap() {
+        return map;
     }
 
     public int getNumberOfUniques() {
-	return map.keySet().size();
+        return map.keySet().size();
     }
 
     /*
@@ -49,13 +49,13 @@ public class FieldObject {
      */
 
     public void addFieldValue(String key) {
-	MutableDouble value = map.get(key);
-	if (value == null) {
-	    value = new MutableDouble();
-	    map.put(key, value);
-	} else {
-	    value.inc();
-	}
+        MutableDouble value = map.get(key);
+        if (value == null) {
+            value = new MutableDouble();
+            map.put(key, value);
+        } else {
+            value.inc();
+        }
     }
 
     /*
@@ -65,21 +65,21 @@ public class FieldObject {
      */
 
     public void addFieldValueBy(String key, double metric) {
-	MutableDouble value = map.get(key);
-	if (value == null) {
-	    value = new MutableDouble(metric);
-	    map.put(key, value);
-	} else {
-	    value.incBy(metric);
-	}
+        MutableDouble value = map.get(key);
+        if (value == null) {
+            value = new MutableDouble(metric);
+            map.put(key, value);
+        } else {
+            value.incBy(metric);
+        }
     }
 
     public String toString() {
-	String str = "fieldName :: " + this.schElement.fieldName
-		+ ", fieldIndex :: " + this.schElement.fieldIndex
-		+ ", fieldType :: " + this.schElement.fieldType
-		+ ", Values :: " + this.map.toString() + "\n";
-	return str;
+        String str = "fieldName :: " + this.schElement.fieldName
+                + ", fieldIndex :: " + this.schElement.fieldIndex
+                + ", fieldType :: " + this.schElement.fieldType
+                + ", Values :: " + this.map.toString() + "\n";
+        return str;
     }
 
 }

@@ -10,40 +10,40 @@ public class PrecisSchemaProcessor extends PrecisProcessor {
     private PrecisStream ps = null;
 
     public PrecisSchemaProcessor(PrecisStream ps) {
-	this.ps = ps;
+        this.ps = ps;
     }
 
     public boolean initialize() throws Exception {
-	return this.ps.initialize();
+        return this.ps.initialize();
     }
 
     public boolean unInitialize() throws Exception {
-	return this.ps.unInitialize();
+        return this.ps.unInitialize();
     }
 
     public boolean process(ValueObject o) throws Exception {
-	String[] str = null;
-	Schema schema = new Schema();
-	int i = 0;
-	int metricCount = 0;
-	while ((str = ps.readStream()) != null) {
-	    if (str[3].equalsIgnoreCase("t")) {
-		Schema.FieldType fieldType;
-		if (str[1].equalsIgnoreCase("d")) {
-		    fieldType = Schema.FieldType.DIMENSION;
-		} else {
-		    fieldType = Schema.FieldType.METRIC;
-		    o.inputObject.setMetricIndex(i);
-		    if (metricCount > 0)
-			throw new PrecisException(
-				"More than 1 Metric Count in Schema");
-		    metricCount++;
-		}
-		schema.addSchemaElement(str[0], i, fieldType);
-	    }
-	    i++;
-	}
-	o.inputObject.loadSchema(schema);
-	return true;
+        String[] str = null;
+        Schema schema = new Schema();
+        int i = 0;
+        int metricCount = 0;
+        while ((str = ps.readStream()) != null) {
+            if (str[3].equalsIgnoreCase("t")) {
+                Schema.FieldType fieldType;
+                if (str[1].equalsIgnoreCase("d")) {
+                    fieldType = Schema.FieldType.DIMENSION;
+                } else {
+                    fieldType = Schema.FieldType.METRIC;
+                    o.inputObject.setMetricIndex(i);
+                    if (metricCount > 0)
+                        throw new PrecisException(
+                                "More than 1 Metric Count in Schema");
+                    metricCount++;
+                }
+                schema.addSchemaElement(str[0], i, fieldType);
+            }
+            i++;
+        }
+        o.inputObject.loadSchema(schema);
+        return true;
     }
 }

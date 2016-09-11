@@ -6,7 +6,7 @@ public class CountPrecisOutputObject extends OutputObject {
     private static final long serialVersionUID = 8259727611192034540L;
 
     public String toString() {
-	return "MetricsPrecisOutputObject = {}\n";
+        return "MetricsPrecisOutputObject = {}\n";
     }
 
     public void loadResult(Object o) throws Exception {
@@ -16,7 +16,7 @@ public class CountPrecisOutputObject extends OutputObject {
     }
 
     protected boolean isInitialized() {
-	return false;
+        return false;
     }
 
 }

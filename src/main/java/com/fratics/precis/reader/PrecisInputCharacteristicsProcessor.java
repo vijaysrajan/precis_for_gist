@@ -9,25 +9,25 @@ public class PrecisInputCharacteristicsProcessor extends PrecisProcessor {
     private PrecisStream ps = null;
 
     public PrecisInputCharacteristicsProcessor(PrecisStream ps) {
-	this.ps = ps;
+        this.ps = ps;
     }
 
     public boolean initialize() throws Exception {
-	return this.ps.initialize();
+        return this.ps.initialize();
     }
 
     public boolean unInitialize() throws Exception {
-	return this.ps.unInitialize();
+        return this.ps.unInitialize();
     }
 
     public boolean process(ValueObject o) throws Exception {
-	String[] str = null;
-	while ((str = ps.readStream()) != null) {
-	    o.inputObject.loadInputCharacteristics(str);
-	}
-	// Set the Number of Lines as Well.
-	o.inputObject.setNoOfLines(ps.getNoOfLines());
-	// System.err.println(Arrays.toString(o.inputObject.getFieldObjects()));
-	return true;
+        String[] str = null;
+        while ((str = ps.readStream()) != null) {
+            o.inputObject.loadInputCharacteristics(str);
+        }
+        // Set the Number of Lines as Well.
+        o.inputObject.setNoOfLines(ps.getNoOfLines());
+        // System.err.println(Arrays.toString(o.inputObject.getFieldObjects()));
+        return true;
     }
 }
