@@ -10,7 +10,7 @@ import java.util.BitSet;
 
 public class Util {
 
-    public static boolean isIgnoredWord(String s){
+    public static boolean isIgnoredWord(String s) {
         return PrecisConfigProperties.IGN_WORDS.contains(s);
     }
 
@@ -18,7 +18,7 @@ public class Util {
         return Integer.toString((int) (Math.random() * 100000));
     }
 
-    private static String convertToDims(int stage, BaseCandidateElement bce) {
+    private static String convertToDims(int stage, BaseCandidateElement bce, String metricName) {
         StringBuilder ret = new StringBuilder();
         ret.append(stage);
         ret.append(PrecisConfigProperties.OUTPUT_RECORD_SEPERATOR_STAGENUMBER);
@@ -41,6 +41,8 @@ public class Util {
                 ret.append(PrecisConfigProperties.OUTPUT_RECORD_SEPERATOR_DIMENSION);
         }
         ret.append(PrecisConfigProperties.OUTPUT_RECORD_SEPERATOR_METRIC);
+        ret.append(metricName);
+        ret.append(PrecisConfigProperties.OUTPUT_DIMVAL_SEPERATOR);
         ret.append(bce.getMetric());
         ret.append("\n");
         return ret.toString();
@@ -53,7 +55,7 @@ public class Util {
         if (stage == 1) {
             for (BaseCandidateElement bce : o.inputObject.firstStageCandidates
                     .values()) {
-                ret = convertToDims(stage, bce);
+                ret = convertToDims(stage, bce, o.inputObject.getMetricName());
                 pw.writeBytes(ret);
             }
 
@@ -61,7 +63,7 @@ public class Util {
             for (ArrayList<BaseCandidateElement> al : o.inputObject.currCandidatePart
                     .values()) {
                 for (BaseCandidateElement bce : al) {
-                    ret = convertToDims(stage, bce);
+                    ret = convertToDims(stage, bce, o.inputObject.getMetricName());
                     pw.writeBytes(ret);
                 }
             }

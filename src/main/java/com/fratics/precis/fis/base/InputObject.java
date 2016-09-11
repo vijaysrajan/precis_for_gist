@@ -53,6 +53,8 @@ public abstract class InputObject implements Serializable {
     protected BaseFeedPartitioner partitioner = null;
     // Column index of the metric field in the input data record.
     protected int metricIndex = -1;
+    // Metric Field Name.
+    protected String metricName = "metric";
     // Threshold applied for candidate generation.
     protected double threshold;
     // No of Lines in the data stream (or) flat file.
@@ -76,6 +78,14 @@ public abstract class InputObject implements Serializable {
 
     public boolean isCountPrecis() {
         return this.countPrecis;
+    }
+
+    public String getMetricName() {
+        return this.metricName;
+    }
+
+    public void setMetricName(String metricName) {
+        this.metricName = metricName;
     }
 
     public int getMetricIndex() {

@@ -34,6 +34,7 @@ public class PrecisSchemaProcessor extends PrecisProcessor {
                 } else {
                     fieldType = Schema.FieldType.METRIC;
                     o.inputObject.setMetricIndex(i);
+                    o.inputObject.setMetricName(str[0]);
                     if (metricCount > 0)
                         throw new PrecisException(
                                 "More than 1 Metric Count in Schema");
